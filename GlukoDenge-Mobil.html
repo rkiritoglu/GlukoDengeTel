@@ -525,32 +525,33 @@
   <!-- Mobile Measurement Sheet Modal -->
   <div id="modalSheet" class="modal-overlay hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-3xl w-full max-w-xl shadow-2xl border border-slate-100 overflow-hidden max-h-[92vh] flex flex-col">
-      <div class="bg-gradient-to-r from-teal-800 to-emerald-900 text-white p-4 relative shrink-0">
+      <!-- Modal Üst Bant (Koyu Yeşil Zemin & Net Tipografi) -->
+      <div id="modalHeaderBanner" class="p-4 relative shrink-0" style="background: linear-gradient(135deg, #022c22, #064e3b) !important; background-color: #064e3b !important; color: #ffffff !important;">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <span id="modalIcon" class="text-2xl">🩸</span>
+            <span id="modalIcon" class="text-2xl drop-shadow">🩸</span>
             <div>
-              <h3 id="modalTitle" class="text-base font-bold text-white m-0">Yeni Kayıt Ekle</h3>
-              <p class="text-[11px] text-teal-200 mt-0.5">Şeker ölçümü yapmadan da ilaç veya yemek bilgisi girebilirsiniz</p>
+              <h3 id="modalTitle" class="text-base font-bold text-white m-0" style="color: #ffffff !important;">Yeni Kayıt Ekle</h3>
+              <p id="modalSubtitle" class="text-[11px] mt-0.5" style="color: #a7f3d0 !important;">Şeker ölçümü yapmadan da ilaç, besin veya spor bilgisi girebilirsiniz</p>
             </div>
           </div>
-          <button onclick="closeModal()" class="text-white/80 hover:text-white p-1 rounded-xl">✕</button>
+          <button type="button" onclick="closeModal()" class="text-white/80 hover:text-white p-1 rounded-xl text-lg font-bold" style="color: #ffffff !important;">✕</button>
         </div>
 
-        <div class="grid grid-cols-5 gap-1 mt-3 bg-teal-950/40 p-1 rounded-2xl border border-white/10 text-[11px] font-semibold">
-          <button type="button" onclick="setModalEntryType('glucose')" id="btn-type-glucose" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition bg-white text-teal-900 font-bold shadow">
+        <div class="grid grid-cols-5 gap-1 mt-3 p-1 rounded-2xl text-[11px] font-semibold" style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15);">
+          <button type="button" onclick="setModalEntryType('glucose')" id="btn-type-glucose" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition font-bold shadow" style="background-color: #ffffff; color: #064e3b;">
             <span>🩸</span> <span class="truncate">Şeker</span>
           </button>
-          <button type="button" onclick="setModalEntryType('insulin')" id="btn-type-insulin" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition text-teal-100 hover:text-white">
+          <button type="button" onclick="setModalEntryType('insulin')" id="btn-type-insulin" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition" style="background-color: transparent; color: #d1fae5;">
             <span>💉</span> <span class="truncate">İlaç</span>
           </button>
-          <button type="button" onclick="setModalEntryType('food')" id="btn-type-food" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition text-teal-100 hover:text-white">
+          <button type="button" onclick="setModalEntryType('food')" id="btn-type-food" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition" style="background-color: transparent; color: #d1fae5;">
             <span>🥗</span> <span class="truncate">Besin</span>
           </button>
-          <button type="button" onclick="setModalEntryType('activity')" id="btn-type-activity" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition text-teal-100 hover:text-white">
+          <button type="button" onclick="setModalEntryType('activity')" id="btn-type-activity" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition" style="background-color: transparent; color: #d1fae5;">
             <span>🏃</span> <span class="truncate">Spor</span>
           </button>
-          <button type="button" onclick="setModalEntryType('note')" id="btn-type-note" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition text-teal-100 hover:text-white">
+          <button type="button" onclick="setModalEntryType('note')" id="btn-type-note" class="py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition" style="background-color: transparent; color: #d1fae5;">
             <span>📝</span> <span class="truncate">Not</span>
           </button>
         </div>
@@ -564,7 +565,7 @@
 
         <!-- 1. Glucose Category -->
         <div id="section-glucose" class="space-y-3">
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div class="p-4 rounded-2xl space-y-2" style="background-color: #f8fafc; border: 1px solid #cbd5e1;">
             <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1">
               Kan Şekeri Değeri
             </label>
@@ -596,7 +597,7 @@
 
         <!-- 2. Insulin Category -->
         <div id="section-insulin" class="hidden space-y-3">
-          <div class="bg-teal-50/50 p-3.5 rounded-2xl border border-teal-200/60 space-y-3">
+          <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #f0fdfa; border: 1px solid #99f6e4;">
             <div class="grid grid-cols-2 gap-2">
               <div>
                 <label class="text-xs font-bold text-slate-700 block mb-1">Bolus (Yemek) İnsülin (Ünite)</label>
@@ -620,7 +621,7 @@
 
         <!-- 3. Food Category -->
         <div id="section-food" class="hidden space-y-3">
-          <div class="bg-amber-50/50 p-3.5 rounded-2xl border border-amber-200/60 space-y-3">
+          <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #fffbeb; border: 1px solid #fde68a;">
             <div>
               <label class="text-xs font-bold text-slate-700 block mb-1">Yemek Saati</label>
               <input type="time" id="inputMealTime" class="w-full bg-white border rounded-xl p-2 text-xs font-bold">
@@ -638,7 +639,7 @@
 
         <!-- 4. Activity Category -->
         <div id="section-activity" class="hidden space-y-3">
-          <div class="bg-sky-50/50 p-3.5 rounded-2xl border border-sky-200/60 space-y-3">
+          <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #f0f9ff; border: 1px solid #bae6fd;">
             <div>
               <label class="text-xs font-bold text-slate-700 block mb-1">Fiziksel Aktivite Şiddeti</label>
               <select id="selectActivity" class="w-full bg-white border rounded-xl p-2 text-xs font-semibold">
@@ -657,7 +658,7 @@
 
         <!-- 5. Notes & Symptoms Category -->
         <div id="section-note" class="hidden space-y-3">
-          <div class="bg-purple-50/50 p-3.5 rounded-2xl border border-purple-200/60 space-y-3">
+          <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #faf5ff; border: 1px solid #e9d5ff;">
             <div>
               <label class="text-xs font-bold text-slate-700 block mb-1">Belirtiler / Sağlık Durumu</label>
               <select id="selectSymptom" class="w-full bg-white border rounded-xl p-2 text-xs font-semibold">
@@ -1199,15 +1200,33 @@
       currentModalType = type;
       const types = ['glucose', 'insulin', 'food', 'activity', 'note'];
       const icons = { glucose: '🩸', insulin: '💉', food: '🥗', activity: '🏃', note: '📝' };
+      const titles = {
+        glucose: 'Yeni Şeker Kaydı',
+        insulin: 'Yeni İlaç / İnsülin Kaydı',
+        food: 'Yeni Besin / Öğün Kaydı',
+        activity: 'Yeni Spor / Aktivite Kaydı',
+        note: 'Yeni Not & Belirti Kaydı'
+      };
+      const subtitles = {
+        glucose: 'Açlık veya tokluk kan şekeri ölçümünüzü kaydedin',
+        insulin: 'Bolus, bazal insülin veya hap kullanımını kaydedin',
+        food: 'Yediğiniz öğün, karbonhidrat ve yemek notunu kaydedin',
+        activity: 'Yürüyüş, egzersiz veya spor aktivitenizi kaydedin',
+        note: 'Günün notu, tansiyon veya hissettiğiniz belirtileri kaydedin'
+      };
 
       types.forEach(t => {
         const btn = document.getElementById(`btn-type-${t}`);
         const sec = document.getElementById(`section-${t}`);
         if (btn) {
           if (t === type) {
-            btn.className = 'py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition bg-white text-teal-900 font-bold shadow';
+            btn.className = 'py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition font-bold shadow';
+            btn.style.backgroundColor = '#ffffff';
+            btn.style.color = '#064e3b';
           } else {
-            btn.className = 'py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition text-teal-100 hover:text-white';
+            btn.className = 'py-2 px-1 rounded-xl flex items-center justify-center gap-1 transition font-semibold';
+            btn.style.backgroundColor = 'transparent';
+            btn.style.color = '#d1fae5';
           }
         }
         if (sec) {
@@ -1217,6 +1236,10 @@
 
       const iconEl = document.getElementById('modalIcon');
       if (iconEl) iconEl.textContent = icons[type] || '🩸';
+      const titleEl = document.getElementById('modalTitle');
+      if (titleEl) titleEl.textContent = titles[type] || 'Yeni Kayıt Ekle';
+      const subEl = document.getElementById('modalSubtitle');
+      if (subEl) subEl.textContent = subtitles[type] || 'Şeker ölçümü yapmadan da ilaç, besin veya spor bilgisi girebilirsiniz';
     }
 
     function openAddModal(type = 'glucose') {
