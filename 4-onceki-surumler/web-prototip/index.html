@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Diyabet & Egzersiz Takipçisi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-inner: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #10b981;
+      --blue: #38bdf8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 20px;
+      font-family: -apple-system, sans-serif;
+    }
+
+    .input-box {
+      background: var(--card-inner);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px 12px;
+      outline: none;
+      width: 100%;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: #0f172a;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Görevler (Tasks) CSS */
+    .progress-bar-bg {
+      background: #334155;
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-fill {
+      background: var(--accent);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .task {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--card-inner);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .task.done {
+      opacity: 0.6;
+    }
+
+    .task-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .task.done .task-check {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .task.done .task-check::after {
+      content: "✓";
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* Grafik Filtre Butonları */
+    .filter-btn {
+      background: var(--card-inner);
+      color: var(--muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      background: var(--blue);
+      color: #000;
+    }
+
+    /* Toast Bildirimleri */
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: #334155;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transform: translateX(120%);
+      transition: transform 0.3s ease-out;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.error {
+      border-left: 4px solid #ef4444;
+    }
+
+    .toast.success {
+      border-left: 4px solid #10b981;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="toast-container"></div>
+
+  <!-- GİRİŞ EKRANI -->
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md border border-slate-700 shadow-xl">
+      <h2 class="text-2xl font-bold mb-6 text-center text-emerald-400">Sağlık Takipçisi</h2>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">E-posta</label>
+          <input type="email" id="emailInput" class="input-box" placeholder="ornek@mail.com">
+        </div>
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">Şifre</label>
+          <input type="password" id="passwordInput" class="input-box" placeholder="••••••••">
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button id="btnLogin" class="btn flex-1">Giriş Yap</button>
+          <button id="btnRegister" class="btn btn-blue flex-1">Kayıt Ol</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANA UYGULAMA EKRANI -->
+  <div id="appScreen" class="hidden">
+    <header
+      class="bg-slate-800/90 backdrop-blur-md p-4 sticky top-0 z-50 border-b border-slate-700 flex justify-between items-center">
+      <div>
+        <h1 class="font-bold text-lg">Diyabet & Egzersiz</h1>
+        <div class="text-xs text-slate-400" id="userEmailDisplay"></div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="completionBadge"
+          class="bg-emerald-900 text-emerald-400 px-2 py-1 rounded-full text-xs font-bold">%0</span>
+        <button id="btnLogout"
+          class="text-xs bg-red-500/20 text-red-400 px-3 py-1.5 rounded-lg border border-red-500/30">Çıkış</button>
+      </div>
+    </header>
+
+    <div class="p-4 space-y-4 max-w-2xl mx-auto">
+
+      <!-- Takvim Seçici -->
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <label class="block text-sm text-slate-400 mb-2 font-semibold">Tarih Seçin:</label>
+        <input type="date" id="datePicker" class="input-box w-full text-lg font-bold text-center">
+      </div>
+
+      <!-- Kan Şekeri -->
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <h2 class="font-bold mb-3 flex justify-between">🩸 Kan Şekeri <span id="latestSugar"
+            class="text-sky-400 font-normal text-sm"></span></h2>
+        <div class="flex gap-2">
+          <input type="number" id="sugarVal" class="input-box flex-1" placeholder="Örn: 120">
+          <select id="sugarType" class="input-box flex-1">
+            <option value="Açlık">Açlık</option>
+            <option value="Tokluk">Tokluk</option>
+          </select>
+          <input type="time" id="sugarTime" class="input-box flex-1">
+          <button id="btnSaveSugar" class="btn">Ekle</button>
+        </div>
+      </div>
+
+      <!-- Menü ve GL -->
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="font-bold">🍽️ Beslenme & Glisemik Yük</h2>
+          <button id="btnRefreshMenu" class="text-xs text-sky-400 underline p-1">Menüyü Yenile</button>
+        </div>
+        <div id="menuList" class="space-y-2"></div>
+      </div>
+
+      <!-- Günlük Görevler (Spor & Su) -->
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <h2 class="font-bold mb-2 flex justify-between">📋 Spor ve Su Tüketimi</h2>
+
+        <!-- Spor Ekleme Alanı -->
+        <div class="flex gap-2 mb-3">
+          <select id="exerciseType" class="input-box" style="flex: 2;">
+            <option value="Yürüyüş">Yürüyüş</option>
+            <option value="Eliptik Bisiklet">Eliptik Bisiklet</option>
+            <option value="Koşu">Koşu</option>
+            <option value="Bahçe İşi">Bahçe İşi</option>
+            <option value="Kuvvet Antrenmanı">Kuvvet Antrenmanı</option>
+            <option value="Yoga / Esneme">Yoga / Esneme</option>
+          </select>
+          <input type="number" id="exerciseDuration" class="input-box" style="flex: 1;" placeholder="Dk (Örn:30)">
+          <button id="btnAddExercise" class="btn">Ekle</button>
+        </div>
+
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div id="taskList" class="space-y-2 mt-3"></div>
+      </div>
+
+      <!-- Grafik Kartı -->
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <h2 class="font-bold mb-3">📊 İlerleme ve Şeker Grafiği</h2>
+        <div class="flex gap-2 mb-3 overflow-x-auto pb-1" id="chartFilters">
+          <button class="filter-btn" data-filter="1">Günlük</button>
+          <button class="filter-btn" data-filter="7">Haftalık</button>
+          <button class="filter-btn active" data-filter="30">Aylık</button>
+          <button class="filter-btn" data-filter="all">Tümü</button>
+        </div>
+        <div style="position: relative; height: 230px;">
+          <canvas id="healthChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB816HyWr4-clYrJKYa7zDIBA2fv7CRHZc",
+      authDomain: "sekertakip-7cc93.firebaseapp.com",
+      projectId: "sekertakip-7cc93",
+      storageBucket: "sekertakip-7cc93.firebasestorage.app",
+      messagingSenderId: "112345884360",
+      appId: "1:112345884360:web:30da06e9b0be84ade5e7fd",
+      measurementId: "G-M5X7T94EKY"
+    };
+
+    let app, auth, db;
+    try {
+      app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      auth = getAuth(app);
+      db = getFirestore(app);
+    } catch (error) {
+      showToast("Firebase ayarlarınızı kontrol edin!", "error");
+    }
+
+    const authScreen = document.getElementById('authScreen');
+    const appScreen = document.getElementById('appScreen');
+    const datePicker = document.getElementById('datePicker');
+    const menuList = document.getElementById('menuList');
+    const taskList = document.getElementById('taskList');
+
+    let currentUser = null;
+    let currentDate = new Date().toISOString().split('T')[0];
+    datePicker.value = currentDate;
+    let currentTasksState = {};
+    let currentExercises = [];
+    let chartInstance = null;
+    let currentChartFilter = '30'; // Varsayılan 30 günlük
+
+    function showToast(message, type = "success") {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerText = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Auth
+    if (auth) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          currentUser = user;
+          document.getElementById('userEmailDisplay').innerText = user.email;
+          authScreen.classList.add('hidden');
+          appScreen.classList.remove('hidden');
+          loadDateData(currentDate);
+          loadChartData();
+        } else {
+          currentUser = null;
+          authScreen.classList.remove('hidden');
+          appScreen.classList.add('hidden');
+        }
+      });
+    } else {
+      authScreen.classList.remove('hidden');
+      setTimeout(() => showToast("Lütfen koddaki firebaseConfig ayarlarını kendi projenizin bilgileriyle güncelleyin.", "error"), 1000);
+    }
+
+    document.getElementById('btnRegister').addEventListener('click', async () => {
+      if (!auth) return showToast("Firebase ayarları eksik! Kodu güncelleyin.", "error");
+      const email = document.getElementById('emailInput').value;
+      const pass = document.getElementById('passwordInput').value;
+      if (!email || !pass) return showToast("E-posta ve şifre giriniz.", "error");
+      try { await createUserWithEmailAndPassword(auth, email, pass); }
+      catch (e) { showToast("Hata: " + e.message, "error"); }
+    });
+
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      if (!auth) return showToast("Firebase ayarları eksik! Kodu güncelleyin.", "error");
+      const email = document.getElementById('emailInput').value;
+      const pass = document.getElementById('passwordInput').value;
+      if (!email || !pass) return showToast("E-posta ve şifre giriniz.", "error");
+      try { await signInWithEmailAndPassword(auth, email, pass); }
+      catch (e) { showToast("Giriş yapılamadı.", "error"); }
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      if (auth) signOut(auth);
+    });
+
+    datePicker.addEventListener('change', (e) => {
+      currentDate = e.target.value;
+      loadDateData(currentDate);
+    });
+
+    // --- VERİTABANLARI ---
+    const foods = {
+      kahvalti: [
+        { name: "Yulaf Ezmeli Kase (Yulaf, yarım yağlı süt, çilek)", gi: 55, carb: 24 },
+        { name: "Klasik Akdeniz Tabağı (Tam çavdar, yumurta, peynir)", gi: 50, carb: 12 },
+        { name: "Avokadolu Omlet (Karabuğday ekmeği, avokado)", gi: 50, carb: 11 },
+        { name: "Menemenli Kahvaltı (Menemen, tam buğday ekmeği)", gi: 50, carb: 14 },
+        { name: "Yoğurtlu Granola (Sade yoğurt, yulaf granolası, kayısı)", gi: 54, carb: 18 },
+        { name: "Mantarlı Scrambled Egg (Siyez ekmeği)", gi: 53, carb: 13 },
+        { name: "Peynirli Çavdar Tostu (Kaşar peyniri, tam çavdar)", gi: 50, carb: 22 },
+        { name: "Kinoalı Kahvaltı Salatası (Kinoa, yumurta, ceviz)", gi: 35, carb: 10 },
+        { name: "Lorlu Kapya Biber Dolgusu (Karabuğday ekmeği)", gi: 50, carb: 15 },
+        { name: "Yeşil Smoothie (Kefir, ıspanak, yeşil elma)", gi: 38, carb: 16 }
+      ],
+      ara_sabah: [
+        { name: "1 Porsiyon Taze Meyve", gi: 40, carb: 15 },
+        { name: "1 Küçük Kase Yoğurt", gi: 35, carb: 10 },
+        { name: "Yeşil Çay & 3 Kuru Kayısı", gi: 45, carb: 18 }
+      ],
+      ogle: [
+        { name: "Mercimek Çorbası ve Ton Balığı", gi: 32, carb: 15 },
+        { name: "Tavuklu Kinoa Salatası", gi: 35, carb: 14 },
+        { name: "Zeytinyağlı Kuru Fasulye & Yoğurt", gi: 48, carb: 18 },
+        { name: "Izgara Köfte, Bulgur & Cacık", gi: 45, carb: 20 },
+        { name: "Nohutlu Roka Salatası & Hindi Göğsü", gi: 28, carb: 15 },
+        { name: "Zeytinyağlı Bakla ve Ayran", gi: 31, carb: 14 },
+        { name: "Etli Yeşil Mercimek Yemeği & Tam Buğday", gi: 30, carb: 24 },
+        { name: "Lor Peynirli Karabuğday Salatası", gi: 50, carb: 16 },
+        { name: "Tavuklu Sote Sebze & Yoğurt", gi: 15, carb: 8 },
+        { name: "Soğuk Yoğurt Çorbası & Izgara Tavuk", gi: 40, carb: 16 }
+      ],
+      ara_ogle: [
+        { name: "1 Avuç Çiğ Badem / Ceviz", gi: 15, carb: 5 },
+        { name: "Yeşil Elma & Şekersiz Fıstık Ezmesi", gi: 38, carb: 20 },
+        { name: "1 Bardak Kefir", gi: 30, carb: 12 }
+      ],
+      aksam: [
+        { name: "Fırın Somon ve Kuşkonmaz", gi: 10, carb: 4 },
+        { name: "Zeytinyağlı Kabak Yemeği & Yoğurt", gi: 15, carb: 11 },
+        { name: "Fırın Baget ve Karnabahar Püresi", gi: 15, carb: 7 },
+        { name: "Karabuğdaylı Kıymalı Dolma & Cacık", gi: 45, carb: 18 },
+        { name: "Izgara Biftek ve Mantar Sote", gi: 15, carb: 5 },
+        { name: "Zeytinyağlı Taze Fasulye & Bulgur", gi: 45, carb: 22 },
+        { name: "Hindi Sote ve Kereviz Salatası", gi: 35, carb: 10 },
+        { name: "Fırında Çipura ve Ege Otları", gi: 10, carb: 3 },
+        { name: "Yumurtalı Ispanak & Yoğurt", gi: 15, carb: 9 },
+        { name: "Köz Patlıcanlı Kebap (Ekmeksiz)", gi: 20, carb: 6 }
+      ]
+    };
+
+    const dailyRoutines = {
+      1: [{ id: "bahce", title: "Bahçe Güç Günü", desc: "Çapa, saksı düzenleme (35-40 Dk)" }],
+      2: [{ id: "eliptik", title: "Eliptik İnterval", desc: "4 dk orta + 1 dk direnç (25 Dk)" }, { id: "bahce", title: "Hafif Bahçe İşi", desc: "Sulama (15 Dk)" }],
+      3: [{ id: "bahce", title: "Aktif Dinlenme", desc: "Sakin budama, tohum bakımı (30 Dk)" }],
+      4: [{ id: "eliptik", title: "Eliptik Bisiklet", desc: "Orta-yüksek sabit tempo (25 Dk)" }, { id: "bahce", title: "Tempolu Bahçe İşi", desc: "Toprak havalandırma (20 Dk)" }],
+      5: [{ id: "bahce", title: "Yoğun Bahçe Güç", desc: "Bel küreği, çapalama (30 Dk)" }, { id: "eliptik", title: "Eliptik Soğuma", desc: "Hafif tempo (15 Dk)" }],
+      6: [{ id: "dinlenme", title: "Tam Dinlenme", desc: "Fiziksel yük yok, bitki bakımı (15 Dk)" }],
+      0: [{ id: "eliptik", title: "Eliptik Bisiklet", desc: "Orta tempo, sabit ritim (20 Dk)" }, { id: "bahce", title: "Bahçe Çalışması", desc: "Ot temizleme veya tırmıklama (20 Dk)" }]
+    };
+
+    const waterTask = { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" };
+
+    function generateRandomMenu() {
+      const getRnd = (arr) => arr[Math.floor(Math.random() * arr.length)];
+      return {
+        kahvalti: getRnd(foods.kahvalti), ara_sabah: getRnd(foods.ara_sabah),
+        ogle: getRnd(foods.ogle), ara_ogle: getRnd(foods.ara_ogle),
+        aksam: getRnd(foods.aksam)
+      };
+    }
+
+    // --- VERİ ÇEKME & EKRAN GÜNCELLEME ---
+    async function loadDateData(dateStr) {
+      if (!currentUser) return;
+      const docRef = doc(db, `users/${currentUser.uid}/dates/${dateStr}`);
+      const docSnap = await getDoc(docRef);
+
+      let data;
+      if (docSnap.exists()) {
+        data = docSnap.data();
+      } else {
+        data = { menu: generateRandomMenu(), sugars: [], tasks: {}, exercises: [] };
+        await setDoc(docRef, data);
+      }
+
+      currentTasksState = data.tasks || {};
+      currentExercises = data.exercises || [];
+      renderMenu(data.menu);
+      renderTasks(dateStr);
+      updateLatestSugarUI(data.sugars);
+    }
+
+    function renderMenu(menu) {
+      menuList.innerHTML = '';
+      const ogunler = [
+        { id: "kahvalti", title: "Kahvaltı", data: menu.kahvalti },
+        { id: "ara_sabah", title: "Ara Öğün (Sabah)", data: menu.ara_sabah },
+        { id: "ogle", title: "Öğle", data: menu.ogle },
+        { id: "ara_ogle", title: "Ara Öğün (Öğle)", data: menu.ara_ogle },
+        { id: "aksam", title: "Akşam", data: menu.aksam }
+      ];
+
+      ogunler.forEach(ogun => {
+        if (!ogun.data) return;
+
+        const gl = ((ogun.data.gi * ogun.data.carb) / 100).toFixed(1);
+        const color = gl <= 10 ? 'text-emerald-400' : (gl <= 19 ? 'text-yellow-400' : 'text-red-400');
+        const timeVal = ogun.data.time || '';
+
+        menuList.innerHTML += `
+          <div class="bg-slate-700/50 p-3 rounded-lg flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+              <div class="w-1/2">
+                <div class="flex items-center gap-2">
+                  <div class="text-xs text-sky-300 font-bold">${ogun.title}</div>
+                  <input type="time" data-meal="${ogun.id}" class="meal-time-input bg-slate-800 text-xs text-slate-300 rounded px-1 border border-slate-600 outline-none cursor-pointer" value="${timeVal}">
+                </div>
+                <div class="font-medium text-sm leading-tight mt-1">${ogun.data.name}</div>
+              </div>
+              <div class="text-right w-1/2">
+                <div class="text-xs text-slate-400">GI: ${ogun.data.gi} | Karb: ${ogun.data.carb}g</div>
+                <div class="text-sm font-bold ${color}">Yük: ${gl}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      document.querySelectorAll('.meal-time-input').forEach(input => {
+        input.addEventListener('change', async (e) => {
+          const mealId = e.target.getAttribute('data-meal');
+          menu[mealId].time = e.target.value;
+          await setDoc(doc(db, `users/${currentUser.uid}/dates/${currentDate}`), { menu: menu }, { merge: true });
+          showToast("Öğün saati kaydedildi!");
+        });
+      });
+    }
+
+    function renderTasks(dateStr) {
+      taskList.innerHTML = '';
+      const todaysTasks = [waterTask];
+
+      currentExercises.forEach((ex, idx) => {
+        todaysTasks.push({
+          id: `ex_${idx}`,
+          title: `${ex.type} (${ex.duration} Dk)`,
+          desc: "Kişisel Egzersiz"
+        });
+      });
+
+      let completedCount = 0;
+
+      todaysTasks.forEach(task => {
+        const isDone = !!currentTasksState[task.id];
+        if (isDone) completedCount++;
+
+        const div = document.createElement('div');
+        div.className = `task ${isDone ? 'done' : ''}`;
+        div.onclick = () => toggleTask(task.id, todaysTasks.length);
+        div.innerHTML = `
+          <div class="task-check"></div>
+          <div>
+            <div class="text-sm font-semibold">${task.title}</div>
+            <div class="text-xs text-slate-400 mt-0.5">${task.desc}</div>
+          </div>
+        `;
+        taskList.appendChild(div);
+      });
+
+      updateProgressUI(completedCount, todaysTasks.length);
+    }
+
+    async function toggleTask(taskId, totalTasks) {
+      currentTasksState[taskId] = !currentTasksState[taskId];
+      const docRef = doc(db, `users/${currentUser.uid}/dates/${currentDate}`);
+      await setDoc(docRef, { tasks: currentTasksState }, { merge: true });
+
+      renderTasks(currentDate);
+      loadChartData(); // Grafiği güncelle
+    }
+
+    function updateProgressUI(completed, total) {
+      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('completionBadge').innerText = `%${percent}`;
+    }
+
+    document.getElementById('btnRefreshMenu').addEventListener('click', async () => {
+      const newMenu = generateRandomMenu();
+      await setDoc(doc(db, `users/${currentUser.uid}/dates/${currentDate}`), { menu: newMenu }, { merge: true });
+      renderMenu(newMenu);
+      showToast("Menü yenilendi!");
+    });
+
+    document.getElementById('btnAddExercise').addEventListener('click', async () => {
+      if (!currentUser) return;
+      const type = document.getElementById('exerciseType').value;
+      const duration = parseInt(document.getElementById('exerciseDuration').value);
+
+      if (!duration) return showToast("Geçerli bir süre girin (Dk).", "error");
+
+      const newExercise = { type, duration };
+      currentExercises.push(newExercise);
+
+      await setDoc(doc(db, `users/${currentUser.uid}/dates/${currentDate}`), { exercises: currentExercises }, { merge: true });
+
+      document.getElementById('exerciseDuration').value = '';
+      renderTasks(currentDate);
+      loadChartData();
+      showToast("Egzersiz eklendi!");
+    });
+
+    document.getElementById('btnSaveSugar').addEventListener('click', async () => {
+      const val = parseInt(document.getElementById('sugarVal').value);
+      if (!val) return showToast("Geçerli bir değer girin.", "error");
+
+      let timeVal = document.getElementById('sugarTime').value;
+      if (!timeVal) {
+        timeVal = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+      }
+
+      const docRef = doc(db, `users/${currentUser.uid}/dates/${currentDate}`);
+      const docSnap = await getDoc(docRef);
+      let sugars = docSnap.exists() && docSnap.data().sugars ? docSnap.data().sugars : [];
+
+      sugars.push({ val, type: document.getElementById('sugarType').value, time: timeVal });
+      await setDoc(docRef, { sugars }, { merge: true });
+
+      document.getElementById('sugarVal').value = '';
+      document.getElementById('sugarTime').value = '';
+      updateLatestSugarUI(sugars);
+      loadChartData(); // Grafiği güncelle
+      showToast("Kaydedildi.");
+    });
+
+    function updateLatestSugarUI(sugars) {
+      if (sugars && sugars.length > 0) {
+        const last = sugars[sugars.length - 1];
+        document.getElementById('latestSugar').innerText = `Son: ${last.val} mg/dL (${last.time || ''})`;
+      } else {
+        document.getElementById('latestSugar').innerText = "";
+      }
+    }
+
+    // --- GRAFİK (CHART.JS) ---
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentChartFilter = e.target.dataset.filter;
+        loadChartData();
+      });
+    });
+
+    async function loadChartData() {
+      if (!currentUser) return;
+
+      // Firebase'de özel dizin (index) hatasını önlemek için tüm kayıtları çekip JavaScript ile sıralıyoruz
+      const q = query(collection(db, `users/${currentUser.uid}/dates`));
+      const querySnapshot = await getDocs(q);
+
+      let allDocs = [];
+      querySnapshot.forEach((doc) => {
+        allDocs.push({ id: doc.id, data: doc.data() });
+      });
+
+      // Tarihe göre (ID) azalan sırada (en yeni en üstte) sırala
+      allDocs.sort((a, b) => b.id.localeCompare(a.id));
+
+      // Sınırlandırma (Limit) uygula
+      if (currentChartFilter !== 'all') {
+        const limitVal = parseInt(currentChartFilter);
+        allDocs = allDocs.slice(0, limitVal);
+      }
+
+      let labels = [];
+      let sugarData = [];
+      let compData = [];
+
+      allDocs.forEach((docObj) => {
+        const data = docObj.data;
+        const dateId = docObj.id; // YYYY-MM-DD
+
+        // Yeni dinamik egzersiz sayısını al
+        const exercisesArr = data.exercises || [];
+        const totalTasks = 1 + exercisesArr.length;
+
+        const tasksObj = data.tasks || {};
+        const completed = Object.values(tasksObj).filter(Boolean).length;
+        const compPercent = totalTasks > 0 ? Math.round((completed / totalTasks) * 100) : 0;
+
+        // O günkü en yüksek şeker değerini (veya son değeri) al
+        let maxSugar = null;
+        if (data.sugars && data.sugars.length > 0) {
+          maxSugar = data.sugars[data.sugars.length - 1].val; // Son ölçümü grafiğe yansıt
+        }
+
+        labels.push(dateId.split('-').slice(1).join('/')); // MM/DD formatı
+        sugarData.push(maxSugar);
+        compData.push(compPercent);
+      });
+
+      // Tarihleri eski->yeni sırasına çevir
+      labels.reverse();
+      sugarData.reverse();
+      compData.reverse();
+
+      renderChart(labels, sugarData, compData);
+    }
+
+    function renderChart(labels, sugarData, compData) {
+      if (chartInstance) chartInstance.destroy();
+      const ctx = document.getElementById('healthChart').getContext('2d');
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Şeker (mg/dL)',
+              data: sugarData,
+              borderColor: '#ef4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.2)',
+              yAxisID: 'ySugar',
+              tension: 0.3,
+              spanGaps: true
+            },
+            {
+              label: 'Görev (%)',
+              data: compData,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.15)',
+              yAxisID: 'yComp',
+              type: 'bar',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#64748b' } },
+            ySugar: { position: 'left', ticks: { color: '#ef4444' }, grid: { color: '#334155' } },
+            yComp: { position: 'right', min: 0, max: 100, ticks: { color: '#10b981', callback: v => '%' + v }, grid: { display: false } }
+          },
+          plugins: { legend: { labels: { color: '#94a3b8' } } }
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

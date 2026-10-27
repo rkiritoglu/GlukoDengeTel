@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şeker Takip ve Analiz Paneli</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warning: #eab308;
+      --danger: #dc2626;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px 16px; line-height: 1.5; }
+    .container { max-width: 1050px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+    header { display: flex; justify-content: space-between; align-items: center; }
+    h1 { font-size: 1.5rem; font-weight: 700; color: #0f172a; }
+    
+    .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+    /* Form Stilleri */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    input, select { padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    input:focus, select:focus { border-color: var(--primary); }
+    button.btn-primary { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; align-self: flex-end; }
+    button.btn-primary:hover { background: var(--primary-hover); }
+
+    /* İstatistik Kartları */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .stat-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px; text-align: center; }
+    .stat-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+    .stat-value { font-size: 1.6rem; font-weight: 700; color: #0f172a; margin-top: 4px; }
+
+    /* Filtre ve Görünüm Seçici */
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .filter-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+    .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* Tablo Stilleri */
+    .table-container { overflow-x: auto; max-height: 350px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    th { position: sticky; top: 0; background: #f8fafc; padding: 10px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+    td { padding: 10px; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-weight: 600; font-size: 0.75rem; }
+    .badge-normal { background: #dcfce7; color: var(--success); }
+    .badge-warning { background: #fef9c3; color: var(--warning); }
+    .badge-danger { background: #fee2e2; color: var(--danger); }
+    .badge-activity { background: #e0f2fe; color: #0369a1; }
+    .btn-delete { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🩺 Şeker Takip ve Analiz Paneli</h1>
+    <span id="entry-count" style="font-size: 0.85rem; color: var(--text-muted);">0 kayıt mevcut</span>
+  </header>
+
+  <!-- Kayıt Formu -->
+  <div class="card">
+    <form id="glucose-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tarih &amp; Saat</label>
+          <input type="datetime-local" id="entry-time" required>
+        </div>
+        <div class="form-group">
+          <label>Öğün Zamanı</label>
+          <select id="entry-period">
+            <option value="Sabah">Sabah</option>
+            <option value="Öğle">Öğle</option>
+            <option value="Akşam">Akşam</option>
+            <option value="Gece/Yatmadan">Gece / Yatmadan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Durum</label>
+          <select id="entry-type">
+            <option value="Açlık">Açlık</option>
+            <option value="Tokluk (2. saat)">Tokluk (2. saat)</option>
+            <option value="Rastgele">Rastgele</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Değer (mg/dL)</label>
+          <input type="number" id="entry-value" placeholder="örn. 110" min="20" max="600" required>
+        </div>
+        <div class="form-group">
+          <label>Spor / Aktivite</label>
+          <select id="entry-sport-type">
+            <option value="">Yok</option>
+            <option value="Yürüyüş">Yürüyüş</option>
+            <option value="Koşu / Jogging">Koşu / Jogging</option>
+            <option value="Bisiklet">Bisiklet</option>
+            <option value="Yüzme">Yüzme</option>
+            <option value="Fitness / Ağırlık">Fitness / Ağırlık</option>
+            <option value="Pilates / Yoga">Pilates / Yoga</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Süre (dk)</label>
+          <input type="number" id="entry-sport-duration" placeholder="örn. 30" min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label>Not / Besin</label>
+          <input type="text" id="entry-note" placeholder="örn. 1 dilim ekmek">
+        </div>
+        <button type="submit" class="btn-primary">Kaydet</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Özet İstatistikler -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-title">Dönem Ortalaması</div>
+      <div class="stat-value" id="stat-avg">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">En Düşük Ölçüm</div>
+      <div class="stat-value" id="stat-min">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">En Yüksek Ölçüm</div>
+      <div class="stat-value" id="stat-max">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Hedef Aralık Oranı</div>
+      <div class="stat-value" id="stat-in-range">-%</div>
+    </div>
+  </div>
+
+  <!-- Grafik ve Filtre Kartı -->
+  <div class="card">
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-period="daily">Günlük (Bugün)</button>
+      <button class="filter-btn" data-period="weekly">Haftalık (Son 7 Gün)</button>
+      <button class="filter-btn" data-period="monthly">Aylık (Son 30 Gün)</button>
+      <button class="filter-btn" data-period="all">Tüm Kayıtlar</button>
+    </div>
+    <div style="height: 280px; position: relative;">
+      <canvas id="glucoseChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Geçmiş Ölçümler Tablosu -->
+  <div class="card">
+    <h3 style="font-size: 1rem; margin-bottom: 12px;">Ölçüm Geçmişi</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Tarih</th>
+            <th>Öğün / Durum</th>
+            <th>Ölçüm</th>
+            <th>Değerlendirme</th>
+            <th>Aktivite / Spor</th>
+            <th>Not</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="log-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Varsayılan datetime input değerini yerel saat ile doldur
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById('entry-time').value = now.toISOString().slice(0, 16);
+
+  let records = JSON.parse(localStorage.getItem('sugar_records')) || [];
+  let currentFilter = 'weekly';
+  let chart = null;
+
+  initChart();
+  renderApp();
+
+  // Form submit
+  document.getElementById('glucose-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const sportType = document.getElementById('entry-sport-type').value;
+    const sportDuration = document.getElementById('

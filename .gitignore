@@ -1,4 +1,31 @@
-﻿*.jar
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Android & Gradle Build Caches
+.gradle/
+**/.gradle/
+build/
+**/build/
+android/build/
+android/app/build/
+*.class
+
+# IDE & Editor files
+.idea/
+**/.idea/
+.vscode/
+**/.vscode/
+*.iml
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Temporary & Archive bundles (hariç tutulanlar)
+*.jar
+!gradle-wrapper.jar
 *.apks
 *.zip
 GlukoDenge-v1.0.0-PlayStore/

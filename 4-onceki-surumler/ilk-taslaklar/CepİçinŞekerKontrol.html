@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <!-- Android Mobil Ekran & Çentik Optimizasyonu -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Şeker & Egzersiz Takibi</title>
+
+  <!-- PWA Manifest'i tek dosyada tanımlama -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%C5%9Eeker%20ve%20Spor%20Takip%22%2C%22short_name%22%3A%22%C5%9Eeker%20Takip%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%232563eb%22%7D">
+
+  <!-- Chart.js CDN (İnternetsiz yerel klasörde kullanıyorsanız ./chart.js yapabilirsiniz) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #15803d;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --sport-bg: #ecfdf5;
+      --sport-text: #065f46;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body { 
+      background-color: var(--bg); 
+      color: var(--text); 
+      padding: 12px 10px 40px 10px; 
+      line-height: 1.4;
+      user-select: none;
+    }
+
+    .container { 
+      max-width: 600px; /* Mobil ekran odaklı genişlik sınırı */
+      margin: 0 auto; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+    }
+
+    header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 6px 4px;
+    }
+    header h1 { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
+    
+    .card { 
+      background: var(--card-bg); 
+      border-radius: 16px; 
+      border: 1px solid var(--border); 
+      padding: 16px; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03); 
+    }
+
+    /* Mobilde Kolay Dokunulan Form Elemanları */
+    .form-grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 10px; 
+    }
+    .col-full { grid-column: span 2; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    
+    input, select { 
+      width: 100%;
+      height: 48px; /* Android dokunma standardı */
+      padding: 10px 12px; 
+      border: 1px solid var(--border); 
+      border-radius: 12px; 
+      font-size: 0.95rem; 
+      outline: none; 
+      background: #fdfdfd;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    input:focus, select:focus { 
+      border-color: var(--primary); 
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      background: #fff;
+    }
+
+    button.btn-primary { 
+      background: var(--primary); 
+      color: #fff; 
+      border: none; 
+      height: 50px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      font-size: 1rem;
+      cursor: pointer; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+    }
+    button.btn-primary:active { 
+      background: var(--primary-hover); 
+      transform: scale(0.98); 
+    }
+
+    /* İstatistik Tablosu (2x2 Grid) */
+    .stats-row { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 8px; 
+    }
+    .stat-card { 
+      background: #fff; 
+      border: 1px solid var(--border); 
+      border-radius: 14px; 
+      padding: 12px 10px; 
+      text-align: center; 
+    }
+    .stat-title { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+    .stat-value { font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-top: 3px; }
+
+    /* Filtre Sekmeleri (Yatay Kaydırılabilir) */
+    .filter-tabs { 
+      display: flex; 
+      gap: 8px; 
+      overflow-x: auto; 
+      padding-bottom: 4px; 
+      margin-bottom: 12px; 
+      scrollbar-width: none; 
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .filter-btn { 
+      white-space: nowrap; 
+      padding: 8px 16px; 
+      border-radius: 24px; 
+      border: 1px solid var(--border); 
+      background: #f1f5f9; 
+      color: #475569;
+      font-size: 0.82rem; 
+      font-weight: 600; 
+      touch-action: manipulation;
+    }
+    .filter-btn.active { 
+      background: var(--primary); 
+      color: #fff; 
+      border-color: var(--primary); 
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Liste Görünümü (Mobilde Tablo Yerine Kart Tipi Liste) */
+    .log-list { display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto; }
+    .log-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .log-item-left { display: flex; flex-direction: column; gap: 3px; }
+    .log-item-date { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+    .log-item-title { font-size: 0.88rem; font-weight: 700; color: #1e293b; }
+    .log-item-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+    
+    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.75rem; }
+    .badge-normal { background: #dcfce7; color: var(--success); }
+    .badge-warning { background: #fef9c3; color: var(--warning); }
+    .badge-danger { background: #fee2e2; color: var(--danger); }
+    
+    .badge-sport { background: var(--sport-bg); color: var(--sport-text); border: 1px solid #a7f3d0; }
+    
+    .btn-delete { 
+      background: #fee2e2; 
+      border: none; 
+      color: var(--danger); 
+      border-radius: 8px;
+      width: 34px; 
+      height: 34px; 
+      font-size: 1rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🩺 Şeker & Egzersiz</h1>
+    <span id="entry-count" style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">0 kayıt</span>
+  </header>
+
+  <!-- Veri Giriş Formu -->
+  <div class="card">
+    <form id="glucose-form">
+      <div class="form-grid">
+        <div class="form-group col-full">
+          <label>Tarih & Saat</label>
+          <input type="datetime-local" id="entry-time" required>
+        </div>
+
+        <div class="form-group">
+          <label>Öğün</label>
+          <select id="entry-period">
+            <option value="Sabah">Sabah</option>
+            <option value="Öğle">Öğle</option>
+            <option value="Akşam">Akşam</option>
+            <option value="Gece/Yatmadan">Gece / Yatmadan</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Durum</label>
+          <select id="entry-type">
+            <option value="Açlık">Açlık</option>
+            <option value="Tokluk (2. saat)">Tokluk (2. saat)</option>
+            <option value="Rastgele">Rastgele</option>
+          </select>
+        </div>
+
+        <div class="form-group col-full">
+          <label>Şeker Değeri (mg/dL)</label>
+          <input type="number" id="entry-value" placeholder="örn. 115" min="20" max="600" inputmode="numeric" required>
+        </div>
+
+        <div class="form-group">
+          <label>Egzersiz Türü</label>
+          <select id="entry-sport">
+            <option value="Yok">Yok / Dinlenme</option>
+            <option value="Yürüyüş">🚶 Yürüyüş</option>
+            <option value="Tempolu Yürüyüş">🏃‍♂️ Hızlı Yürüyüş</option>
+            <option value="Bisiklet">🚴 Bisiklet</option>
+            <option value="Yüzme">🏊 Yüzme</option>
+            <option value="Fitness / Direnç">🏋️ Fitness</option>
+            <option value="Esneme / Yoga">🧘 Esneme</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Süre</label>
+          <select id="entry-sport-duration">
+            <option value="0">0 dk</option>
+            <option value="15">15 dk</option>
+            <option value="30">30 dk</option>
+            <option value="45">45 dk</option>
+            <option value="60">60 dk</option>
+            <option value="90">90 dk</option>
+            <option value="120">120 dk+</option>
+          </select>
+        </div>
+
+        <div class="form-group col-full">
+          <label>Not / Tüketilen Besin</label>
+          <input type="text" id="entry-note" placeholder="örn. 1 porsiyon çorba, salata">
+        </div>
+
+        <div class="col-full" style="margin-top: 4px;">
+          <button type="submit" class="btn-primary">Kaydet</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Özet Kartlar (Mobil 2x2 düzen) -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-title">Ortalama</div>
+      <div class="stat-value" id="stat-avg">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Hedef (70-140)</div>
+      <div class="stat-value" id="stat-in-range">-%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Min / Max</div>
+      <div class="stat-value" id="stat-min-max" style="font-size: 1.1rem; margin-top: 5px;">- / -</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Toplam Spor</div>
+      <div class="stat-value" id="stat-total-sport">0 dk</div>
+    </div>
+  </div>
+
+  <!-- Grafik Kartı -->
+  <div class="card">
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-period="daily">Bugün</button>
+      <button class="filter-btn" data-period="weekly">Son 7 Gün</button>
+      <button class="filter-btn" data-period="monthly">Son 30 Gün</button>
+      <button class="filter-btn" data-period="all">Tümü</button>
+    </div>
+    <div style="height: 220px; width: 100%; position: relative;">
+      <canvas id="glucoseChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Geçmiş Kayıtlar (Mobil Kart Listesi) -->
+  <div class="card">
+    <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;">Kayıt Geçmişi</h3>
+    <div class="log-list" id="log-list-container"></div>
+  </div>
+</div>
+
+<script>
+  // Otomatik güncel saat doldurma
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById('entry-time').value = now.toISOString().slice(0, 16);
+
+  let records = JSON.parse(localStorage.getItem('sugar_records')) || [];
+  let currentFilter = 'daily';
+  let chart = null;
+
+  initChart();
+  renderApp();
+
+  document.getElementById('glucose-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const entry = {
+      id: Date.now(),
+      timestamp: new Date(document.getElementById('entry-time').value).toISOString(),
+      period: document.getElementById('entry-period').value,
+      type: document.getElementById('entry-type').value,
+      value: Number(document.getElementById('entry-value').value),
+      sport: document.getElementById('entry-sport').value,
+      sportDuration: Number(document.getElementById('entry-sport-duration').value),
+      note: document.getElementById('entry-note').value.trim()
+    };
+    records.push(entry);
+    saveAndRefresh();
+    
+    document.getElementById('entry-value').value = '';
+    document.getElementById('entry-note').value = '';
+    document.getElementById('entry-sport').value = 'Yok';
+    document.getElementById('entry-sport-duration').value = '0';
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      currentFilter = e.target.getAttribute('data-period');
+      renderApp();
+    });
+  });
+
+  function saveAndRefresh() {
+    localStorage.setItem('sugar_records', JSON.stringify(records));
+    renderApp();
+  }
+
+  function deleteRecord(id) {
+    if (confirm('Bu kaydı silmek istediğinize emin misiniz?')) {
+      records = records.filter(r => r.id !== id);
+      saveAndRefresh();
+    }
+  }
+
+  function getFilteredRecords() {
+    const now = new Date();
+    return records.filter(r => {
+      const date = new Date(r.timestamp);
+      if (currentFilter === 'daily') {
+        return date.toDateString() === now.toDateString();
+      } else if (currentFilter === 'weekly') {
+        return (now - date) / (1000 * 60 * 60 * 24) <= 7;
+      } else if (currentFilter === 'monthly') {
+        return (now - date) / (1000 * 60 * 60 * 24) <= 30;
+      }
+      return true;
+    }).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  }
+
+  function renderApp() {
+    const filtered = getFilteredRecords();
+    updateStats(filtered);
+    updateChart(filtered);
+    updateList();
+    document.getElementById('entry-count').textContent = `${records.length} kayıt`;
+  }
+
+  function updateStats(data) {
+    if (!data.length) {
+      document.getElementById('stat-avg').textContent = '-';
+      document.getElementById('stat-in-range').textContent = '-%';
+      document.getElementById('stat-min-max').textContent = '- / -';
+      document.getElementById('stat-total-sport').textContent = '0 dk';
+      return;
+    }
+
+    const values = data.map(d => d.value);
+    const avg = Math.round(values.reduce((a, b) => a + b, 0) / values.length);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const inRange = values.filter(v => v >= 70 && v <= 140).length;
+    const inRangePercent = Math.round((inRange / values.length) * 100);
+    const totalSport = data.reduce((acc, cur) => acc + (cur.sportDuration || 0), 0);
+
+    document.getElementById('stat-avg').textContent = `${avg}`;
+    document.getElementById('stat-in-range').textContent = `%${inRangePercent}`;
+    document.getElementById('stat-min-max').textContent = `${min} / ${max}`;
+    document.getElementById('stat-total-sport').textContent = totalSport > 60 
+      ? `${Math.floor(totalSport/60)}sa ${totalSport%60}d` 
+      : `${totalSport} dk`;
+  }
+
+  function getBadgeHtml(val, type) {
+    let limitHigh = type.includes('Tokluk') ? 140 : 100;
+    if (val < 70) return `<span class="badge badge-warning">Düşük (${val})</span>`;
+    if (val <= limitHigh) return `<span class="badge badge-normal">Normal (${val})</span>`;
+    if (val <= limitHigh + 40) return `<span class="badge badge-warning">Sınırda (${val})</span>`;
+    return `<span class="badge badge-danger">Yüksek (${val})</span>`;
+  }
+
+  function updateList() {
+    const container = document.getElementById('log-list-container');
+    container.innerHTML = '';
+    const sorted = [...records].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    if (sorted.length === 0) {
+      container.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Henüz kayıt bulunmuyor.</div>';
+      return;
+    }
+
+    sorted.forEach(r => {
+      const d = new Date(r.timestamp);
+      const formattedDate = `${d.toLocaleDateString('tr-TR', {day:'2-digit', month:'2-digit'})} • ${d.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'})}`;
+      
+      const sportBadge = (r.sport && r.sport !== 'Yok') 
+        ? `<span class="badge badge-sport">${r.sport} (${r.sportDuration} dk)</span>` 
+        : '';
+
+      const item = document.createElement('div');
+      item.className = 'log-item';
+      item.innerHTML = `
+        <div class="log-item-left">
+          <span class="log-item-date">${formattedDate}</span>
+          <div class="log-item-title">${r.period} — <span style="font-weight:500; font-size:0.8rem; color:#64748b;">${r.type}</span></div>
+          <div class="log-item-meta">
+            ${getBadgeHtml(r.value, r.type)}
+            ${sportBadge}
+          </div>
+          ${r.note ? `<div style="font-size:0.75rem; color:#475569; margin-top:4px;">📝 ${r.note}</div>` : ''}
+        </div>
+        <button class="btn-delete" onclick="deleteRecord(${r.id})" title="Sil">✕</button>
+      `;
+      container.appendChild(item);
+    });
+  }
+
+  function initChart() {
+    const ctx = document.getElementById('glucoseChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: { 
+        labels: [], 
+        datasets: [{ 
+          data: [], 
+          borderColor: '#2563eb', 
+          borderWidth: 2,
+          backgroundColor: 'rgba(37, 99, 235, 0.08)', 
+          tension: 0.3, 
+          fill: true, 
+          pointRadius: 4,
+          pointBackgroundColor: '#2563eb'
+        }] 
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: 50, max: 240, grid: { color: '#f1f5f9' }, ticks: { font: { size: 9 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+        }
+      }
+    });
+  }
+
+  function updateChart(data) {
+    chart.data.labels = data.map(d => {
+      const dt = new Date(d.timestamp);
+      return currentFilter === 'daily' 
+        ? dt.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'})
+        : `${dt.getDate()}/${dt.getMonth()+1}`;
+    });
+    chart.data.datasets[0].data = data.map(d => d.value);
+    chart.update();
+  }
+</script>
+
+</body>
+</html>

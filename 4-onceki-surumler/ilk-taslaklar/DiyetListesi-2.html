@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Şeker & Egzersiz">
+  <title>Diyabet & Egzersiz Takipçisi</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-inner: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --blue: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 70px; -webkit-tap-highlight-color: transparent; }
+    header { background: #1e293be6; backdrop-filter: blur(8px); padding: 14px 16px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+    .badge { background: #064e3b; color: #6ee7b7; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    
+    .day-selector { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; scrollbar-width: none; }
+    .day-selector::-webkit-scrollbar { display: none; }
+    .day-btn { background: var(--card); border: 1px solid #334155; color: var(--muted); padding: 8px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+    .day-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .container { padding: 0 16px 20px 16px; display: flex; flex-direction: column; gap: 14px; }
+    .card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid #334155; }
+    .card h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; color: #e2e8f0; }
+
+    .sugar-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .input-box { background: var(--card-inner); border: 1px solid #475569; border-radius: 10px; color: #fff; padding: 10px 12px; font-size: 0.9rem; flex: 1; outline: none; }
+    ::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+    
+    .btn { background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 10px 16px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+    .btn:active { transform: scale(0.97); }
+
+    .task { display: flex; align-items: flex-start; gap: 12px; background: var(--card-inner); padding: 12px; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
+    .task.done { opacity: 0.55; text-decoration: line-through; }
+    .task-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--muted); display: flex; align-items: center; justify-content: center; margin-top: 2px; flex-shrink: 0; }
+    .task.done .task-check { background: var(--accent); border-color: var(--accent); }
+    .task.done .task-check::after { content: "✓"; color: #fff; font-size: 14px; font-weight: bold; }
+    .task-body { flex: 1; }
+    .task-title { font-size: 0.88rem; font-weight: 600; color: #f1f5f9; }
+    .task-desc { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    .progress-bar-bg { background: #334155; border-radius: 999px; height: 8px; overflow: hidden; margin-top: 6px; }
+    .progress-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.3s; }
+
+    .filter-group { display: flex; gap: 6px; margin-bottom: 12px; }
+    .filter-btn { background: var(--card-inner); border: none; color: var(--muted); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+    .filter-btn.active { background: var(--blue); color: #000; }
+    .error-text { color: var(--warning); font-size: 0.85rem; text-align: center; padding: 20px 0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Diyabet & Egzersiz Takibi</h1>
+      <span style="font-size: 0.75rem; color: var(--muted);" id="currentDateText"></span>
+    </div>
+    <span class="badge" id="completionBadge">%0 Tamamlandı</span>
+  </header>
+
+  <div class="day-selector" id="daySelector"></div>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>🩸 Kan Şekeri Girişi <span id="latestSugar" style="font-size:0.8rem; font-weight:normal; color:var(--blue);"></span></h2>
+      <div class="sugar-row">
+        <input type="number" id="sugarInput" class="input-box" placeholder="Örn: 170" inputmode="numeric">
+        <select id="sugarType" class="input-box" style="flex:0.8;">
+          <option value="Açlık">Açlık</option>
+          <option value="Tokluk">Tokluk</option>
+        </select>
+      </div>
+      <div class="sugar-row">
+        <input type="datetime-local" id="sugarDateTime" class="input-box">
+        <button class="btn" onclick="saveSugar()">Kaydet</button>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 Günün Programı <span style="font-size:0.75rem; color:var(--muted);" id="selectedDayName"></span></h2>
+      <div id="taskList"></div>
+    </div>
+
+    <div class="card">
+      <h2>📊 İlerleme ve Şeker Grafiği</h2>
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="setChartFilter('all', this)">Tümü</button>
+        <button class="filter-btn" onclick="setChartFilter('month', this)">Aylık</button>
+        <button class="filter-btn" onclick="setChartFilter('week', this)">Haftalık</button>
+        <button class="filter-btn" onclick="setChartFilter('day', this)">Son Gün</button>
+      </div>
+      <div style="position: relative; height: 230px;" id="chartContainer">
+        <canvas id="healthChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const days = [
+      { id: 0, name: "Pazartesi" }, { id: 1, name: "Salı" }, { id: 2, name: "Çarşamba" },
+      { id: 3, name: "Perşembe" }, { id: 4, name: "Cuma" }, { id: 5, name: "Cumartesi" },
+      { id: 6, name: "Pazar" }
+    ];
+
+    const weeklyProgram = {
+      0: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "1 haşlanmış yumurta, peynir, bol yeşillik, 1 dilim siyez ekmeği" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Zeytinyağlı taze fasulye, yoğurt, mevsim salata" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "150g ızgara tavuk, fırın brokoli ve kabak, yeşil salata" },
+        { id: "eliptik", title: "Eliptik Bisiklet (20 Dk)", desc: "Orta tempo, sabit ritim" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      1: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "2 yumurtalı mantarlı ıspanaklı omlet, çavdar ekmeği" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Mercimek çorbası, ton balıklı yeşil salata" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "Kıymalı karnabahar, 1 kase cacık, 1 dilim tam buğday ekmeği" },
+        { id: "bahce", title: "Bahçe Güç Günü (35-40 Dk)", desc: "Çapa, saksı düzenleme" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      2: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "3 yk yulaf, 1 bardak kefir, tarçın, 2 ceviz" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Ekmeksiz ızgara köfte, közlenmiş patlıcan/biber, ayran" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "Zeytinyağlı enginar veya pırasa, yoğurt, salata" },
+        { id: "eliptik", title: "Eliptik İnterval (25 Dk)", desc: "4 dk orta + 1 dk direnç artırımı" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      3: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "2 haşlanmış yumurta, lor peynirli roka, karabuğday ekmeği" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Nohut/kuru fasulye, 3-4 yk bulgur pilavı, salata" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "150g fırında somon/levrek, fırın sebze, salata" },
+        { id: "bahce", title: "Aktif Dinlenme & Bahçe (30 Dk)", desc: "Sakin budama, tohum bakımı (eliptik yok)" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      4: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "Bol domatesli menemen, beyaz peynir, tam buğday ekmeği" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Yoğurtlu nohut çorbası, ızgara hindi fileto, yeşillik" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "Zeytinyağlı kabak, 1 kase yoğurt, 1 dilim siyez ekmeği" },
+        { id: "eliptik", title: "Eliptik Bisiklet (25 Dk)", desc: "Orta-yüksek sabit tempo" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      5: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "Peynirli omlet, 5 zeytin, çeyrek avokado, bol yeşillik" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Tavuklu kinoa veya karabuğday salatası" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "Fırında patatessiz sebzeli köfte, naneli cacık" },
+        { id: "bahce", title: "Yoğun Bahçe Güç (30-35 Dk)", desc: "Bel küreği, çapalama veya düzenleme" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ],
+      6: [
+        { id: "kahvalti", title: "Kahvaltı", desc: "Yumurta, peynir, ceviz, domates, 1 dilim ekmek" },
+        { id: "ogle", title: "Öğle Yemeği", desc: "Etli sebze türlüsü, ev yoğurdu, bol salata" },
+        { id: "aksam", title: "Akşam Yemeği", desc: "Izgara/fırın balık, buharda brokoli, roka" },
+        { id: "bahce", title: "Tam Dinlenme (10-15 Dk)", desc: "Sadece bitkilerle vakit geçirme" },
+        { id: "su", title: "Günlük Su Tüketimi", desc: "En az 2.5 litre su tamamlandı" }
+      ]
+    };
+
+    let selectedDay = 0;
+    let chartInstance = null;
+    let currentFilter = 'all';
+
+    function getStoredData(key, fallback) {
+      try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function setStoredData(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+    }
+
+    let sugarHistory = getStoredData('sugar_history', []);
+    if (!Array.isArray(sugarHistory)) sugarHistory = [];
+
+    let tasksCompleted = getStoredData('tasks_completed', {});
+    if (typeof tasksCompleted !== 'object' || tasksCompleted === null || Array.isArray(tasksCompleted)) {
+      tasksCompleted = {};
+    }
+
+    function init() {
+      try {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDateText').innerText = now.toLocaleDateString('tr-TR', options);
+
+        const jsDay = now.getDay();
+        selectedDay = jsDay === 0 ? 6 : jsDay - 1;
+
+        setCurrentDateTime();
+        renderDaySelector();
+        renderTasks();
+        updateLatestSugarBadge();
+        initChart();
+      } catch (e) {
+        console.error("Başlatma hatası:", e);
+      }
+    }
+
+    function setCurrentDateTime() {
+      try {
+        const now = new Date();
+        const offsetMs = now.getTimezoneOffset() * 60000;
+        const localTime = new Date(now.getTime() - offsetMs);
+        const isoString = localTime.toISOString().slice(0, 16);
+        document.getElementById('sugarDateTime').value = isoString;
+      } catch(e) {
+        console.error("Saat hatası:", e);
+      }
+    }
+
+    function renderDaySelector() {
+      const container = document.getElementById('daySelector');
+      container.innerHTML = '';
+      days.forEach(d => {
+        const btn = document.createElement('button');
+        btn.className = `day-btn ${d.id === selectedDay ? 'active' : ''}`;
+        btn.innerText = d.name;
+        btn.onclick = () => {
+          selectedDay = d.id;
+          renderDaySelector();
+          renderTasks();
+        };
+        container.appendChild(btn);
+      });
+      document.getElementById('selectedDayName').innerText = `(${days[selectedDay].name})`;
+    }
+
+    function renderTasks() {
+      const list = document.getElementById('taskList');
+      if (!list) return;
+      list.innerHTML = '';
+      const dayTasks = weeklyProgram[selectedDay] || [];
+      const dayState = tasksCompleted[selectedDay] || {};
+
+      let completedCount = 0;
+
+      dayTasks.forEach(task => {
+        const isDone = !!dayState[task.id];
+        if (isDone) completedCount++;
+
+        const div = document.createElement('div');
+        div.className = `task ${isDone ? 'done' : ''}`;
+        div.onclick = () => toggleTask(task.id);
+        div.innerHTML = `
+          <div class="task-check"></div>
+          <div class="task-body">
+            <div class="task-title">${task.title}</div>
+            <div class="task-desc">${task.desc}</div>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+
+      const percent = dayTasks.length ? Math.round((completedCount / dayTasks.length) * 100) : 0;
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('completionBadge').innerText = `%${percent} Tamamlandı`;
+    }
+
+    function toggleTask(taskId) {
+      if (!tasksCompleted[selectedDay]) tasksCompleted[selectedDay] = {};
+      tasksCompleted[selectedDay][taskId] = !tasksCompleted[selectedDay][taskId];
+      setStoredData('tasks_completed', tasksCompleted);
+      renderTasks();
+    }
+
+    function saveSugar() {
+      const valInput = document.getElementById('sugarInput');
+      const typeInput = document.getElementById('sugarType');
+      const dtInput = document.getElementById('sugarDateTime');
+      const val = parseInt(valInput.value);
+
+      if (!val || isNaN(val)) {
+        alert('Lütfen geçerli bir şeker değeri girin.');
+        return;
+      }
+      if (!dtInput.value) {
+        alert('Lütfen tarih ve saat seçin.');
+        return;
+      }
+
+      const selectedDate = new Date(dtInput.value);
+      const hours = String(selectedDate.getHours()).padStart(2, '0');
+      const minutes = String(selectedDate.getMinutes()).padStart(2, '0');
+      const dateLabel = `${selectedDate.getDate()} ${selectedDate.toLocaleString('tr-TR', { month: 'short' })} ${hours}:${minutes}`;
+
+      const dayTasks = weeklyProgram[selectedDay] || [];
+      const dayState = tasksCompleted[selectedDay] || {};
+      const completed = Object.values(dayState).filter(Boolean).length;
+      const compPercent = dayTasks.length ? Math.round((completed / dayTasks.length) * 100) : 0;
+
+      sugarHistory.push({
+        timestamp: selectedDate.getTime(),
+        date: dateLabel,
+        value: val,
+        type: typeInput.value,
+        completion: compPercent
+      });
+
+      sugarHistory.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+      setStoredData('sugar_history', sugarHistory);
+      
+      valInput.value = '';
+      updateLatestSugarBadge();
+      updateChartData();
+    }
+
+    function updateLatestSugarBadge() {
+      if (sugarHistory.length > 0) {
+        const last = sugarHistory[sugarHistory.length - 1];
+        document.getElementById('latestSugar').innerText = `Son: ${last.value} mg/dL (${last.type || ''})`;
+      }
+    }
+
+    function setChartFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+      updateChartData();
+    }
+
+    function getFilteredData() {
+      let data = [...sugarHistory];
+      if (currentFilter === 'day') { data = data.slice(-2); } 
+      else if (currentFilter === 'week') { data = data.slice(-7); } 
+      else if (currentFilter === 'month') { data = data.slice(-30); }
+      return data;
+    }
+
+    function initChart() {
+      try {
+        if (typeof Chart === 'undefined') {
+          document.getElementById('chartContainer').innerHTML = '<div class="error-text">Grafik kütüphanesi yüklenemedi.<br>Lütfen internet bağlantınızı kontrol edin veya reklam engelleyiciyi kapatın.</div>';
+          return;
+        }
+
+        const canvas = document.getElementById('healthChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const filtered = getFilteredData();
+
+        chartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: filtered.map(d => `${d.date || ''} ${(d.type && typeof d.type === 'string') ? '('+d.type[0]+')' : ''}`),
+            datasets: [
+              {
+                label: 'Şeker (mg/dL)',
+                data: filtered.map(d => d.value || 0),
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                yAxisID: 'ySugar',
+                tension: 0.35,
+                pointRadius: 5,
+                borderWidth: 2
+              },
+              {

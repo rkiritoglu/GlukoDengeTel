@@ -1,0 +1,50 @@
+name: Android Play Store Build (AAB & APK)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Web App & Sync Capacitor
+        run: npm run sync
+
+      - name: Build Android APK & App Bundle (AAB)
+        working-directory: ./android
+        run: |
+          chmod +x gradlew
+          ./gradlew bundleRelease assembleRelease
+
+      - name: Upload Android App Bundle (AAB for Play Store)
+        uses: actions/upload-artifact@v4
+        with:
+          name: glukodenge-playstore-aab
+          path: android/app/build/outputs/bundle/release/*.aab
+
+      - name: Upload APK (For Direct Phone Testing)
+        uses: actions/upload-artifact@v4
+        with:
+          name: glukodenge-release-apk
+          path: android/app/build/outputs/apk/release/*.apk

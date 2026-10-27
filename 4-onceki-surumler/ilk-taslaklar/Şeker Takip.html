@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kişisel Sağlık ve Egzersiz Takipçisi</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --border: #e5e7eb;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { margin-bottom: 20px; font-size: 1.6rem; color: #111827; }
+    
+    .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media(min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+    
+    .card { background: var(--card-bg); border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid var(--border); }
+    .full-width { grid-column: 1 / -1; }
+    
+    h2 { font-size: 1.15rem; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; }
+    
+    button { background: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; }
+    button:hover { background: var(--primary-hover); }
+    
+    .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 15px; }
+    .stat-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+    .stat-title { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+    .stat-val { font-size: 1.25rem; font-weight: bold; margin-top: 4px; color: #0f172a; }
+
+    .period-filter { display: flex; gap: 8px; margin-bottom: 15px; }
+    .period-btn { background: #e2e8f0; color: #334155; padding: 6px 12px; width: auto; font-size: 0.85rem; }
+    .period-btn.active { background: var(--primary); color: #fff; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+    th { background: #f8fafc; color: #475569; }
+    .del-btn { background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; width: auto; }
+    .del-btn:hover { background: #dc2626; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Kişisel Sağlık ve Egzersiz Günlüğü</h1>
+
+  <div class="grid">
+    <!-- Veri Giriş Formu -->
+    <div class="card">
+      <h2>Yeni Kayıt Ekle</h2>
+      <form id="healthForm">
+        <div class="form-group">
+          <label for="recordDate">Tarih</label>
+          <input type="date" id="recordDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="sugarType">Şeker Ölçüm Vakti</label>
+          <select id="sugarType">
+            <option value="Sabah Açlık">Sabah Açlık</option>
+            <option value="Sabah Tokluk (2. saat)">Sabah Tokluk</option>
+            <option value="Öğle Tokluk">Öğle Tokluk</option>
+            <option value="Akşam Tokluk">Akşam Tokluk</option>
+            <option value="Gece">Gece</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sugarVal">Kan Şekeri (mg/dL)</label>
+          <input type="number" id="sugarVal" placeholder="Örn: 105" min="20" max="600" required>
+        </div>
+
+        <div class="form-group">
+          <label for="sportType">Yapılan Egzersiz / Spor</label>
+          <select id="sportType">
+            <option value="Yürüyüş">Tempolu Yürüyüş</option>
+            <option value="Hafif Koşu">Hafif Koşu</option>
+            <option value="Yüzme">Yüzme</option>
+            <option value="Bisiklet">Bisiklet</option>
+            <option value="Esneme / Pilates">Esneme / Pilates</option>
+            <option value="Direnç / Ağırlık">Direnç / Ağırlık</option>
+            <option value="Dinlenme (Spor Yok)">Dinlenme (Spor Yok)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sportDuration">Egzersiz Süresi (Dakika)</label>
+          <input type="number" id="sportDuration" placeholder="Örn: 40" min="0" max="300" value="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Program Notu / Durum</label>
+          <input type="text" id="notes" placeholder="Örn: Program eksiksiz uygulandı">
+        </div>
+
+        <button type="submit">Kaydet</button>
+      </form>
+    </div>
+
+    <!-- Özet & Analiz Paneli -->
+    <div class="card">
+      <h2>Özet Rapor</h2>
+      <div class="period-filter">
+        <button class="period-btn active" onclick="setPeriod('daily')">Bugün</button>
+        <button class="period-btn" onclick="setPeriod('weekly')">Son 7 Gün</button>
+        <button class="period-btn"

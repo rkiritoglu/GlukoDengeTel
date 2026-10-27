@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GlukoDenge</string>
+    <string name="title_activity_main">GlukoDenge</string>
+    <string name="package_name">com.rifat.glukodenge</string>
+    <string name="custom_url_scheme">com.rifat.glukodenge</string>
+</resources>
