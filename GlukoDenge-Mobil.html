@@ -162,17 +162,22 @@
   <main class="flex-1 w-full max-w-md mx-auto px-3.5 pt-3 pb-safe">
 
     <!-- Hypo Emergency Alert Banner -->
-    <div id="hypoAlertBox" class="hidden bg-gradient-to-br from-rose-500 to-red-600 text-white rounded-3xl p-4 shadow-lg mb-4 border border-rose-400">
+    <div id="hypoAlertBox" class="hidden rounded-3xl p-4 shadow-xl mb-4" style="background: linear-gradient(135deg, #be123c, #9f1239) !important; background-color: #be123c !important; color: #ffffff !important; border: 2px solid #fda4af !important; box-shadow: 0 10px 25px -5px rgba(190, 18, 60, 0.4) !important;">
       <div class="flex items-start justify-between">
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-rose-200">⚠️ Acil Durum Uyarısı</span>
-          <h3 class="text-base font-extrabold" id="hypoValueText">Hipoglisemi: 65 mg/dL</h3>
+        <div class="flex items-start gap-2.5">
+          <span class="text-2xl select-none leading-none">⚠️</span>
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider block" style="color: #ffe4e6 !important;">ACİL DURUM UYARISI</span>
+            <h3 class="text-lg font-black tracking-tight" id="hypoValueText" style="color: #ffffff !important; margin-top: 1px;">Hipoglisemi: 65 mg/dL</h3>
+          </div>
         </div>
-        <button onclick="dismissHypo()" class="text-xs bg-white/20 px-2.5 py-1 rounded-xl">Kapat</button>
+        <button onclick="dismissHypo()" class="touch-active text-xs font-bold px-3 py-1.5 rounded-xl transition" style="background-color: rgba(255, 255, 255, 0.25) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.4) !important;">
+          Kapat
+        </button>
       </div>
-      <p class="text-xs text-rose-100 mt-2">
-        <strong>15-15 Kuralı:</strong> 15g hızlı şeker alın (3-4 kesme şeker veya meyve suyu). 15 dk dinlenip tekrar ölçün.
-      </p>
+      <div class="mt-2.5 pt-2.5 text-xs font-medium" style="border-top: 1px solid rgba(255, 255, 255, 0.25); color: #ffffff !important; line-height: 1.45;">
+        <strong style="color: #fef08a !important;">15-15 Kuralı:</strong> 15g hızlı şeker alın (3-4 kesme şeker veya 1 çay bardağı meyve suyu). 15 dk dinlenip şekeri tekrar ölçün.
+      </div>
     </div>
 
     <!-- TAB 1: BUGÜN (TODAY / ÖZET) -->
@@ -220,18 +225,52 @@
         </div>
       </div>
 
-      <!-- Today's Meal Slots Grid -->
+      <!-- Quick Entry Hub (Bilgi Girişi) -->
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200/90 space-y-3">
         <div class="flex items-center justify-between border-b border-slate-100 pb-2">
           <div>
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Bugünün Ölçüm Planı</h3>
-            <span class="text-[10px] text-teal-700 font-semibold">Ölçüm Vakti / Durumu Bağlantılı</span>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+              <span>✍️</span> Bilgi Girişi
+            </h3>
+            <span class="text-[10px] text-slate-500 font-medium">Hızlı kayıt eklemek için dokunun:</span>
           </div>
           <span id="todayCountBadge" class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
             0 / 7 Tamamlandı
           </span>
         </div>
-        <div id="todaySlotsContainer" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2"></div>
+
+        <!-- 5 Category Direct Buttons -->
+        <div class="grid grid-cols-5 gap-1.5">
+          <button type="button" onclick="openAddModal('glucose')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #fff1f2; border-color: #fecdd3; color: #9f1239;">
+            <span class="text-xl mb-0.5">🩸</span>
+            <span class="text-[10px] font-black leading-tight">Şeker</span>
+          </button>
+          <button type="button" onclick="openAddModal('insulin')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #f0fdfa; border-color: #99f6e4; color: #115e59;">
+            <span class="text-xl mb-0.5">💉</span>
+            <span class="text-[10px] font-black leading-tight">İlaç</span>
+          </button>
+          <button type="button" onclick="openAddModal('food')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #fffbeb; border-color: #fde68a; color: #854d0e;">
+            <span class="text-xl mb-0.5">🥗</span>
+            <span class="text-[10px] font-black leading-tight">Besin</span>
+          </button>
+          <button type="button" onclick="openAddModal('activity')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #f0f9ff; border-color: #bae6fd; color: #075985;">
+            <span class="text-xl mb-0.5">🏃</span>
+            <span class="text-[10px] font-black leading-tight">Spor</span>
+          </button>
+          <button type="button" onclick="openAddModal('note')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #faf5ff; border-color: #e9d5ff; color: #6b21a8;">
+            <span class="text-xl mb-0.5">📝</span>
+            <span class="text-[10px] font-black leading-tight">Not</span>
+          </button>
+        </div>
+
+        <!-- 7 Measurement Slots Strip -->
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Bugünün Ölçüm Vakitleri</span>
+            <span class="text-[9.5px] text-teal-700 font-semibold">Vakit seçerek de girebilirsiniz</span>
+          </div>
+          <div id="todaySlotsContainer" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5"></div>
+        </div>
       </div>
 
       <!-- Today List -->
@@ -254,11 +293,16 @@
         />
       </div>
 
-      <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar">
-        <button onclick="setLogFilter('all', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white">Tümü</button>
-        <button onclick="setLogFilter('fasting', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Açlık</button>
-        <button onclick="setLogFilter('post', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Tokluk</button>
-        <button onclick="setLogFilter('out', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Hedef Dışı</button>
+      <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
+        <button onclick="setLogFilter('all', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white shrink-0">Tümü</button>
+        <button onclick="setLogFilter('glucose', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🩸 Şeker</button>
+        <button onclick="setLogFilter('insulin', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">💉 İlaç</button>
+        <button onclick="setLogFilter('food', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🥗 Besin</button>
+        <button onclick="setLogFilter('activity', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🏃 Spor</button>
+        <button onclick="setLogFilter('note', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">📝 Not</button>
+        <button onclick="setLogFilter('fasting', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Açlık</button>
+        <button onclick="setLogFilter('post', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Tokluk</button>
+        <button onclick="setLogFilter('out', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Hedef Dışı</button>
       </div>
 
       <div id="logbookList" class="space-y-2"></div>
@@ -570,18 +614,19 @@
               Kan Şekeri Değeri
             </label>
             <div class="flex items-center gap-2.5">
-              <input type="number" id="inputGlucose" value="110" oninput="updateModalFeedback()" class="text-3xl font-black font-mono tracking-tight text-slate-900 bg-white border border-slate-300 rounded-xl px-4 py-2 w-36 focus:ring-2 focus:ring-teal-500">
+              <input type="number" id="inputGlucose" placeholder="Örn: 110" oninput="updateModalFeedback()" class="text-3xl font-black font-mono tracking-tight text-slate-900 bg-white border border-slate-300 rounded-xl px-4 py-2 w-36 focus:ring-2 focus:ring-teal-500">
               <button type="button" onclick="toggleUnit()" class="touch-active px-2.5 py-1.5 text-xs font-bold rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 shadow-2xs flex items-center gap-1 transition cursor-pointer">
                 <span>⇄</span>
                 <span id="modalUnitSpan">mg/dL</span>
               </button>
             </div>
-            <div id="modalStatusBadge" class="mt-2 text-xs font-bold text-emerald-600">Hedefte (Normal)</div>
+            <div id="modalStatusBadge" class="mt-2 text-xs font-bold text-slate-500">Değer girildiğinde durum değerlendirilecektir.</div>
           </div>
 
           <div>
             <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1.5">Ölçüm Vakti / Durumu</label>
             <select id="selectTiming" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-800">
+              <option value="" disabled selected>Ölçüm vaktini seçiniz...</option>
               <option value="fasting">Sabah Açlık</option>
               <option value="breakfast_post">Kahvaltı Tokluk (+2 saat)</option>
               <option value="lunch_pre">Öğle Açlık / Yemek Öncesi</option>
@@ -601,11 +646,11 @@
             <div class="grid grid-cols-2 gap-2">
               <div>
                 <label class="text-xs font-bold text-slate-700 block mb-1">Bolus (Yemek) İnsülin (Ünite)</label>
-                <input type="number" step="0.5" id="inputBolus" placeholder="0" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
+                <input type="number" step="0.5" id="inputBolus" placeholder="Örn: 4" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
               </div>
               <div>
                 <label class="text-xs font-bold text-slate-700 block mb-1">Bazal (Uzun) İnsülin (Ünite)</label>
-                <input type="number" step="0.5" id="inputBasal" placeholder="0" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
+                <input type="number" step="0.5" id="inputBasal" placeholder="Örn: 18" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
               </div>
             </div>
             <div>
@@ -642,7 +687,8 @@
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #f0f9ff; border: 1px solid #bae6fd;">
             <div>
               <label class="text-xs font-bold text-slate-700 block mb-1">Fiziksel Aktivite Şiddeti</label>
-              <select id="selectActivity" class="w-full bg-white border rounded-xl p-2 text-xs font-semibold">
+              <select id="selectActivity" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+                <option value="" disabled selected>Aktivite türünü seçiniz...</option>
                 <option value="Hafif (15-30 dk yürüyüş)">Hafif (15-30 dk tempolu yürüyüş)</option>
                 <option value="Orta (30-60 dk egzersiz)">Orta (30-60 dk bisiklet/fitness)</option>
                 <option value="Yoğun (Ağır spor/koşu)">Yoğun (Ağır antrenman/koşu)</option>
@@ -661,7 +707,8 @@
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #faf5ff; border: 1px solid #e9d5ff;">
             <div>
               <label class="text-xs font-bold text-slate-700 block mb-1">Belirtiler / Sağlık Durumu</label>
-              <select id="selectSymptom" class="w-full bg-white border rounded-xl p-2 text-xs font-semibold">
+              <select id="selectSymptom" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+                <option value="" disabled selected>Belirti veya durum seçiniz...</option>
                 <option value="Normal / İyi">Normal / Kendimi iyi hissediyorum</option>
                 <option value="Halsizlik / Yorgunluk">Halsizlik / Aşırı yorgunluk</option>
                 <option value="Ağız Kuruluğu / Çok Su İçme">Ağız kuruluğu / Çok su içme</option>
@@ -682,7 +729,7 @@
           <button type="button" onclick="closeModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">
             Vazgeç
           </button>
-          <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-teal-700 hover:bg-teal-800 shadow-md transition">
+          <button type="submit" id="modalSubmitBtn" class="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-teal-700 hover:bg-teal-800 shadow-md transition">
             Bilgiyi Kaydet
           </button>
         </div>
@@ -763,6 +810,7 @@
     let logFilter = 'all';
     let currentModalType = 'glucose';
     let lastNotifiedMinute = {};
+    let editingRecordId = null;
 
     function init() {
       const savedRec = localStorage.getItem('gluko_tel_records');
@@ -778,7 +826,7 @@
           { id: 'r1', entryType: 'glucose', glucose: 104, timing: 'fasting', timestamp: new Date(now - 3600000*8).toISOString(), medication: 'Metformin 1000mg', medicationTime: '07:35', notes: 'Sabah aç karnına bol su ile' },
           { id: 'r2', entryType: 'food', glucose: 142, timing: 'breakfast_post', timestamp: new Date(now - 3600000*5).toISOString(), insulinBolus: 4, carbs: 45, mealNote: 'Yumurta, peynir, 2 dilim tam buğday' },
           { id: 'r3', entryType: 'glucose', glucose: 110, timing: 'lunch_post', timestamp: new Date(now - 3600000*2).toISOString(), carbs: 50, mealNote: 'Izgara köfte, salata, ayran' },
-          { id: 'r4', entryType: 'activity', glucose: 118, timing: 'dinner_pre', timestamp: new Date(now - 3600000*24).toISOString(), activity: 'Hafif (15-30 dk yürüyüş)', activityDetails: 'Akşam yürüyüşü' },
+          { id: 'r4', entryType: 'activity', glucose: null, timing: 'random', timestamp: new Date(now - 3600000*3).toISOString(), activity: 'Hafif (15-30 dk yürüyüş)', activityDetails: '30 dk sahil tempolu yürüyüş' },
           { id: 'r5', entryType: 'glucose', glucose: 135, timing: 'dinner_post', timestamp: new Date(now - 3600000*20).toISOString(), insulinBolus: 5, carbs: 60, mealNote: 'Sebzeli tavuk, bulgur pilavı' },
           { id: 'r6', entryType: 'glucose', glucose: 68, timing: 'bedtime', timestamp: new Date(now - 3600000*48).toISOString(), notes: 'Hafif titreme hissedildi, meyve suyu alındı' },
         ];
@@ -811,9 +859,9 @@
       
       const gInput = document.getElementById('inputGlucose');
       if (gInput) {
-        gInput.placeholder = profile.unit === 'mmol/L' ? '6.0' : '110';
+        gInput.placeholder = profile.unit === 'mmol/L' ? 'Örn: 6.0' : 'Örn: 110';
         gInput.step = profile.unit === 'mmol/L' ? '0.1' : '1';
-        gInput.value = profile.unit === 'mmol/L' ? '6.0' : '110';
+        gInput.value = '';
       }
 
       switchTab('today');
@@ -858,6 +906,125 @@
       if (isF && val > (profile.targets?.fastingMax || 130)) return { label: 'Açlık Yüksek', color: '#f59e0b', class: 'bg-amber-500 text-white', advice: 'Açlık hedefinin üzerinde. Karbonhidrat ve ilaç saatinizi gözden geçirin.' };
       if (!isF && val > (profile.targets?.postMealMax || 180)) return { label: 'Tokluk Yüksek', color: '#f59e0b', class: 'bg-amber-500 text-white', advice: 'Tokluk hedefinin üzerinde. Porsiyon miktarınızı kontrol edin.' };
       return { label: 'Hedefte (Normal)', color: '#10b981', class: 'bg-emerald-500 text-white', advice: 'Tebrikler! Kan şekeriniz sağlıklı hedef aralıkta.' };
+    }
+
+    function getRecordSummary(r) {
+      const tObj = TIMINGS.find(t => t.id === r.timing);
+      const timingLabel = tObj ? tObj.label : (r.timing || '');
+      const hasG = r.glucose !== null && r.glucose !== undefined && Number(r.glucose) > 0;
+      
+      if (hasG) {
+        const c = classify(r.glucose, r.timing);
+        return `🩸 ${formatGlucose(r.glucose, profile.unit)} ${profile.unit} (${timingLabel ? timingLabel + ' • ' : ''}${c.label})`;
+      }
+      if (r.entryType === 'insulin' || (r.medication || r.insulinBolus || r.insulinBasal)) {
+        let parts = [];
+        if (r.insulinBolus) parts.push(`${r.insulinBolus}U Bolus`);
+        if (r.insulinBasal) parts.push(`${r.insulinBasal}U Bazal`);
+        if (r.medication) parts.push(r.medication);
+        return `💉 İlaç: ${parts.join(' + ') || 'İlaç/İnsülin Kaydı'}`;
+      }
+      if (r.entryType === 'food' || (r.mealNote || r.carbs)) {
+        return `🥗 Besin: ${r.carbs ? r.carbs + 'g Karb ' : ''}${r.mealNote ? `• "${r.mealNote}"` : ''}`.trim();
+      }
+      if (r.entryType === 'activity' || (r.activity || r.activityDetails)) {
+        return `🏃 Spor: ${r.activity || 'Aktivite'} ${r.activityDetails ? `(${r.activityDetails})` : ''}`.trim();
+      }
+      if (r.entryType === 'note' || (r.symptoms || r.notes)) {
+        return `📝 Not: ${r.symptoms || ''} ${r.notes ? `• ${r.notes}` : ''}`.trim();
+      }
+      return '📋 Kayıt';
+    }
+
+    function renderRecordSectionsHtml(r) {
+      const tObj = TIMINGS.find(t => t.id === r.timing);
+      const timingLabel = tObj ? tObj.label : (r.timing || '');
+      const hasG = r.glucose !== null && r.glucose !== undefined && Number(r.glucose) > 0;
+      const c = hasG ? classify(r.glucose, r.timing) : null;
+      const hasInsulin = !!(r.medication || r.insulinBolus || r.insulinBasal || r.medicationTime);
+      const hasFood = !!(r.carbs || r.mealNote || r.mealTime);
+      const hasActivity = !!(r.activity || r.activityDetails);
+      const hasNote = !!(r.symptoms || r.notes);
+
+      let html = '<div class="mt-2.5 pt-2 border-t border-slate-100 space-y-2">';
+
+      // 1. Şeker Başlığı ve Bölümü
+      if (hasG) {
+        html += `
+          <div class="bg-rose-50/70 border border-rose-100 rounded-xl p-2.5 text-xs">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-rose-900 flex items-center gap-1 text-[11px]">🩸 ŞEKER ÖLÇÜMÜ</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${c.class}">${c.label}</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-base font-black font-mono text-slate-800">${formatGlucose(r.glucose, profile.unit)} <span class="text-xs font-semibold text-slate-500">${profile.unit}</span></span>
+              ${timingLabel ? `<span class="text-[11px] text-slate-600 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-rose-100">Vakit: ${timingLabel}</span>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. İlaç & İnsülin Başlığı ve Bölümü
+      if (hasInsulin) {
+        html += `
+          <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-2.5 text-xs">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-teal-900 flex items-center gap-1 text-[11px]">💉 İLAÇ & İNSÜLİN</span>
+              ${r.medicationTime ? `<span class="text-[10px] text-teal-700 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-teal-200">Saat: ${r.medicationTime}</span>` : ''}
+            </div>
+            <div class="flex flex-wrap gap-1.5 text-[11px] mt-1">
+              ${r.insulinBolus ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bolus: ${r.insulinBolus} Ünite</span>` : ''}
+              ${r.insulinBasal ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bazal: ${r.insulinBasal} Ünite</span>` : ''}
+              ${r.medication ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">💊 ${r.medication}</span>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. Besin Başlığı ve Bölümü
+      if (hasFood) {
+        html += `
+          <div class="bg-amber-50/70 border border-amber-100 rounded-xl p-2.5 text-xs">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-amber-900 flex items-center gap-1 text-[11px]">🥗 BESİN & ÖĞÜN</span>
+              ${r.mealTime ? `<span class="text-[10px] text-amber-800 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-amber-200">Saat: ${r.mealTime}</span>` : ''}
+            </div>
+            <div class="text-[11px] text-slate-700 space-y-1 mt-1">
+              ${r.carbs ? `<span class="inline-block bg-white border border-amber-200 text-amber-900 px-2 py-0.5 rounded-lg font-bold">🍞 ${r.carbs}g Karbonhidrat</span>` : ''}
+              ${r.mealNote ? `<p class="text-slate-700 italic font-medium bg-white/80 p-2 rounded-lg border border-amber-200/60 mt-1">"${r.mealNote}"</p>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. Spor Başlığı ve Bölümü
+      if (hasActivity) {
+        html += `
+          <div class="bg-sky-50/70 border border-sky-100 rounded-xl p-2.5 text-xs">
+            <span class="font-bold text-sky-900 flex items-center gap-1 text-[11px] mb-1">🏃 SPOR & AKTİVİTE</span>
+            <div class="text-[11px] text-slate-700 space-y-1 mt-1">
+              ${r.activity ? `<span class="inline-block bg-white border border-sky-200 text-sky-900 px-2 py-0.5 rounded-lg font-bold">⚡ ${r.activity}</span>` : ''}
+              ${r.activityDetails ? `<p class="text-slate-700 font-medium bg-white/80 p-2 rounded-lg border border-sky-200/60 mt-1">🏃 Detay: ${r.activityDetails}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. Not Başlığı ve Bölümü
+      if (hasNote) {
+        html += `
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-2.5 text-xs">
+            <span class="font-bold text-purple-900 flex items-center gap-1 text-[11px] mb-1">📝 NOT & BELİRTİ</span>
+            <div class="text-[11px] text-slate-700 space-y-1 mt-1">
+              ${r.symptoms ? `<span class="inline-block bg-white border border-purple-200 text-purple-900 px-2 py-0.5 rounded-lg font-bold">🩺 ${r.symptoms}</span>` : ''}
+              ${r.notes ? `<p class="text-slate-700 font-medium bg-white/80 p-2 rounded-lg border border-purple-200/60 mt-1">💬 ${r.notes}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+      return html;
     }
 
     function renderToday() {
@@ -933,24 +1100,60 @@
 
       const listCont = document.getElementById('todayListContainer');
       if (todayLogs.length === 0) {
-        listCont.innerHTML = `<div class="bg-white rounded-2xl p-4 text-center text-xs text-slate-400 border border-slate-200">Bugün henüz kayıt girilmedi. + butonuna dokunarak ekleyin.</div>`;
+        listCont.innerHTML = `<div class="bg-white rounded-2xl p-4 text-center text-xs text-slate-400 border border-slate-200">Bugün henüz kayıt girilmedi. Yukarıdaki bilgi girişi butonlarına dokunarak ekleyin.</div>`;
       } else {
         listCont.innerHTML = todayLogs.map(r => {
           const c = classify(r.glucose, r.timing);
           const tObj = TIMINGS.find(t => t.id === r.timing);
+          const timeStr = new Date(r.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+          const summary = getRecordSummary(r);
+          const sectionsHtml = renderRecordSectionsHtml(r);
+
+          let icon = '📋';
+          let iconBg = '#0f766e';
+          if (r.glucose) {
+            icon = formatGlucose(r.glucose, profile.unit);
+            iconBg = c.color;
+          } else if (r.activity || r.entryType === 'activity') {
+            icon = '🏃';
+            iconBg = '#0284c7';
+          } else if (r.medication || r.insulinBolus || r.entryType === 'insulin') {
+            icon = '💉';
+            iconBg = '#0d9488';
+          } else if (r.carbs || r.mealNote || r.entryType === 'food') {
+            icon = '🥗';
+            iconBg = '#d97706';
+          } else if (r.symptoms || r.entryType === 'note') {
+            icon = '📝';
+            iconBg = '#7c3aed';
+          }
+
           return `
-            <div class="bg-white rounded-2xl p-3 shadow-sm border border-slate-200 flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs text-white shadow-xs" style="background:${c.color}">
-                  ${r.glucose ? formatGlucose(r.glucose, profile.unit) : '📝'}
+            <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-200 space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-start gap-2.5 min-w-0 flex-1">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs text-white shrink-0 shadow-xs" style="background:${iconBg}">
+                    ${icon}
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="text-xs font-black text-slate-800">${tObj ? tObj.label : (r.timing || 'Kayıt')}</span>
+                      <span class="text-[10px] text-slate-400 font-mono">${timeStr}</span>
+                    </div>
+                    <p class="text-[11px] font-bold text-teal-800 truncate mt-0.5">${summary}</p>
+                  </div>
                 </div>
-                <div>
-                  <span class="text-xs font-bold text-slate-800">${tObj ? tObj.label : r.timing}</span>
-                  <span class="text-[10px] text-slate-400 block">${new Date(r.timestamp).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})}</span>
-                  ${r.mealNote ? `<p class="text-[11px] text-slate-500 italic mt-0.5 truncate max-w-[200px]">${r.mealNote}</p>` : ''}
+                <div class="flex items-center gap-1 shrink-0">
+                  <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Kaydı Düzenle">
+                    <span>✏️</span> <span>Düzenle</span>
+                  </button>
+                  <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="Kaydı Sil">
+                    🗑️
+                  </button>
                 </div>
               </div>
-              <button onclick="deleteRecord('${r.id}')" class="text-slate-300 hover:text-rose-600 text-sm p-1.5">🗑️</button>
+
+              ${sectionsHtml}
             </div>
           `;
         }).join('');
@@ -965,14 +1168,23 @@
       const filtered = records.filter(r => {
         if (logFilter === 'fasting' && r.timing !== 'fasting' && r.timing !== 'lunch_pre' && r.timing !== 'dinner_pre') return false;
         if (logFilter === 'post' && r.timing !== 'breakfast_post' && r.timing !== 'lunch_post' && r.timing !== 'dinner_post') return false;
-        if (logFilter === 'out' && r.glucose && (r.glucose >= 70 && r.glucose <= 180)) return false;
+        if (logFilter === 'out' && (!r.glucose || (r.glucose >= 70 && r.glucose <= 180))) return false;
+        if (logFilter === 'glucose' && (!r.glucose && r.entryType !== 'glucose')) return false;
+        if (logFilter === 'insulin' && (!r.medication && !r.insulinBolus && !r.insulinBasal && r.entryType !== 'insulin')) return false;
+        if (logFilter === 'food' && (!r.carbs && !r.mealNote && r.entryType !== 'food')) return false;
+        if (logFilter === 'activity' && (!r.activity && !r.activityDetails && r.entryType !== 'activity')) return false;
+        if (logFilter === 'note' && (!r.symptoms && !r.notes && r.entryType !== 'note')) return false;
 
         if (!query) return true;
+        const q = query;
         return (
-          String(r.glucose || '').includes(query) ||
-          (r.mealNote && r.mealNote.toLowerCase().includes(query)) ||
-          (r.medication && r.medication.toLowerCase().includes(query)) ||
-          (r.notes && r.notes.toLowerCase().includes(query))
+          String(r.glucose || '').includes(q) ||
+          (r.mealNote && r.mealNote.toLowerCase().includes(q)) ||
+          (r.medication && r.medication.toLowerCase().includes(q)) ||
+          (r.activity && r.activity.toLowerCase().includes(q)) ||
+          (r.activityDetails && r.activityDetails.toLowerCase().includes(q)) ||
+          (r.symptoms && r.symptoms.toLowerCase().includes(q)) ||
+          (r.notes && r.notes.toLowerCase().includes(q))
         );
       });
 
@@ -986,35 +1198,55 @@
         const tObj = TIMINGS.find(t => t.id === r.timing);
         const dateStr = new Date(r.timestamp).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' });
         const timeStr = new Date(r.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        const summary = getRecordSummary(r);
+        const sectionsHtml = renderRecordSectionsHtml(r);
+
+        let icon = '📋';
+        let iconBg = '#0f766e';
+        if (r.glucose) {
+          icon = formatGlucose(r.glucose, profile.unit);
+          iconBg = c.color;
+        } else if (r.activity || r.entryType === 'activity') {
+          icon = '🏃';
+          iconBg = '#0284c7';
+        } else if (r.medication || r.insulinBolus || r.entryType === 'insulin') {
+          icon = '💉';
+          iconBg = '#0d9488';
+        } else if (r.carbs || r.mealNote || r.entryType === 'food') {
+          icon = '🥗';
+          iconBg = '#d97706';
+        } else if (r.symptoms || r.entryType === 'note') {
+          icon = '📝';
+          iconBg = '#7c3aed';
+        }
 
         return `
           <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-200 space-y-2">
-            <div class="flex items-start justify-between">
-              <div class="flex items-center space-x-3">
-                <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-sm text-white shadow-xs" style="background:${c.color}">
-                  ${r.glucose ? formatGlucose(r.glucose, profile.unit) : '📋'}
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-start gap-2.5 min-w-0 flex-1">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-sm text-white shrink-0 shadow-xs" style="background:${iconBg}">
+                  ${icon}
                 </div>
-                <div>
-                  <div class="flex items-center space-x-1.5">
-                    <span class="text-xs font-bold text-slate-800">${tObj ? tObj.label : r.timing}</span>
-                    <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${c.class}">${c.label}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center space-x-1.5 flex-wrap">
+                    <span class="text-xs font-bold text-slate-800">${tObj ? tObj.label : (r.timing || 'Kayıt')}</span>
+                    ${r.glucose ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${c.class}">${c.label}</span>` : ''}
                   </div>
-                  <span class="text-[10px] text-slate-400">${dateStr} • ${timeStr} ${r.glucose ? `• <strong class="text-teal-700">${formatGlucose(r.glucose, profile.unit)} ${profile.unit}</strong>` : ''}</span>
+                  <span class="text-[10px] text-slate-400 block">${dateStr} • ${timeStr}</span>
+                  <p class="text-[11px] font-bold text-teal-800 truncate mt-0.5">${summary}</p>
                 </div>
               </div>
-              <button onclick="deleteRecord('${r.id}')" class="text-slate-300 hover:text-rose-600 text-sm p-1">🗑️</button>
+              <div class="flex items-center gap-1 shrink-0">
+                <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Kaydı Düzenle">
+                  <span>✏️</span> <span>Düzenle</span>
+                </button>
+                <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="Kaydı Sil">
+                  🗑️
+                </button>
+              </div>
             </div>
 
-            ${(r.medication || r.insulinBolus || r.insulinBasal || r.carbs || r.mealNote || r.notes) ? `
-              <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-2 text-[11px] text-slate-600">
-                ${r.medication ? `<span class="bg-teal-50 text-teal-800 px-2 py-0.5 rounded-lg font-medium">💊 ${r.medication}</span>` : ''}
-                ${r.insulinBolus ? `<span class="bg-blue-50 text-blue-800 px-2 py-0.5 rounded-lg font-bold">💉 ${r.insulinBolus}U Bolus</span>` : ''}
-                ${r.insulinBasal ? `<span class="bg-indigo-50 text-indigo-800 px-2 py-0.5 rounded-lg font-bold">💉 ${r.insulinBasal}U Bazal</span>` : ''}
-                ${r.carbs ? `<span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded-lg font-medium">🥗 ${r.carbs}g Karb</span>` : ''}
-                ${r.mealNote ? `<span class="text-slate-500 italic block w-full mt-0.5">"${r.mealNote}"</span>` : ''}
-                ${r.notes ? `<span class="text-slate-500 block w-full mt-0.5">Not: ${r.notes}</span>` : ''}
-              </div>
-            ` : ''}
+            ${sectionsHtml}
           </div>
         `;
       }).join('');
@@ -1023,10 +1255,10 @@
     function setLogFilter(filter, btn) {
       logFilter = filter;
       document.querySelectorAll('.log-filter-btn').forEach(b => {
-        b.className = 'log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200';
+        b.className = 'log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0';
       });
       if (btn) {
-        btn.className = 'log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white';
+        btn.className = 'log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white shrink-0';
       }
       renderLogbook();
     }
@@ -1242,28 +1474,134 @@
       if (subEl) subEl.textContent = subtitles[type] || 'Şeker ölçümü yapmadan da ilaç, besin veya spor bilgisi girebilirsiniz';
     }
 
+    function editRecord(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+
+      editingRecordId = id;
+      const entryType = rec.entryType || (rec.activity ? 'activity' : (rec.medication || rec.insulinBolus || rec.insulinBasal ? 'insulin' : (rec.mealNote || rec.carbs ? 'food' : (rec.symptoms || rec.notes ? 'note' : 'glucose'))));
+      setModalEntryType(entryType);
+
+      const gInput = document.getElementById('inputGlucose');
+      if (gInput) {
+        gInput.value = (rec.glucose !== null && rec.glucose !== undefined && Number(rec.glucose) > 0) ? formatGlucose(rec.glucose, profile.unit) : '';
+      }
+
+      const selTiming = document.getElementById('selectTiming');
+      if (selTiming) selTiming.value = rec.timing || '';
+
+      const tsInput = document.getElementById('inputTimestamp');
+      if (tsInput && rec.timestamp) {
+        const d = new Date(rec.timestamp);
+        const pad = n => String(n).padStart(2, '0');
+        tsInput.value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+
+      const bolusInput = document.getElementById('inputBolus');
+      if (bolusInput) bolusInput.value = rec.insulinBolus || '';
+
+      const basalInput = document.getElementById('inputBasal');
+      if (basalInput) basalInput.value = rec.insulinBasal || '';
+
+      const medInput = document.getElementById('inputMed');
+      if (medInput) medInput.value = rec.medication || '';
+
+      const medTimeInput = document.getElementById('inputMedTime');
+      if (medTimeInput) medTimeInput.value = rec.medicationTime || '';
+
+      const mealTimeInput = document.getElementById('inputMealTime');
+      if (mealTimeInput) mealTimeInput.value = rec.mealTime || '';
+
+      const carbsInput = document.getElementById('inputCarbs');
+      if (carbsInput) carbsInput.value = rec.carbs || '';
+
+      const mealNoteInput = document.getElementById('inputMealNote');
+      if (mealNoteInput) mealNoteInput.value = rec.mealNote || '';
+
+      const actSelect = document.getElementById('selectActivity');
+      if (actSelect) actSelect.value = rec.activity || '';
+
+      const actDetInput = document.getElementById('inputActivityDetails');
+      if (actDetInput) actDetInput.value = rec.activityDetails || '';
+
+      const symSelect = document.getElementById('selectSymptom');
+      if (symSelect) symSelect.value = rec.symptoms || '';
+
+      const notesInput = document.getElementById('inputNotes');
+      if (notesInput) notesInput.value = rec.notes || '';
+
+      const titleEl = document.getElementById('modalTitle');
+      if (titleEl) titleEl.textContent = 'Kaydı Düzenle';
+      const subEl = document.getElementById('modalSubtitle');
+      if (subEl) subEl.textContent = 'Mevcut kaydı güncelleyin ve değişiklikleri kaydedin';
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      if (submitBtn) submitBtn.textContent = '✓ Değişiklikleri Kaydet';
+
+      const modal = document.getElementById('modalSheet');
+      modal.classList.remove('hidden');
+      modal.classList.add('active');
+      updateModalFeedback();
+    }
+
     function openAddModal(type = 'glucose') {
+      editingRecordId = null;
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      if (submitBtn) submitBtn.textContent = 'Bilgiyi Kaydet';
+
       setModalEntryType(type);
       const now = new Date();
       const pad = n => String(n).padStart(2, '0');
       const localNow = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-      const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
       
       const tsInput = document.getElementById('inputTimestamp');
       if (tsInput) tsInput.value = localNow;
+
+      // Varsayılan değer sıfırlama (Kullanıcı kendi girecektir / default yok)
+      const gInput = document.getElementById('inputGlucose');
+      if (gInput) {
+        gInput.placeholder = profile.unit === 'mmol/L' ? 'Örn: 6.0' : 'Örn: 110';
+        gInput.step = profile.unit === 'mmol/L' ? '0.1' : '1';
+        gInput.value = '';
+      }
+
+      const selTiming = document.getElementById('selectTiming');
+      if (selTiming) selTiming.value = '';
+
+      const bolusInput = document.getElementById('inputBolus');
+      if (bolusInput) bolusInput.value = '';
+
+      const basalInput = document.getElementById('inputBasal');
+      if (basalInput) basalInput.value = '';
+
+      const medInput = document.getElementById('inputMed');
+      if (medInput) medInput.value = '';
+
       const medTimeInput = document.getElementById('inputMedTime');
-      if (medTimeInput) medTimeInput.value = timeStr;
+      if (medTimeInput) medTimeInput.value = '';
+
       const mealTimeInput = document.getElementById('inputMealTime');
-      if (mealTimeInput) mealTimeInput.value = timeStr;
+      if (mealTimeInput) mealTimeInput.value = '';
+
+      const carbsInput = document.getElementById('inputCarbs');
+      if (carbsInput) carbsInput.value = '';
+
+      const mealNoteInput = document.getElementById('inputMealNote');
+      if (mealNoteInput) mealNoteInput.value = '';
+
+      const actSelect = document.getElementById('selectActivity');
+      if (actSelect) actSelect.value = '';
+
+      const actDetInput = document.getElementById('inputActivityDetails');
+      if (actDetInput) actDetInput.value = '';
+
+      const symSelect = document.getElementById('selectSymptom');
+      if (symSelect) symSelect.value = '';
+
+      const notesInput = document.getElementById('inputNotes');
+      if (notesInput) notesInput.value = '';
 
       const unitSpan = document.getElementById('modalUnitSpan');
       if (unitSpan) unitSpan.textContent = profile.unit;
-      const gInput = document.getElementById('inputGlucose');
-      if (gInput) {
-        gInput.placeholder = profile.unit === 'mmol/L' ? '6.0' : '110';
-        gInput.step = profile.unit === 'mmol/L' ? '0.1' : '1';
-        gInput.value = profile.unit === 'mmol/L' ? '6.0' : '110';
-      }
 
       const modal = document.getElementById('modalSheet');
       modal.classList.remove('hidden');
@@ -1273,9 +1611,6 @@
 
     function openAddWithSlot(slotId) {
       selectedTiming = slotId;
-      openAddModal('glucose');
-      const sel = document.getElementById('selectTiming');
-      if (sel) sel.value = slotId;
 
       const now = new Date();
       const existing = records.find(r => {
@@ -1283,45 +1618,62 @@
         return d.getDate() === now.getDate() && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && r.timing === slotId;
       });
       if (existing) {
-        const gInp = document.getElementById('inputGlucose');
-        if (gInp && existing.glucose) gInp.value = formatGlucose(existing.glucose, profile.unit);
-        const mInp = document.getElementById('inputMealNote');
-        if (mInp && existing.mealNote) mInp.value = existing.mealNote;
+        editRecord(existing.id);
+        return;
       }
+
+      openAddModal('glucose');
+      const sel = document.getElementById('selectTiming');
+      if (sel) sel.value = slotId;
       updateModalFeedback();
     }
 
     function closeModal() {
+      editingRecordId = null;
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      if (submitBtn) submitBtn.textContent = 'Bilgiyi Kaydet';
       const modal = document.getElementById('modalSheet');
       modal.classList.add('hidden');
       modal.classList.remove('active');
     }
 
     function updateModalFeedback() {
-      const raw = parseFloat(document.getElementById('inputGlucose').value);
-      const selTiming = document.getElementById('selectTiming')?.value || selectedTiming;
+      const gInput = document.getElementById('inputGlucose');
+      const rawStr = gInput ? gInput.value : '';
       const badge = document.getElementById('modalStatusBadge');
-      if (isNaN(raw) || raw <= 0) {
-        if (badge) {
-          badge.textContent = 'Lütfen geçerli bir değer giriniz';
-          badge.style.color = '#64748b';
-        }
+      if (!badge) return;
+
+      if (!rawStr || rawStr.trim() === '') {
+        badge.textContent = 'Değer girildiğinde durum değerlendirilecektir.';
+        badge.style.color = '#64748b';
         return;
       }
+
+      const raw = parseFloat(rawStr);
+      if (isNaN(raw) || raw <= 0) {
+        badge.textContent = 'Lütfen geçerli bir değer giriniz';
+        badge.style.color = '#64748b';
+        return;
+      }
+      const selTiming = document.getElementById('selectTiming')?.value || selectedTiming;
       const gMgDl = toMgDl(raw, profile.unit);
       const c = classify(gMgDl, selTiming);
-      if (badge) {
-        badge.textContent = `${c.label} - ${c.advice}`;
-        badge.style.color = c.color;
-      }
+      badge.textContent = `${c.label} - ${c.advice}`;
+      badge.style.color = c.color;
     }
 
     function saveRecordFromModal(e) {
       if (e) e.preventDefault();
 
       let gVal = null;
+      const gInput = document.getElementById('inputGlucose');
+      const rawG = gInput ? gInput.value.trim() : '';
+
       if (currentModalType === 'glucose') {
-        const num = parseFloat(document.getElementById('inputGlucose').value);
+        if (!rawG) {
+          return alert('Lütfen kan şekeri değerini giriniz!');
+        }
+        const num = parseFloat(rawG);
         if (profile.unit === 'mmol/L') {
           if (isNaN(num) || num < 1.1 || num > 36.0) {
             return alert('Lütfen geçerli bir kan şekeri değeri giriniz (1.1 - 36.0 mmol/L)!');
@@ -1333,9 +1685,14 @@
           }
           gVal = Math.round(num);
         }
+      } else if (rawG) {
+        const num = parseFloat(rawG);
+        if (!isNaN(num) && num > 0) {
+          gVal = profile.unit === 'mmol/L' ? toMgDl(num, 'mmol/L') : Math.round(num);
+        }
       }
 
-      const selTiming = document.getElementById('selectTiming')?.value || selectedTiming;
+      const selTiming = document.getElementById('selectTiming')?.value || '';
       const med = document.getElementById('inputMed')?.value.trim() || '';
       const medTime = document.getElementById('inputMedTime')?.value || '';
       const bolus = Number(document.getElementById('inputBolus')?.value) || 0;
@@ -1349,39 +1706,76 @@
       const notes = document.getElementById('inputNotes')?.value.trim() || '';
       const tsVal = document.getElementById('inputTimestamp')?.value;
 
+      if (currentModalType === 'glucose' && !selTiming) {
+        return alert('Lütfen ölçüm vaktini (Sabah Açlık, vb.) seçiniz!');
+      }
       if (currentModalType === 'insulin' && !med && !bolus && !basal) {
         return alert('Lütfen en az bir ilaç adı veya insülin dozu giriniz!');
       }
       if (currentModalType === 'food' && !mealNote && !carbs) {
         return alert('Lütfen yenilen yemeği veya karbonhidrat miktarını giriniz!');
       }
+      if (currentModalType === 'activity' && !act && !actDet) {
+        return alert('Lütfen spor/aktivite türünü seçiniz veya detayını yazınız!');
+      }
+      if (currentModalType === 'note' && !symptom && !notes) {
+        return alert('Lütfen bir belirti seçiniz veya açıklama/not yazınız!');
+      }
 
-      const newRec = {
-        id: `rec-${Date.now()}`,
-        entryType: currentModalType,
-        glucose: gVal,
-        timing: selTiming,
-        timestamp: tsVal ? new Date(tsVal).toISOString() : new Date().toISOString(),
-        medication: med,
-        medicationTime: medTime,
-        insulinBolus: bolus,
-        insulinBasal: basal,
-        carbs: carbs,
-        mealTime: mealTime,
-        mealNote: mealNote,
-        activity: currentModalType === 'activity' ? act : '',
-        activityDetails: actDet,
-        symptoms: currentModalType === 'note' ? symptom : '',
-        notes: notes
-      };
+      const timestampIso = tsVal ? new Date(tsVal).toISOString() : new Date().toISOString();
 
-      records.unshift(newRec);
+      if (editingRecordId) {
+        const idx = records.findIndex(r => r.id === editingRecordId);
+        if (idx !== -1) {
+          records[idx] = {
+            ...records[idx],
+            entryType: currentModalType,
+            glucose: gVal !== null ? gVal : (currentModalType === 'glucose' ? null : records[idx].glucose),
+            timing: selTiming || records[idx].timing || 'random',
+            timestamp: timestampIso,
+            medication: currentModalType === 'insulin' ? med : (med || records[idx].medication || ''),
+            medicationTime: currentModalType === 'insulin' ? medTime : (medTime || records[idx].medicationTime || ''),
+            insulinBolus: currentModalType === 'insulin' ? bolus : (bolus || records[idx].insulinBolus || 0),
+            insulinBasal: currentModalType === 'insulin' ? basal : (basal || records[idx].insulinBasal || 0),
+            carbs: currentModalType === 'food' ? carbs : (carbs || records[idx].carbs || 0),
+            mealTime: currentModalType === 'food' ? mealTime : (mealTime || records[idx].mealTime || ''),
+            mealNote: currentModalType === 'food' ? mealNote : (mealNote || records[idx].mealNote || ''),
+            activity: currentModalType === 'activity' ? act : (act || records[idx].activity || ''),
+            activityDetails: currentModalType === 'activity' ? actDet : (actDet || records[idx].activityDetails || ''),
+            symptoms: currentModalType === 'note' ? symptom : (symptom || records[idx].symptoms || ''),
+            notes: notes || records[idx].notes || ''
+          };
+        }
+        editingRecordId = null;
+      } else {
+        const newRec = {
+          id: `rec-${Date.now()}`,
+          entryType: currentModalType,
+          glucose: gVal,
+          timing: selTiming || 'random',
+          timestamp: timestampIso,
+          medication: med,
+          medicationTime: medTime,
+          insulinBolus: bolus,
+          insulinBasal: basal,
+          carbs: carbs,
+          mealTime: mealTime,
+          mealNote: mealNote,
+          activity: act,
+          activityDetails: actDet,
+          symptoms: symptom,
+          notes: notes
+        };
+        records.unshift(newRec);
+      }
+
       records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
       saveRecords();
       closeModal();
       renderToday();
       renderLogbook();
       if (currentTab === 'charts') renderCharts();
+      if (currentTab === 'report') renderReport();
     }
 
     function deleteRecord(id) {
@@ -1510,6 +1904,8 @@
         if (r.medication) extraDetails.push(`💊 ${r.medication}`);
         if (r.carbs) extraDetails.push(`🍞 ${r.carbs}g Karb`);
         if (r.mealNote) extraDetails.push(`🥗 ${r.mealNote}`);
+        if (r.activity) extraDetails.push(`🏃 ${r.activity}${r.activityDetails ? ` (${r.activityDetails})` : ''}`);
+        if (r.symptoms) extraDetails.push(`🩺 ${r.symptoms}`);
         if (r.notes) extraDetails.push(`📝 ${r.notes}`);
 
         return `
@@ -1587,7 +1983,7 @@
     }
 
     function downloadCSV() {
-      let csv = `\uFEFFTarih;Saat;Ölçüm Vakti;Şeker (${profile.unit});Bolus İnsülin;Bazal İnsülin;İlaç;Karbonhidrat (g);Yemek Notu;Notlar\r\n`;
+      let csv = `\uFEFFTarih;Saat;Ölçüm Vakti;Kategori;Şeker (${profile.unit});Bolus İnsülin;Bazal İnsülin;İlaç;Karbonhidrat (g);Yemek Notu;Spor / Aktivite;Belirtiler;Notlar\r\n`;
       records.forEach(r => {
         const d = new Date(r.timestamp);
         const date = d.toLocaleDateString('tr-TR');
@@ -1596,7 +1992,8 @@
         const timingObj = TIMINGS.find(t => t.id === r.timing);
         const timingLabel = timingObj ? (timingObj.short || timingObj.label) : (r.timing || '');
         const gDisplay = r.glucose ? formatGlucose(r.glucose, profile.unit) : '';
-        csv += `${clean(date)};${clean(time)};${clean(timingLabel)};${clean(gDisplay)};${clean(r.insulinBolus||0)};${clean(r.insulinBasal||0)};${clean(r.medication||'')};${clean(r.carbs||0)};${clean(r.mealNote||'')};${clean(r.notes||'')}\r\n`;
+        const actStr = [r.activity, r.activityDetails].filter(Boolean).join(' - ');
+        csv += `${clean(date)};${clean(time)};${clean(timingLabel)};${clean(r.entryType||'')};${clean(gDisplay)};${clean(r.insulinBolus||0)};${clean(r.insulinBasal||0)};${clean(r.medication||'')};${clean(r.carbs||0)};${clean(r.mealNote||'')};${clean(actStr)};${clean(r.symptoms||'')};${clean(r.notes||'')}\r\n`;
       });
 
       const fileName = `glukodenge-kayitlar-${new Date().toISOString().slice(0,10)}.csv`;
