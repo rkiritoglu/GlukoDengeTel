@@ -8,6 +8,7 @@ Bu GitHub deposu, projenin ilk web prototiplerinden Google Play Store için derl
 
 ## 🌟 Öne Çıkan Özellikler
 
+- 🌐 **Çok Dilli Destek (Multilingual):** Cihazın sistem dilini otomatik algılama (Türkçe 🇹🇷, English 🇬🇧, Deutsch 🇩🇪, Français 🇫🇷, Español 🇪🇸, العربية 🇸🇦, Русский 🇷🇺) ve alt gezinme çubuğundan anında isteğe bağlı dil değiştirme.
 - 🩸 **Kapsamlı Veri Girişi:** Kan şekeri, bolus/bazal insülin, ağızdan ilaç, yemek & karbonhidrat (g), spor & egzersiz süresi, belirti ve notlar.
 - 🚨 **Akıllı Hipoglisemi Uyarısı (15-15 Kuralı):** 70 mg/dL altındaki ölçümlerde otomatik açılan yüksek kontrastlı acil durum kartı ve rehberlik.
 - 📋 **Kategori Bazlı Kayıt Takibi:** Girilen her bilgi, kendi başlığı (🩸 Şeker, 💉 İlaç, 🥗 Besin, 🏃 Spor, 📝 Not) altında net ve düzenli listelenir.

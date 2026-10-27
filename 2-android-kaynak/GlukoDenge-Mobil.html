@@ -13,8 +13,6 @@
   <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22GlukoDenge%20Mobil%22%2C%22short_name%22%3A%22GlukoDenge%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%230f766e%22%7D">
 
   <!-- Tailwind CSS & Chart.js CDN -->
-  <link rel="stylesheet" href="assets/tailwind.css">
-  <script src="chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -91,7 +89,7 @@
         </div>
         <div>
           <div class="flex items-center space-x-1.5">
-            <h1 class="text-base font-bold tracking-tight">GlukoDenge</h1>
+            <h1 class="text-base font-bold tracking-tight" data-i18n="app_title">GlukoDenge</h1>
             <span class="text-[10px] font-semibold bg-teal-500/40 text-teal-100 px-1.5 py-0.5 rounded-full border border-teal-400/30">
               Mobil
             </span>
@@ -111,32 +109,32 @@
         <!-- Özet Sayfası -->
         <button onclick="switchTab('today')" class="touch-active px-2 py-1 rounded-lg bg-teal-900 hover:bg-teal-950 border border-teal-700 text-teal-200 shadow-sm transition flex items-center gap-1 cursor-pointer" title="Özet Sayfası">
           <span>🏠</span>
-          <span class="hidden sm:inline text-[11px] font-bold">Özet</span>
+          <span class="hidden sm:inline text-[11px] font-bold" data-i18n="header_summary">Özet</span>
         </button>
 
         <!-- Hekim Raporu -->
         <button onclick="switchTab('report')" class="touch-active px-2 py-1 rounded-lg bg-teal-900 hover:bg-teal-950 border border-teal-700 text-teal-200 shadow-sm transition flex items-center gap-1" title="Hekim & Doktor Raporu">
           <span>🩺</span>
-          <span class="hidden sm:inline text-[11px] font-bold">Rapor</span>
+          <span class="hidden sm:inline text-[11px] font-bold" data-i18n="header_report">Rapor</span>
         </button>
 
         <!-- Hatırlatıcılar -->
         <button onclick="switchTab('reminders')" class="touch-active relative px-2 py-1 rounded-lg bg-teal-900 hover:bg-teal-950 border border-teal-700 text-teal-200 shadow-sm transition flex items-center gap-1" title="Hatırlatıcılar & Alarmlar">
           <span>🔔</span>
-          <span class="hidden sm:inline text-[11px] font-bold">Alarm</span>
+          <span class="hidden sm:inline text-[11px] font-bold" data-i18n="header_alarm">Alarm</span>
           <span id="activeReminderDot" class="hidden absolute top-0.5 right-0.5 w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
         </button>
 
         <!-- Ayarlar -->
         <button onclick="switchTab('settings')" class="touch-active px-2 py-1 rounded-lg bg-teal-900 hover:bg-teal-950 border border-teal-700 text-teal-200 shadow-sm transition flex items-center gap-1" title="Profil & Hedef Ayarları">
           <span>⚙️</span>
-          <span class="hidden sm:inline text-[11px] font-bold">Ayar</span>
+          <span class="hidden sm:inline text-[11px] font-bold" data-i18n="header_settings">Ayar</span>
         </button>
 
         <!-- Yeni Kayıt -->
         <button onclick="openAddModal('glucose')" class="touch-active px-2 py-1 rounded-lg bg-teal-900 hover:bg-teal-950 border border-teal-700 text-teal-200 shadow-sm transition flex items-center gap-1" title="Yeni Kayıt Ekle">
           <span>➕</span>
-          <span class="hidden sm:inline text-[11px] font-bold">Kayıt</span>
+          <span class="hidden sm:inline text-[11px] font-bold" data-i18n="header_add">Kayıt</span>
         </button>
       </div>
 
@@ -151,7 +149,7 @@
           🔔
         </div>
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-teal-400 block">Ölçüm & İlaç Vakti</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-teal-400 block" data-i18n="toast_badge">Ölçüm & İlaç Vakti</span>
           <h4 id="toastTitle" class="text-sm font-bold text-white leading-tight">Sabah Açlık</h4>
           <span id="toastTime" class="text-xs text-slate-400">Saat: 07:30</span>
         </div>
@@ -159,7 +157,7 @@
       <button onclick="dismissToast()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
     </div>
     <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-end gap-2">
-      <button onclick="dismissToast()" class="px-3 py-1.5 text-xs font-semibold text-slate-400">Daha Sonra</button>
+      <button onclick="dismissToast()" class="px-3 py-1.5 text-xs font-semibold text-slate-400" data-i18n="toast_later">Daha Sonra</button>
       <button onclick="openAddFromToast()" class="px-3.5 py-1.5 bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold rounded-xl shadow">
         + Ölçüm Gir
       </button>
@@ -175,7 +173,7 @@
         <div class="flex items-start gap-2.5">
           <span class="text-2xl select-none leading-none">⚠️</span>
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider block" style="color: #ffe4e6 !important;">ACİL DURUM UYARISI</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider block" style="color: #ffe4e6 !important;" data-i18n="hypo_alert">ACİL DURUM UYARISI</span>
             <h3 class="text-lg font-black tracking-tight" id="hypoValueText" style="color: #ffffff !important; margin-top: 1px;">Hipoglisemi: 65 mg/dL</h3>
           </div>
         </div>
@@ -195,7 +193,7 @@
       <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-slate-200/90 relative overflow-hidden">
         <div id="latestAccentBar" class="absolute top-0 left-0 right-0 h-1.5 bg-teal-600"></div>
         <div class="flex items-center justify-between pt-1">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Son Ölçüm</span>
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider" data-i18n="latest_measurement">Son Ölçüm</span>
           <span id="latestBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
             Hedefte
           </span>
@@ -217,17 +215,17 @@
       <!-- Quick 3 Stat Cards -->
       <div class="grid grid-cols-3 gap-2">
         <div class="bg-white rounded-2xl p-3 shadow-sm border border-slate-200/80 text-center">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Ortalama</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block" data-i18n="stat_avg">Ortalama</span>
           <span id="statAvg" class="text-xl font-extrabold font-mono text-slate-800">124</span>
           <span class="text-[10px] text-slate-400 block" id="statUnitLabel">mg/dL</span>
         </div>
         <div class="bg-white rounded-2xl p-3 shadow-sm border border-slate-200/80 text-center">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Tahmini A1c</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block" data-i18n="stat_a1c">Tahmini A1c</span>
           <span id="statA1c" class="text-xl font-extrabold font-mono text-teal-700">%5.9</span>
           <span class="text-[10px] text-slate-400 block">ADAG Formülü</span>
         </div>
         <div class="bg-white rounded-2xl p-3 shadow-sm border border-slate-200/80 text-center">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">TIR (Hedefte)</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block" data-i18n="stat_tir">TIR (Hedefte)</span>
           <span id="statTir" class="text-xl font-extrabold font-mono text-emerald-600">%88</span>
           <span class="text-[10px] text-slate-400 block">70-180 aralığı</span>
         </div>
@@ -237,39 +235,39 @@
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200/90 space-y-3">
         <div class="border-b border-slate-100 pb-2">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-            <span>✍️</span> Bilgi Girişi
+            <span>✍️</span> <span data-i18n="hub_title">Bilgi Girişi</span>
           </h3>
-          <span class="text-[10px] text-slate-500 font-medium">Hızlı kayıt eklemek için dokunun:</span>
+          <span class="text-[10px] text-slate-500 font-medium" data-i18n="hub_subtitle">Hızlı kayıt eklemek için dokunun:</span>
         </div>
 
         <!-- 5 Category Direct Buttons -->
         <div class="grid grid-cols-5 gap-1.5">
           <button type="button" onclick="openAddModal('glucose')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #fff1f2; border-color: #fecdd3; color: #9f1239;">
             <span class="text-xl mb-0.5">🩸</span>
-            <span class="text-[10px] font-black leading-tight">Şeker</span>
+            <span class="text-[10px] font-black leading-tight" data-i18n="hub_glucose">Şeker</span>
           </button>
           <button type="button" onclick="openAddModal('insulin')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #f0fdfa; border-color: #99f6e4; color: #115e59;">
             <span class="text-xl mb-0.5">💉</span>
-            <span class="text-[10px] font-black leading-tight">İlaç</span>
+            <span class="text-[10px] font-black leading-tight" data-i18n="hub_insulin">İlaç</span>
           </button>
           <button type="button" onclick="openAddModal('food')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #fffbeb; border-color: #fde68a; color: #854d0e;">
             <span class="text-xl mb-0.5">🥗</span>
-            <span class="text-[10px] font-black leading-tight">Besin</span>
+            <span class="text-[10px] font-black leading-tight" data-i18n="hub_food">Besin</span>
           </button>
           <button type="button" onclick="openAddModal('activity')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #f0f9ff; border-color: #bae6fd; color: #075985;">
             <span class="text-xl mb-0.5">🏃</span>
-            <span class="text-[10px] font-black leading-tight">Spor</span>
+            <span class="text-[10px] font-black leading-tight" data-i18n="hub_activity">Spor</span>
           </button>
           <button type="button" onclick="openAddModal('note')" class="touch-active flex flex-col items-center justify-center p-2 rounded-2xl border transition text-center hover:shadow-xs cursor-pointer" style="background-color: #faf5ff; border-color: #e9d5ff; color: #6b21a8;">
             <span class="text-xl mb-0.5">📝</span>
-            <span class="text-[10px] font-black leading-tight">Not</span>
+            <span class="text-[10px] font-black leading-tight" data-i18n="hub_note">Not</span>
           </button>
         </div>
       </div>
 
       <!-- Today List -->
       <div class="space-y-2">
-        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider px-1">Bugünkü Kayıtlar</h3>
+        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider px-1" data-i18n="today_records_title">Bugünkü Kayıtlar</h3>
         <div id="todayListContainer" class="space-y-2"></div>
       </div>
 
@@ -282,21 +280,21 @@
           type="text" 
           id="searchInput" 
           oninput="renderLogbook()" 
-          placeholder="Ölçüm, yemek, ilaç veya not ara..." 
+          placeholder="Ölçüm, yemek, ilaç veya not ara..." data-i18n-placeholder="search_placeholder" 
           class="w-full bg-white rounded-2xl px-4 py-2.5 text-xs font-medium text-slate-800 border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
       </div>
 
       <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
-        <button onclick="setLogFilter('all', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white shrink-0">Tümü</button>
-        <button onclick="setLogFilter('glucose', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🩸 Şeker</button>
-        <button onclick="setLogFilter('insulin', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">💉 İlaç</button>
-        <button onclick="setLogFilter('food', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🥗 Besin</button>
-        <button onclick="setLogFilter('activity', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">🏃 Spor</button>
-        <button onclick="setLogFilter('note', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">📝 Not</button>
-        <button onclick="setLogFilter('fasting', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Açlık</button>
-        <button onclick="setLogFilter('post', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Tokluk</button>
-        <button onclick="setLogFilter('out', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0">Hedef Dışı</button>
+        <button onclick="setLogFilter('all', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white shrink-0" data-i18n="filter_all">Tümü</button>
+        <button onclick="setLogFilter('glucose', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_glucose">🩸 Şeker</button>
+        <button onclick="setLogFilter('insulin', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_insulin">💉 İlaç</button>
+        <button onclick="setLogFilter('food', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_food">🥗 Besin</button>
+        <button onclick="setLogFilter('activity', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_activity">🏃 Spor</button>
+        <button onclick="setLogFilter('note', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_note">📝 Not</button>
+        <button onclick="setLogFilter('fasting', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_fasting">Açlık</button>
+        <button onclick="setLogFilter('post', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_post">Tokluk</button>
+        <button onclick="setLogFilter('out', this)" class="log-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 shrink-0" data-i18n="filter_out">Hedef Dışı</button>
       </div>
 
       <div id="logbookList" class="space-y-2"></div>
@@ -305,15 +303,15 @@
     <!-- TAB 3: GRAFİKLER (CHARTS) -->
     <div id="tab-charts" class="tab-page hidden space-y-3">
       <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar">
-        <button onclick="setChartDays(7)" id="btn-chart-7" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">7 Gün</button>
-        <button onclick="setChartDays(14)" id="btn-chart-14" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white">14 Gün</button>
-        <button onclick="setChartDays(30)" id="btn-chart-30" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">30 Gün</button>
-        <button onclick="setChartDays(90)" id="btn-chart-90" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">90 Gün</button>
+        <button onclick="setChartDays(7)" id="btn-chart-7" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200" data-i18n="days_7">7 Gün</button>
+        <button onclick="setChartDays(14)" id="btn-chart-14" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-700 text-white" data-i18n="days_14">14 Gün</button>
+        <button onclick="setChartDays(30)" id="btn-chart-30" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200" data-i18n="days_30">30 Gün</button>
+        <button onclick="setChartDays(90)" id="btn-chart-90" class="chart-day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200" data-i18n="days_90">90 Gün</button>
       </div>
 
       <!-- Trend Line Chart -->
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200/90">
-        <h3 class="text-xs font-bold text-slate-700 mb-2">Kan Şekeri Trend Eğrisi</h3>
+        <h3 class="text-xs font-bold text-slate-700 mb-2" data-i18n="chart_trend_title">Kan Şekeri Trend Eğrisi</h3>
         <div class="h-56 w-full">
           <canvas id="trendChartCanvas"></canvas>
         </div>
@@ -321,7 +319,7 @@
 
       <!-- TIR Donut Chart -->
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200/90">
-        <h3 class="text-xs font-bold text-slate-700 mb-2 text-center">Hedefte Kalma Dağılımı (TIR)</h3>
+        <h3 class="text-xs font-bold text-slate-700 mb-2 text-center" data-i18n="chart_tir_title">Hedefte Kalma Dağılımı (TIR)</h3>
         <div class="h-48 w-full">
           <canvas id="tirChartCanvas"></canvas>
         </div>
@@ -329,7 +327,7 @@
 
       <!-- Meal Averages Bar Chart -->
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200/90">
-        <h3 class="text-xs font-bold text-slate-700 mb-2">Öğün Bazlı Ortalama Şeker</h3>
+        <h3 class="text-xs font-bold text-slate-700 mb-2" data-i18n="chart_meal_title">Öğün Bazlı Ortalama Şeker</h3>
         <div class="h-48 w-full">
           <canvas id="mealChartCanvas"></canvas>
         </div>
@@ -343,18 +341,18 @@
           <div class="flex items-center gap-2.5">
             <span class="text-2xl">⏰</span>
             <div>
-              <h3 class="text-sm font-bold">Ölçüm & İlaç Alarmları</h3>
-              <p class="text-[11px] text-teal-200">Zamanında ölçüm diyabet kontrolünün anahtarıdır.</p>
+              <h3 class="text-sm font-bold" data-i18n="rem_banner_title">Ölçüm & İlaç Alarmları</h3>
+              <p class="text-[11px] text-teal-200" data-i18n="rem_banner_sub">Zamanında ölçüm diyabet kontrolünün anahtarıdır.</p>
             </div>
           </div>
         </div>
 
         <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
           <button onclick="testChimeSound()" class="touch-active px-3 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
-            <span>🔊</span> Ses Testi
+            <span>🔊</span> <span data-i18n="rem_btn_sound_test">Ses Testi</span>
           </button>
           <button onclick="requestNotificationPermission()" class="touch-active px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-900 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition">
-            <span>🔔</span> Bildirimi Aç
+            <span>🔔</span> <span data-i18n="rem_btn_open_notif">Bildirimi Aç</span>
           </button>
         </div>
       </div>
@@ -363,24 +361,24 @@
 
       <!-- Add Custom Reminder Form -->
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 space-y-3">
-        <h4 class="text-xs font-bold text-slate-800 pb-1 border-b">Yeni Hatırlatıcı Ekle</h4>
+        <h4 class="text-xs font-bold text-slate-800 pb-1 border-b" data-i18n="rem_add_title">Yeni Hatırlatıcı Ekle</h4>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-[10px] font-bold text-slate-500 block mb-1">Saat</label>
+            <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="rem_label_time">Saat</label>
             <input type="time" id="newRemTime" value="12:00" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
           </div>
           <div>
-            <label class="text-[10px] font-bold text-slate-500 block mb-1">Öğün / Tür</label>
+            <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="rem_label_type">Öğün / Tür</label>
             <select id="newRemType" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
-              <option value="glucose">Kan Şekeri</option>
-              <option value="insulin">İnsülin / İlaç</option>
-              <option value="meal">Öğün</option>
+              <option value="glucose" data-i18n="rem_opt_glucose">Kan Şekeri</option>
+              <option value="insulin" data-i18n="rem_opt_insulin">İnsülin / İlaç</option>
+              <option value="meal" data-i18n="rem_opt_meal">Öğün</option>
             </select>
           </div>
         </div>
         <div>
-          <label class="text-[10px] font-bold text-slate-500 block mb-1">Başlık / Etiket</label>
-          <input type="text" id="newRemLabel" placeholder="Örn: Ara Öğün & İlaç" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
+          <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="rem_label_title">Başlık / Etiket</label>
+          <input type="text" id="newRemLabel" placeholder="Örn: Ara Öğün & İlaç" data-i18n-placeholder="rem_placeholder_title" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
         </div>
         <button onclick="addNewReminder()" class="touch-active w-full py-2.5 bg-teal-700 text-white font-bold text-xs rounded-xl shadow">
           + Hatırlatıcıyı Kaydet
@@ -394,39 +392,39 @@
         <div class="flex items-center space-x-3">
           <span class="text-3xl">💬</span>
           <div>
-            <h3 class="text-sm font-black">WhatsApp ile Doktora Gönder</h3>
-            <p class="text-[11px] text-emerald-100">Ölçüm özetini hekiminize tek tıkla iletin.</p>
+            <h3 class="text-sm font-black" data-i18n="rep_wa_title">WhatsApp ile Doktora Gönder</h3>
+            <p class="text-[11px] text-emerald-100" data-i18n="rep_wa_sub">Ölçüm özetini hekiminize tek tıkla iletin.</p>
           </div>
         </div>
         <button onclick="shareWhatsApp()" class="touch-active w-full py-3 bg-white text-emerald-800 font-extrabold text-xs rounded-2xl shadow flex items-center justify-center space-x-2">
-          <span>WhatsApp'ta Paylaş</span>
+          <span data-i18n="rep_wa_btn">WhatsApp'ta Paylaş</span>
         </button>
       </div>
 
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 space-y-3">
         <div class="border-b pb-2 flex items-center justify-between">
           <div>
-            <h4 class="text-xs font-bold text-slate-800 uppercase">Hekim Muayene Özeti</h4>
-            <p class="text-[11px] text-slate-500">American Diabetes Association (ADA) Standartları</p>
+            <h4 class="text-xs font-bold text-slate-800 uppercase" data-i18n="rep_doc_summary">Hekim Muayene Özeti</h4>
+            <p class="text-[11px] text-slate-500" data-i18n="rep_ada_std">American Diabetes Association (ADA) Standartları</p>
           </div>
-          <span class="text-xs bg-teal-50 text-teal-800 px-2 py-0.5 rounded-full font-bold">Klinik Rapor</span>
+          <span class="text-xs bg-teal-50 text-teal-800 px-2 py-0.5 rounded-full font-bold" data-i18n="rep_badge">Klinik Rapor</span>
         </div>
 
         <div class="grid grid-cols-2 gap-2 text-xs">
           <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-400 font-bold block">Toplam Kayıt:</span>
+            <span class="text-[10px] text-slate-400 font-bold block" data-i18n="rep_total_records">Toplam Kayıt:</span>
             <span id="repTotalCount" class="font-extrabold text-slate-800">0</span>
           </div>
           <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-400 font-bold block">Ortalama Şeker:</span>
+            <span class="text-[10px] text-slate-400 font-bold block" data-i18n="rep_avg_glucose">Ortalama Şeker:</span>
             <span id="repAvgVal" class="font-extrabold text-slate-800">0</span>
           </div>
           <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-400 font-bold block">Tahmini HbA1c:</span>
+            <span class="text-[10px] text-slate-400 font-bold block" data-i18n="rep_est_a1c">Tahmini HbA1c:</span>
             <span id="repA1cVal" class="font-extrabold text-teal-700">%0</span>
           </div>
           <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-400 font-bold block">Hipoglisemi Olayı:</span>
+            <span class="text-[10px] text-slate-400 font-bold block" data-i18n="rep_hypo_events">Hipoglisemi Olayı:</span>
             <span id="repHypoCount" class="font-extrabold text-rose-600">0 adet</span>
           </div>
         </div>
@@ -435,13 +433,13 @@
         <div class="mt-4 pt-3 border-t border-slate-100 space-y-2">
           <div class="flex items-center justify-between">
             <h5 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-              <span>📋</span> Son 14 Günün Ölçüm Sonuçları
+              <span>📋</span> <span data-i18n="rep_14days_title">Son 14 Günün Ölçüm Sonuçları</span>
             </h5>
             <span id="rep14CountBadge" class="text-[10px] bg-teal-50 text-teal-800 font-bold px-2 py-0.5 rounded-full border border-teal-200">
               0 Ölçüm
             </span>
           </div>
-          <p class="text-[11px] text-slate-500">Hekim muayenesi için son 14 günlük ayrıntılı kan şekeri, insülin ve ilaç dökümü:</p>
+          <p class="text-[11px] text-slate-500" data-i18n="rep_14days_sub">Hekim muayenesi için son 14 günlük ayrıntılı kan şekeri, insülin ve ilaç dökümü:</p>
           <div id="rep14TableContainer" class="max-h-96 overflow-y-auto space-y-1.5 pr-1 no-scrollbar">
             <!-- JavaScript ile doldurulacak -->
           </div>
@@ -449,13 +447,13 @@
 
         <div class="pt-2 border-t border-slate-100 space-y-2 no-print">
           <button onclick="printDoctorReport()" class="touch-active w-full py-3 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-1.5 transition">
-            <span>📄</span> Hekim Raporu Yazdır / PDF İndir
+            <span>📄</span> <span data-i18n="rep_btn_print">Hekim Raporu Yazdır / PDF İndir</span>
           </button>
           <button onclick="downloadCSV()" class="touch-active w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-2xl border border-slate-200 flex items-center justify-center gap-1.5 transition">
-            <span>📥</span> Excel (CSV) Raporu İndir
+            <span>📥</span> <span data-i18n="rep_btn_csv">Excel (CSV) Raporu İndir</span>
           </button>
           <button onclick="downloadJSON()" class="touch-active w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-2xl border border-slate-200 flex items-center justify-center gap-1.5 transition">
-            <span>💾</span> Tüm Verileri Yedekle (JSON)
+            <span>💾</span> <span data-i18n="rep_btn_json">Tüm Verileri Yedekle (JSON)</span>
           </button>
         </div>
       </div>
@@ -465,32 +463,32 @@
     <div id="tab-settings" class="tab-page hidden space-y-3">
       <form onsubmit="saveProfileSettings(event)" class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 space-y-3">
         <div class="border-b pb-2 flex items-center justify-between">
-          <h3 class="text-xs font-bold text-slate-800 uppercase">Kişisel Profil & İletişim</h3>
+          <h3 class="text-xs font-bold text-slate-800 uppercase" data-i18n="set_prof_title">Kişisel Profil & İletişim</h3>
           <span class="text-[10px] text-slate-400 font-bold">Ayarlar</span>
         </div>
 
         <div>
-          <label class="text-[10px] font-bold text-slate-500 block mb-1">Hasta Adı Soyadı</label>
+          <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="set_patient_name">Hasta Adı Soyadı</label>
           <input type="text" id="profName" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-600">
         </div>
         
         <div>
-          <label class="text-[10px] font-bold text-slate-500 block mb-1">Diyabet Tipi</label>
+          <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="set_diabetes_type">Diyabet Tipi</label>
           <select id="profDiabetesType" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
-            <option value="type2">Tip 2 Diyabet</option>
-            <option value="type1">Tip 1 Diyabet</option>
-            <option value="gestational">Gestasyonel (Gebelik) Diyabeti</option>
-            <option value="prediabetes">Prediyabet / Gizli Şeker</option>
+            <option value="type2" data-i18n="set_dt_type2">Tip 2 Diyabet</option>
+            <option value="type1" data-i18n="set_dt_type1">Tip 1 Diyabet</option>
+            <option value="gestational" data-i18n="set_dt_gestational">Gestasyonel (Gebelik) Diyabeti</option>
+            <option value="prediabetes" data-i18n="set_dt_prediabetes">Prediyabet / Gizli Şeker</option>
           </select>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-[10px] font-bold text-slate-500 block mb-1">Hekim Adı</label>
+            <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="set_doc_name">Hekim Adı</label>
             <input type="text" id="profDocName" placeholder="Dr. Adı..." class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
           </div>
           <div>
-            <label class="text-[10px] font-bold text-slate-500 block mb-1">Doktor Telefonu</label>
+            <label class="text-[10px] font-bold text-slate-500 block mb-1" data-i18n="set_doc_phone">Doktor Telefonu</label>
             <input type="tel" id="profDocPhone" placeholder="+905..." class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs font-bold border border-slate-200">
           </div>
         </div>
@@ -501,18 +499,18 @@
       </form>
 
       <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 space-y-3">
-        <h3 class="text-xs font-bold text-slate-800 uppercase pb-1 border-b">Glukoz Hedef Aralıkları (mg/dL)</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase pb-1 border-b" data-i18n="set_targets_title">Glukoz Hedef Aralıkları (mg/dL)</h3>
         <div class="grid grid-cols-3 gap-2">
           <div>
-            <label class="text-[9px] font-bold text-slate-400 block mb-1">Hipo Alt Sınır</label>
+            <label class="text-[9px] font-bold text-slate-400 block mb-1" data-i18n="set_target_hypo">Hipo Alt Sınır</label>
             <input type="number" id="targetHypo" value="70" class="w-full bg-slate-50 rounded-xl px-2 py-1.5 text-xs font-mono font-bold border">
           </div>
           <div>
-            <label class="text-[9px] font-bold text-slate-400 block mb-1">Açlık Üst Sınır</label>
+            <label class="text-[9px] font-bold text-slate-400 block mb-1" data-i18n="set_target_fasting">Açlık Üst Sınır</label>
             <input type="number" id="targetFasting" value="130" class="w-full bg-slate-50 rounded-xl px-2 py-1.5 text-xs font-mono font-bold border">
           </div>
           <div>
-            <label class="text-[9px] font-bold text-slate-400 block mb-1">Tokluk Üst Sınır</label>
+            <label class="text-[9px] font-bold text-slate-400 block mb-1" data-i18n="set_target_post">Tokluk Üst Sınır</label>
             <input type="number" id="targetPostMeal" value="180" class="w-full bg-slate-50 rounded-xl px-2 py-1.5 text-xs font-mono font-bold border">
           </div>
         </div>
@@ -533,29 +531,29 @@
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="no-print fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg pb-[env(safe-area-inset-bottom,0px)]">
     <div class="max-w-md mx-auto grid grid-cols-6 h-16 items-center px-1">
-      <button onclick="switchTab('today')" id="nav-today" class="nav-btn touch-active flex flex-col items-center justify-center text-teal-700 font-bold">
-        <span class="text-base">🏠</span>
-        <span class="text-[9px]">Özet</span>
+      <button onclick="openLanguageModal()" id="nav-lang" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-500 font-medium hover:text-teal-700 transition cursor-pointer" title="Dil / Language" data-i18n-title="nav_lang_title">
+        <span class="text-base" id="navLangFlag">🌐</span>
+        <span class="text-[9px]" id="navLangLabel" data-i18n="nav_lang">Dil</span>
       </button>
       <button onclick="switchTab('charts')" id="nav-charts" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-400 font-medium">
         <span class="text-base">📈</span>
-        <span class="text-[9px]">Grafik</span>
+        <span class="text-[9px]" data-i18n="nav_charts">Grafik</span>
       </button>
       <button onclick="switchTab('logbook')" id="nav-logbook" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-400 font-medium">
         <span class="text-base">📋</span>
-        <span class="text-[9px]">Kayıtlar</span>
+        <span class="text-[9px]" data-i18n="nav_logbook">Kayıtlar</span>
       </button>
       <button onclick="switchTab('reminders')" id="nav-reminders" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-400 font-medium relative">
         <span class="text-base">⏰</span>
-        <span class="text-[9px]">Alarm</span>
+        <span class="text-[9px]" data-i18n="nav_reminders">Alarm</span>
       </button>
       <button onclick="switchTab('report')" id="nav-report" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-400 font-medium">
         <span class="text-base">🩺</span>
-        <span class="text-[9px]">Rapor</span>
+        <span class="text-[9px]" data-i18n="nav_report">Rapor</span>
       </button>
       <button onclick="switchTab('settings')" id="nav-settings" class="nav-btn touch-active flex flex-col items-center justify-center text-slate-400 font-medium">
         <span class="text-base">⚙️</span>
-        <span class="text-[9px]">Ayarlar</span>
+        <span class="text-[9px]" data-i18n="nav_settings">Ayarlar</span>
       </button>
     </div>
   </nav>
@@ -597,7 +595,7 @@
 
       <form onsubmit="saveRecordFromModal(event)" class="p-4 space-y-4 overflow-y-auto flex-1">
         <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs">
-          <span class="text-slate-500 font-bold">Kayıt Tarih & Saati:</span>
+          <span class="text-slate-500 font-bold" data-i18n="label_datetime">Kayıt Tarih & Saati:</span>
           <input type="datetime-local" id="inputTimestamp" class="bg-white border rounded-lg px-2 py-1 text-xs font-semibold text-slate-800">
         </div>
 
@@ -618,18 +616,18 @@
           </div>
 
           <div>
-            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1.5">Ölçüm Vakti / Durumu</label>
+            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1.5" data-i18n="label_timing">Ölçüm Vakti / Durumu</label>
             <select id="selectTiming" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-800">
-              <option value="" disabled selected>Ölçüm vaktini seçiniz...</option>
-              <option value="fasting">Sabah Açlık</option>
-              <option value="breakfast_post">Kahvaltı Tokluk (+2 saat)</option>
-              <option value="lunch_pre">Öğle Açlık / Yemek Öncesi</option>
-              <option value="lunch_post">Öğle Tokluk (+2 saat)</option>
-              <option value="dinner_pre">Akşam Açlık / Yemek Öncesi</option>
-              <option value="dinner_post">Akşam Tokluk (+2 saat)</option>
-              <option value="bedtime">Gece Yatış Öncesi</option>
-              <option value="night">Gece 03:00 Kontrolü</option>
-              <option value="random">Rastgele / Ara Kontrol</option>
+              <option value="" disabled selected data-i18n="opt_select_timing">Ölçüm vaktini seçiniz...</option>
+              <option value="fasting" data-i18n="timing_fasting">Sabah Açlık</option>
+              <option value="breakfast_post" data-i18n="timing_breakfast_post">Kahvaltı Tokluk (+2 saat)</option>
+              <option value="lunch_pre" data-i18n="timing_lunch_pre">Öğle Açlık / Yemek Öncesi</option>
+              <option value="lunch_post" data-i18n="timing_lunch_post">Öğle Tokluk (+2 saat)</option>
+              <option value="dinner_pre" data-i18n="timing_dinner_pre">Akşam Açlık / Yemek Öncesi</option>
+              <option value="dinner_post" data-i18n="timing_dinner_post">Akşam Tokluk (+2 saat)</option>
+              <option value="bedtime" data-i18n="timing_bedtime">Gece Yatış Öncesi</option>
+              <option value="night" data-i18n="timing_night">Gece 03:00 Kontrolü</option>
+              <option value="random" data-i18n="timing_random">Rastgele / Ara Kontrol</option>
             </select>
           </div>
         </div>
@@ -639,20 +637,20 @@
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #f0fdfa; border: 1px solid #99f6e4;">
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <label class="text-xs font-bold text-slate-700 block mb-1">Bolus (Yemek) İnsülin (Ünite)</label>
+                <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_bolus">Bolus (Yemek) İnsülin (Ünite)</label>
                 <input type="number" step="0.5" id="inputBolus" placeholder="Örn: 4" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
               </div>
               <div>
-                <label class="text-xs font-bold text-slate-700 block mb-1">Bazal (Uzun) İnsülin (Ünite)</label>
+                <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_basal">Bazal (Uzun) İnsülin (Ünite)</label>
                 <input type="number" step="0.5" id="inputBasal" placeholder="Örn: 18" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
               </div>
             </div>
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Ağızdan Alınan İlaç (Örn: Metformin)</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_med">Ağızdan Alınan İlaç (Örn: Metformin)</label>
               <input type="text" id="inputMed" placeholder="Örn: Glifor 1000mg" class="w-full bg-white border rounded-xl p-2 text-xs">
             </div>
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">İlaç Alınma Saati</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_med_time">İlaç Alınma Saati</label>
               <input type="time" id="inputMedTime" class="w-full bg-white border rounded-xl p-2 text-xs font-bold">
             </div>
           </div>
@@ -662,15 +660,15 @@
         <div id="section-food" class="hidden space-y-3">
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #fffbeb; border: 1px solid #fde68a;">
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Yemek Saati</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_meal_time">Yemek Saati</label>
               <input type="time" id="inputMealTime" class="w-full bg-white border rounded-xl p-2 text-xs font-bold">
             </div>
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Tahmini Karbonhidrat (gr)</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_carbs">Tahmini Karbonhidrat (gr)</label>
               <input type="number" id="inputCarbs" placeholder="Örn: 45" class="w-full bg-white border rounded-xl p-2 text-xs font-bold font-mono">
             </div>
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Yenilen Yemekler / Menü</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_meal_note">Yenilen Yemekler / Menü</label>
               <input type="text" id="inputMealNote" placeholder="Örn: 1 dilim tam buğday ekmeği, çorba, tavuk" class="w-full bg-white border rounded-xl p-2 text-xs">
             </div>
           </div>
@@ -680,17 +678,17 @@
         <div id="section-activity" class="hidden space-y-3">
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #f0f9ff; border: 1px solid #bae6fd;">
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Fiziksel Aktivite Şiddeti</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_activity_intensity">Fiziksel Aktivite Şiddeti</label>
               <select id="selectActivity" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold">
-                <option value="" disabled selected>Aktivite türünü seçiniz...</option>
-                <option value="Hafif (15-30 dk yürüyüş)">Hafif (15-30 dk tempolu yürüyüş)</option>
-                <option value="Orta (30-60 dk egzersiz)">Orta (30-60 dk bisiklet/fitness)</option>
-                <option value="Yoğun (Ağır spor/koşu)">Yoğun (Ağır antrenman/koşu)</option>
-                <option value="Dinlenme / Hareketsiz">Dinlenme / Hareketsiz gün</option>
+                <option value="" disabled selected data-i18n="opt_select_activity">Aktivite türünü seçiniz...</option>
+                <option value="Hafif (15-30 dk yürüyüş)" data-i18n="act_light">Hafif (15-30 dk tempolu yürüyüş)</option>
+                <option value="Orta (30-60 dk egzersiz)" data-i18n="act_medium">Orta (30-60 dk bisiklet/fitness)</option>
+                <option value="Yoğun (Ağır spor/koşu)" data-i18n="act_heavy">Yoğun (Ağır antrenman/koşu)</option>
+                <option value="Dinlenme / Hareketsiz" data-i18n="act_rest">Dinlenme / Hareketsiz gün</option>
               </select>
             </div>
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Spor Detayı / Süresi</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_activity_details">Spor Detayı / Süresi</label>
               <input type="text" id="inputActivityDetails" placeholder="Örn: 45 dk açık hava yürüyüşü" class="w-full bg-white border rounded-xl p-2 text-xs">
             </div>
           </div>
@@ -700,22 +698,22 @@
         <div id="section-note" class="hidden space-y-3">
           <div class="p-3.5 rounded-2xl space-y-3" style="background-color: #faf5ff; border: 1px solid #e9d5ff;">
             <div>
-              <label class="text-xs font-bold text-slate-700 block mb-1">Belirtiler / Sağlık Durumu</label>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="label_symptoms">Belirtiler / Sağlık Durumu</label>
               <select id="selectSymptom" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-semibold">
-                <option value="" disabled selected>Belirti veya durum seçiniz...</option>
-                <option value="Normal / İyi">Normal / Kendimi iyi hissediyorum</option>
-                <option value="Halsizlik / Yorgunluk">Halsizlik / Aşırı yorgunluk</option>
-                <option value="Ağız Kuruluğu / Çok Su İçme">Ağız kuruluğu / Çok su içme</option>
-                <option value="Baş Dönmesi / Titreme (Hipo)">Baş dönmesi / Titreme (Hipoglisemi hissi)</option>
-                <option value="Bulanık Görme">Bulanık görme</option>
-                <option value="Stresli / Huzursuz">Stresli / Huzursuz</option>
+                <option value="" disabled selected data-i18n="opt_select_symptom">Belirti veya durum seçiniz...</option>
+                <option value="Normal / İyi" data-i18n="sym_normal">Normal / Kendimi iyi hissediyorum</option>
+                <option value="Halsizlik / Yorgunluk" data-i18n="sym_fatigue">Halsizlik / Aşırı yorgunluk</option>
+                <option value="Ağız Kuruluğu / Çok Su İçme" data-i18n="sym_dry_mouth">Ağız kuruluğu / Çok su içme</option>
+                <option value="Baş Dönmesi / Titreme (Hipo)" data-i18n="sym_dizziness">Baş dönmesi / Titreme (Hipoglisemi hissi)</option>
+                <option value="Bulanık Görme" data-i18n="sym_blurred_vision">Bulanık görme</option>
+                <option value="Stresli / Huzursuz" data-i18n="sym_stress">Stresli / Huzursuz</option>
               </select>
             </div>
           </div>
         </div>
 
         <div>
-          <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1">Ek Açıklama & Not (İsteğe Bağlı)</label>
+          <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1" data-i18n="label_extra_notes">Ek Açıklama & Not (İsteğe Bağlı)</label>
           <textarea id="inputNotes" rows="2" placeholder="Gerekirse ek açıklamalar..." class="w-full text-xs border border-slate-300 rounded-xl p-2.5 bg-white resize-none"></textarea>
         </div>
 
@@ -731,7 +729,1923 @@
     </div>
   </div>
 
+  <!-- Language Selection Modal (Çok Dilli Destek) -->
+  <div id="modalLanguage" class="modal-overlay hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-100 overflow-hidden max-h-[85vh] flex flex-col">
+      <!-- Modal Header Banner -->
+      <div class="p-4 relative shrink-0 flex items-center justify-between" style="background: linear-gradient(135deg, #022c22, #064e3b) !important; background-color: #064e3b !important; color: #ffffff !important;">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl drop-shadow">🌐</span>
+          <div>
+            <h3 class="text-base font-bold text-white m-0" style="color: #ffffff !important;" data-i18n="modal_lang_title">Dil Seçimi / Language</h3>
+            <p class="text-[11px] mt-0.5" style="color: #a7f3d0 !important;" data-i18n="modal_lang_sub">Uygulama dilini seçiniz</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLanguageModal()" class="text-white/80 hover:text-white p-1 rounded-xl text-lg font-bold" style="color: #ffffff !important;">✕</button>
+      </div>
+
+      <!-- Language List -->
+      <div class="p-3 space-y-2 overflow-y-auto flex-1" id="langListContainer">
+        <!-- Rendered by renderLanguageList() -->
+      </div>
+    </div>
+  </div>
+
   <script>
+
+    const SUPPORTED_LANGS = {
+      tr: { name: 'Türkçe', flag: '🇹🇷', native: 'Türkçe' },
+      en: { name: 'English', flag: '🇬🇧', native: 'English' },
+      de: { name: 'Deutsch', flag: '🇩🇪', native: 'Deutsch' },
+      fr: { name: 'Français', flag: '🇫🇷', native: 'Français' },
+      es: { name: 'Español', flag: '🇪🇸', native: 'Español' },
+      ar: { name: 'العربية', flag: '🇸🇦', native: 'العربية', rtl: true },
+      ru: { name: 'Русский', flag: '🇷🇺', native: 'Русский' }
+    };
+
+    const TRANSLATIONS = {
+      tr: {
+        app_title: 'GlukoDenge',
+        app_badge: 'Mobil',
+        header_summary: 'Özet',
+        header_report: 'Rapor',
+        header_alarm: 'Alarm',
+        header_settings: 'Ayar',
+        header_add: 'Kayıt',
+        nav_lang: 'Dil',
+        nav_lang_title: 'Dil Seçimi / Language',
+        nav_charts: 'Grafik',
+        nav_logbook: 'Kayıtlar',
+        nav_reminders: 'Alarm',
+        nav_report: 'Rapor',
+        nav_settings: 'Ayarlar',
+        modal_lang_title: 'Dil Seçimi / Language',
+        modal_lang_sub: 'Uygulama dilini seçiniz',
+        toast_badge: 'Ölçüm & İlaç Vakti',
+        toast_later: 'Daha Sonra',
+        toast_enter: '+ Ölçüm Gir',
+        hypo_alert: 'ACİL DURUM UYARISI',
+        hypo_title: 'Hipoglisemi',
+        hypo_rule: '15-15 Kuralı: 15g hızlı şeker alın (3-4 kesme şeker veya 1 çay bardağı meyve suyu). 15 dk dinlenip şekeri tekrar ölçün.',
+        btn_close: 'Kapat',
+        latest_measurement: 'Son Ölçüm',
+        stat_avg: 'Ortalama',
+        stat_a1c: 'Tahmini A1c',
+        stat_a1c_sub: 'ADAG Formülü',
+        stat_tir: 'TIR (Hedefte)',
+        stat_tir_sub: '70-180 aralığı',
+        hub_title: 'Bilgi Girişi',
+        hub_subtitle: 'Hızlı kayıt eklemek için dokunun:',
+        hub_glucose: 'Şeker',
+        hub_insulin: 'İlaç',
+        hub_food: 'Besin',
+        hub_activity: 'Spor',
+        hub_note: 'Not',
+        today_records_title: 'Bugünkü Kayıtlar',
+        today_empty: 'Bugün henüz kayıt girilmedi. Yukarıdaki bilgi girişi butonlarına dokunarak ekleyin.',
+        search_placeholder: 'Ölçüm, yemek, ilaç veya not ara...',
+        filter_all: 'Tümü',
+        filter_glucose: '🩸 Şeker',
+        filter_insulin: '💉 İlaç',
+        filter_food: '🥗 Besin',
+        filter_activity: '🏃 Spor',
+        filter_note: '📝 Not',
+        filter_fasting: 'Açlık',
+        filter_post: 'Tokluk',
+        filter_out: 'Hedef Dışı',
+        log_empty: 'Kriterlere uygun kayıt bulunamadı.',
+        days_7: '7 Gün',
+        days_14: '14 Gün',
+        days_30: '30 Gün',
+        days_90: '90 Gün',
+        chart_trend_title: 'Kan Şekeri Trend Eğrisi',
+        chart_tir_title: 'Hedefte Kalma Dağılımı (TIR)',
+        chart_meal_title: 'Öğün Bazlı Ortalama Şeker',
+        chart_tir_in_range: 'Hedefte (70-180)',
+        chart_tir_high: 'Yüksek (>180)',
+        chart_tir_low: 'Düşük (<70)',
+        chart_glucose_label: 'Şeker',
+        chart_meal_avg: 'Ortalama',
+        meal_fasting: 'Sabah Aç',
+        meal_breakfast_post: 'Kahvaltı Tok',
+        meal_lunch_post: 'Öğle Tok',
+        meal_dinner_post: 'Akşam Tok',
+        meal_bedtime: 'Yatış',
+        rem_banner_title: 'Ölçüm & İlaç Alarmları',
+        rem_banner_sub: 'Zamanında ölçüm diyabet kontrolünün anahtarıdır.',
+        rem_btn_sound_test: 'Ses Testi',
+        rem_btn_open_notif: 'Bildirimi Aç',
+        rem_add_title: 'Yeni Hatırlatıcı Ekle',
+        rem_label_time: 'Saat',
+        rem_label_type: 'Öğün / Tür',
+        rem_opt_glucose: 'Kan Şekeri',
+        rem_opt_insulin: 'İnsülin / İlaç',
+        rem_opt_meal: 'Öğün',
+        rem_label_title: 'Başlık / Etiket',
+        rem_placeholder_title: 'Örn: Ara Öğün & İlaç',
+        rem_btn_save: '+ Hatırlatıcıyı Kaydet',
+        rem_active: 'Açık',
+        rem_inactive: 'Kapalı',
+        rep_wa_title: 'WhatsApp ile Doktora Gönder',
+        rep_wa_sub: 'Ölçüm özetini hekiminize tek tıkla iletin.',
+        rep_wa_btn: 'WhatsApp\'ta Paylaş',
+        rep_doc_summary: 'Hekim Muayene Özeti',
+        rep_ada_std: 'American Diabetes Association (ADA) Standartları',
+        rep_badge: 'Klinik Rapor',
+        rep_total_records: 'Toplam Kayıt:',
+        rep_avg_glucose: 'Ortalama Şeker:',
+        rep_est_a1c: 'Tahmini HbA1c:',
+        rep_hypo_events: 'Hipoglisemi Olayı:',
+        rep_14days_title: 'Son 14 Günün Ölçüm Sonuçları',
+        rep_14days_sub: 'Hekim muayenesi için son 14 günlük ayrıntılı kan şekeri, insülin ve ilaç dökümü:',
+        rep_14days_empty: 'Son 14 güne ait kayıt bulunmuyor. Yeni ölçüm ekledikçe burada otomatik listelenecektir.',
+        rep_unit_count: 'adet',
+        rep_measurement: 'Ölçüm',
+        rep_btn_print: '📄 Hekim Raporu Yazdır / PDF İndir',
+        rep_btn_csv: '📥 Excel (CSV) Raporu İndir',
+        rep_btn_json: '💾 Tüm Verileri Yedekle (JSON)',
+        set_prof_title: 'Kişisel Profil & İletişim',
+        set_prof_sub: 'Ayarlar',
+        set_patient_name: 'Hasta Adı Soyadı',
+        set_diabetes_type: 'Diyabet Tipi',
+        set_dt_type2: 'Tip 2 Diyabet',
+        set_dt_type1: 'Tip 1 Diyabet',
+        set_dt_gestational: 'Gestasyonel (Gebelik) Diyabeti',
+        set_dt_prediabetes: 'Prediyabet / Gizli Şeker',
+        set_doc_name: 'Hekim Adı',
+        set_doc_phone: 'Doktor Telefonu',
+        set_btn_save: 'Ayarları Kaydet',
+        set_targets_title: 'Glukoz Hedef Aralıkları (mg/dL)',
+        set_target_hypo: 'Hipo Alt Sınır',
+        set_target_fasting: 'Açlık Üst Sınır',
+        set_target_post: 'Tokluk Üst Sınır',
+        set_btn_demo: '🔄 Örnek Veri Yükle',
+        set_btn_clear: '🗑️ Verileri Sıfırla',
+        modal_add_title: 'Yeni Kayıt Ekle',
+        modal_edit_title: 'Kaydı Düzenle',
+        modal_add_sub: 'Şeker ölçümü yapmadan da ilaç, besin veya spor bilgisi girebilirsiniz',
+        modal_edit_sub: 'Mevcut kaydı güncelleyin ve değişiklikleri kaydedin',
+        modal_sub_glucose: 'Açlık veya tokluk kan şekeri ölçümünüzü kaydedin',
+        modal_sub_insulin: 'Bolus, bazal insülin veya hap kullanımını kaydedin',
+        modal_sub_food: 'Yediğiniz öğün, karbonhidrat ve yemek notunu kaydedin',
+        modal_sub_activity: 'Yürüyüş, egzersiz veya spor aktivitenizi kaydedin',
+        modal_sub_note: 'Günün notu, tansiyon veya hissettiğiniz belirtileri kaydedin',
+        label_datetime: 'Kayıt Tarih & Saati:',
+        label_glucose: 'Kan Şekeri Değeri',
+        label_timing: 'Ölçüm Vakti / Durumu',
+        opt_select_timing: 'Ölçüm vaktini seçiniz...',
+        badge_eval_pending: 'Değer girildiğinde durum değerlendirilecektir.',
+        label_bolus: 'Bolus (Yemek) İnsülin (Ünite)',
+        label_basal: 'Bazal (Uzun) İnsülin (Ünite)',
+        label_med: 'Ağızdan Alınan İlaç (Örn: Metformin)',
+        label_med_time: 'İlaç Alınma Saati',
+        label_meal_time: 'Yemek Saati',
+        label_carbs: 'Tahmini Karbonhidrat (gr)',
+        label_meal_note: 'Yenilen Yemekler / Menü',
+        label_activity_intensity: 'Fiziksel Aktivite Şiddeti',
+        opt_select_activity: 'Aktivite türünü seçiniz...',
+        act_light: 'Hafif (15-30 dk tempolu yürüyüş)',
+        act_medium: 'Orta (30-60 dk bisiklet/fitness)',
+        act_heavy: 'Yoğun (Ağır antrenman/koşu)',
+        act_rest: 'Dinlenme / Hareketsiz gün',
+        label_activity_details: 'Spor Detayı / Süresi',
+        label_symptoms: 'Belirtiler / Sağlık Durumu',
+        opt_select_symptom: 'Belirti veya durum seçiniz...',
+        sym_normal: 'Normal / Kendimi iyi hissediyorum',
+        sym_fatigue: 'Halsizlik / Aşırı yorgunluk',
+        sym_dry_mouth: 'Ağız kuruluğu / Çok su içme',
+        sym_dizziness: 'Baş dönmesi / Titreme (Hipoglisemi hissi)',
+        sym_blurred_vision: 'Bulanık görme',
+        sym_stress: 'Stresli / Huzursuz',
+        label_extra_notes: 'Ek Açıklama & Not (İsteğe Bağlı)',
+        btn_cancel: 'Vazgeç',
+        btn_save_record: 'Bilgiyi Kaydet',
+        btn_save_changes: '✓ Değişiklikleri Kaydet',
+        btn_edit: 'Düzenle',
+        btn_delete: 'Sil',
+        sec_glucose: 'ŞEKER ÖLÇÜMÜ',
+        sec_insulin: 'İLAÇ & İNSÜLİN',
+        sec_food: 'BESİN & ÖĞÜN',
+        sec_activity: 'SPOR & AKTİVİTE',
+        sec_note: 'NOT & BELİRTİ',
+        time_label: 'Saat:',
+        timing_prefix: 'Vakit:',
+        detail_label: 'Detay',
+        carbs_unit: 'Karbonhidrat',
+        carbs_short: 'Karb',
+        bolus_unit: 'Ünite',
+        basal_unit: 'Ünite',
+        summary_bolus: 'Bolus',
+        summary_basal: 'Bazal',
+        summary_insulin_record: 'İlaç/İnsülin Kaydı',
+        activity_title: 'Aktivite',
+        record_general: 'Kayıt',
+        status_hypo: 'Düşük (Hipoglisemi)',
+        status_target: 'Hedefte (Normal)',
+        status_fasting_high: 'Açlık Yüksek',
+        status_post_high: 'Tokluk Yüksek',
+        status_critical_high: 'Kritik Yüksek',
+        status_no_measure: 'Bilgi Girişi',
+        advice_hypo: '15-15 Kuralı: 15g hızlı şeker alın ve 15 dk dinlenin.',
+        advice_critical_high: 'Değer çok yüksek! Bol su için ve doktorunuza danışın.',
+        advice_fasting_high: 'Açlık hedefinin üzerinde. Karbonhidrat ve ilaç saatinizi gözden geçirin.',
+        advice_post_high: 'Tokluk hedefinin üzerinde. Porsiyon miktarınızı kontrol edin.',
+        advice_target: 'Tebrikler! Kan şekeriniz sağlıklı hedef aralıkta.',
+        advice_no_measure: 'Ölçüm yapılmadı.',
+        timing_fasting: 'Sabah Açlık',
+        timing_fasting_short: 'Sabah Açlık',
+        timing_breakfast_post: 'Kahvaltı Tokluk (+2 saat)',
+        timing_breakfast_post_short: 'Kahvaltı Tok',
+        timing_lunch_pre: 'Öğle Açlık / Yemek Öncesi',
+        timing_lunch_pre_short: 'Öğle Aç',
+        timing_lunch_post: 'Öğle Tokluk (+2 saat)',
+        timing_lunch_post_short: 'Öğle Tok',
+        timing_dinner_pre: 'Akşam Açlık / Yemek Öncesi',
+        timing_dinner_pre_short: 'Akşam Aç',
+        timing_dinner_post: 'Akşam Tokluk (+2 saat)',
+        timing_dinner_post_short: 'Akşam Tok',
+        timing_bedtime: 'Gece Yatış Öncesi',
+        timing_bedtime_short: 'Gece Yatış',
+        timing_night: 'Gece 03:00 Kontrolü',
+        timing_night_short: 'Gece 03:00',
+        timing_random: 'Rastgele / Ara Kontrol',
+        timing_random_short: 'Rastgele',
+        alert_fill_glucose: 'Lütfen kan şekeri değerini giriniz!',
+        alert_invalid_glucose: 'Lütfen geçerli bir kan şekeri değeri giriniz!',
+        alert_select_timing: 'Lütfen ölçüm vaktini (Sabah Açlık, vb.) seçiniz!',
+        alert_fill_insulin: 'Lütfen en az bir ilaç adı veya insülin dozu giriniz!',
+        alert_fill_food: 'Lütfen yenilen yemeği veya karbonhidrat miktarını giriniz!',
+        alert_fill_activity: 'Lütfen spor/aktivite türünü seçiniz veya detayını yazınız!',
+        alert_fill_note: 'Lütfen bir belirti seçiniz veya açıklama/not yazınız!',
+        confirm_delete_record: 'Bu kaydı silmek istediğinize emin misiniz?',
+        confirm_delete_reminder: 'Bu hatırlatıcıyı silmek istiyor musunuz?',
+        confirm_clear_all: 'TÜM ölçüm ve profil verileriniz silinecektir!',
+        alert_all_cleared: 'Tüm veriler sıfırlandı.',
+        alert_demo_loaded: 'Örnek veriler başarıyla yüklendi!',
+        alert_settings_saved: 'Profil ve hedef ayarları başarıyla kaydedildi!',
+        alert_reminder_added: 'Hatırlatıcı başarıyla eklendi!',
+        alert_invalid_reminder: 'Lütfen geçerli bir saat ve açıklama yazınız!',
+        wa_title: 'GlukoDenge Kan Şekeri Özeti',
+        wa_general_status: 'Genel Durum',
+        wa_latest_records: 'Son Ölçümler',
+        wa_footer: 'GlukoDenge Mobil Takip Uygulaması ile iletildi.',
+        csv_date: 'Tarih',
+        csv_time: 'Saat',
+        csv_timing: 'Ölçüm Vakti',
+        csv_category: 'Kategori',
+        csv_glucose: 'Şeker',
+        csv_bolus: 'Bolus İnsülin',
+        csv_basal: 'Bazal İnsülin',
+        csv_med: 'İlaç',
+        csv_carbs: 'Karbonhidrat (g)',
+        csv_meal_note: 'Yemek Notu',
+        csv_activity: 'Spor / Aktivite',
+        csv_symptoms: 'Belirtiler',
+        csv_notes: 'Notlar'
+      },
+
+      en: {
+        app_title: 'GlucoBalance',
+        app_badge: 'Mobile',
+        header_summary: 'Summary',
+        header_report: 'Report',
+        header_alarm: 'Alarm',
+        header_settings: 'Settings',
+        header_add: 'Add',
+        nav_lang: 'Language',
+        nav_lang_title: 'Language Selection',
+        nav_charts: 'Charts',
+        nav_logbook: 'Logbook',
+        nav_reminders: 'Reminders',
+        nav_report: 'Report',
+        nav_settings: 'Settings',
+        modal_lang_title: 'Select Language',
+        modal_lang_sub: 'Choose your preferred language',
+        toast_badge: 'Measurement & Med Time',
+        toast_later: 'Later',
+        toast_enter: '+ Log Value',
+        hypo_alert: 'EMERGENCY ALERT',
+        hypo_title: 'Hypoglycemia',
+        hypo_rule: '15-15 Rule: Consume 15g fast-acting carbs (3-4 sugar cubes or 1 small cup of juice). Rest 15 mins and recheck.',
+        btn_close: 'Close',
+        latest_measurement: 'Latest Reading',
+        stat_avg: 'Average',
+        stat_a1c: 'Estimated A1c',
+        stat_a1c_sub: 'ADAG Formula',
+        stat_tir: 'TIR (In Target)',
+        stat_tir_sub: '70-180 range',
+        hub_title: 'Quick Entry',
+        hub_subtitle: 'Tap to quickly add a record:',
+        hub_glucose: 'Glucose',
+        hub_insulin: 'Insulin/Med',
+        hub_food: 'Meal',
+        hub_activity: 'Activity',
+        hub_note: 'Note',
+        today_records_title: 'Today\'s Records',
+        today_empty: 'No records logged today yet. Tap the buttons above to add.',
+        search_placeholder: 'Search readings, meals, meds or notes...',
+        filter_all: 'All',
+        filter_glucose: '🩸 Glucose',
+        filter_insulin: '💉 Meds',
+        filter_food: '🥗 Food',
+        filter_activity: '🏃 Activity',
+        filter_note: '📝 Note',
+        filter_fasting: 'Fasting',
+        filter_post: 'Post-Meal',
+        filter_out: 'Out of Target',
+        log_empty: 'No matching records found.',
+        days_7: '7 Days',
+        days_14: '14 Days',
+        days_30: '30 Days',
+        days_90: '90 Days',
+        chart_trend_title: 'Blood Glucose Trend Curve',
+        chart_tir_title: 'Time in Range (TIR) Distribution',
+        chart_meal_title: 'Average Glucose by Meal',
+        chart_tir_in_range: 'In Target (70-180)',
+        chart_tir_high: 'High (>180)',
+        chart_tir_low: 'Low (<70)',
+        chart_glucose_label: 'Glucose',
+        chart_meal_avg: 'Average',
+        meal_fasting: 'Fasting',
+        meal_breakfast_post: 'Post-Breakfast',
+        meal_lunch_post: 'Post-Lunch',
+        meal_dinner_post: 'Post-Dinner',
+        meal_bedtime: 'Bedtime',
+        rem_banner_title: 'Glucose & Medication Alarms',
+        rem_banner_sub: 'Timely tracking is the key to diabetes management.',
+        rem_btn_sound_test: 'Sound Test',
+        rem_btn_open_notif: 'Enable Alerts',
+        rem_add_title: 'Add New Reminder',
+        rem_label_time: 'Time',
+        rem_label_type: 'Meal / Type',
+        rem_opt_glucose: 'Blood Glucose',
+        rem_opt_insulin: 'Insulin / Med',
+        rem_opt_meal: 'Meal',
+        rem_label_title: 'Title / Label',
+        rem_placeholder_title: 'e.g. Snack & Insulin',
+        rem_btn_save: '+ Save Reminder',
+        rem_active: 'Active',
+        rem_inactive: 'Off',
+        rep_wa_title: 'Send Report to Doctor via WhatsApp',
+        rep_wa_sub: 'Share your measurement summary with your physician in one tap.',
+        rep_wa_btn: 'Share on WhatsApp',
+        rep_doc_summary: 'Clinical Consultation Summary',
+        rep_ada_std: 'American Diabetes Association (ADA) Standards',
+        rep_badge: 'Clinical Report',
+        rep_total_records: 'Total Records:',
+        rep_avg_glucose: 'Average Glucose:',
+        rep_est_a1c: 'Estimated HbA1c:',
+        rep_hypo_events: 'Hypoglycemia Events:',
+        rep_14days_title: 'Last 14 Days Measurement Log',
+        rep_14days_sub: 'Detailed blood sugar, insulin and medication log for doctor review:',
+        rep_14days_empty: 'No entries in the past 14 days. As you add records, they will appear here.',
+        rep_unit_count: 'records',
+        rep_measurement: 'Readings',
+        rep_btn_print: '📄 Print Doctor Report / Download PDF',
+        rep_btn_csv: '📥 Download Excel (CSV) Report',
+        rep_btn_json: '💾 Backup All Data (JSON)',
+        set_prof_title: 'Personal Profile & Contact',
+        set_prof_sub: 'Settings',
+        set_patient_name: 'Patient Full Name',
+        set_diabetes_type: 'Diabetes Type',
+        set_dt_type2: 'Type 2 Diabetes',
+        set_dt_type1: 'Type 1 Diabetes',
+        set_dt_gestational: 'Gestational Diabetes',
+        set_dt_prediabetes: 'Prediabetes',
+        set_doc_name: 'Physician Name',
+        set_doc_phone: 'Doctor Phone',
+        set_btn_save: 'Save Settings',
+        set_targets_title: 'Target Glucose Ranges',
+        set_target_hypo: 'Hypo Lower Limit',
+        set_target_fasting: 'Fasting Upper Limit',
+        set_target_post: 'Post-Meal Upper Limit',
+        set_btn_demo: '🔄 Load Demo Data',
+        set_btn_clear: '🗑️ Clear All Data',
+        modal_add_title: 'Add New Record',
+        modal_edit_title: 'Edit Record',
+        modal_add_sub: 'You can log medication, food or workout even without glucose test',
+        modal_edit_sub: 'Update the existing record and save changes',
+        modal_sub_glucose: 'Record fasting or post-meal blood sugar measurement',
+        modal_sub_insulin: 'Log bolus, basal insulin or oral medications',
+        modal_sub_food: 'Record meal taken, carbohydrates and food notes',
+        modal_sub_activity: 'Log walking, exercise or sports activity',
+        modal_sub_note: 'Log daily notes, blood pressure or symptoms felt',
+        label_datetime: 'Date & Time:',
+        label_glucose: 'Blood Glucose Value',
+        label_timing: 'Measurement Timing',
+        opt_select_timing: 'Select measurement timing...',
+        badge_eval_pending: 'Evaluation will be shown once value is entered.',
+        label_bolus: 'Bolus (Meal) Insulin (Units)',
+        label_basal: 'Basal (Long) Insulin (Units)',
+        label_med: 'Oral Medication (e.g. Metformin)',
+        label_med_time: 'Medication Time',
+        label_meal_time: 'Meal Time',
+        label_carbs: 'Estimated Carbs (grams)',
+        label_meal_note: 'Food Consumed / Menu',
+        label_activity_intensity: 'Physical Activity Intensity',
+        opt_select_activity: 'Select activity type...',
+        act_light: 'Light (15-30 min brisk walk)',
+        act_medium: 'Moderate (30-60 min cycle/gym)',
+        act_heavy: 'Intense (Heavy workout/run)',
+        act_rest: 'Rest / Inactive day',
+        label_activity_details: 'Activity Detail / Duration',
+        label_symptoms: 'Symptoms / Health Status',
+        opt_select_symptom: 'Select symptom or status...',
+        sym_normal: 'Normal / Feeling good',
+        sym_fatigue: 'Fatigue / Extreme tiredness',
+        sym_dry_mouth: 'Dry mouth / Excessive thirst',
+        sym_dizziness: 'Dizziness / Shaking (Hypo)',
+        sym_blurred_vision: 'Blurred vision',
+        sym_stress: 'Stressed / Restless',
+        label_extra_notes: 'Extra Notes & Remarks (Optional)',
+        btn_cancel: 'Cancel',
+        btn_save_record: 'Save Record',
+        btn_save_changes: '✓ Save Changes',
+        btn_edit: 'Edit',
+        btn_delete: 'Delete',
+        sec_glucose: 'GLUCOSE READING',
+        sec_insulin: 'MEDS & INSULIN',
+        sec_food: 'FOOD & MEAL',
+        sec_activity: 'SPORTS & ACTIVITY',
+        sec_note: 'NOTES & SYMPTOMS',
+        time_label: 'Time:',
+        timing_prefix: 'Timing:',
+        detail_label: 'Detail',
+        carbs_unit: 'Carbohydrates',
+        carbs_short: 'Carbs',
+        bolus_unit: 'Units',
+        basal_unit: 'Units',
+        summary_bolus: 'Bolus',
+        summary_basal: 'Basal',
+        summary_insulin_record: 'Meds/Insulin Record',
+        activity_title: 'Activity',
+        record_general: 'Record',
+        status_hypo: 'Low (Hypoglycemia)',
+        status_target: 'In Target (Normal)',
+        status_fasting_high: 'High Fasting',
+        status_post_high: 'High Post-Meal',
+        status_critical_high: 'Critically High',
+        status_no_measure: 'Data Entry',
+        advice_hypo: '15-15 Rule: Take 15g fast sugar and rest for 15 mins.',
+        advice_critical_high: 'Value is very high! Drink plenty of water and consult your physician.',
+        advice_fasting_high: 'Above fasting target. Review carbohydrates and medication timing.',
+        advice_post_high: 'Above post-meal target. Check meal portion and carbs.',
+        advice_target: 'Congratulations! Blood sugar is within healthy target range.',
+        advice_no_measure: 'No measurement recorded.',
+        timing_fasting: 'Morning Fasting',
+        timing_fasting_short: 'Fasting',
+        timing_breakfast_post: 'Post-Breakfast (+2h)',
+        timing_breakfast_post_short: 'Post-Brk',
+        timing_lunch_pre: 'Pre-Lunch',
+        timing_lunch_pre_short: 'Pre-Lunch',
+        timing_lunch_post: 'Post-Lunch (+2h)',
+        timing_lunch_post_short: 'Post-Lunch',
+        timing_dinner_pre: 'Pre-Dinner',
+        timing_dinner_pre_short: 'Pre-Dinner',
+        timing_dinner_post: 'Post-Dinner (+2h)',
+        timing_dinner_post_short: 'Post-Dinner',
+        timing_bedtime: 'Before Bedtime',
+        timing_bedtime_short: 'Bedtime',
+        timing_night: 'Night 03:00 Check',
+        timing_night_short: 'Night 03:00',
+        timing_random: 'Random / Spot Check',
+        timing_random_short: 'Random',
+        alert_fill_glucose: 'Please enter a blood glucose value!',
+        alert_invalid_glucose: 'Please enter a valid glucose value!',
+        alert_select_timing: 'Please select measurement timing!',
+        alert_fill_insulin: 'Please enter at least one medication or insulin dose!',
+        alert_fill_food: 'Please enter food consumed or carbohydrate amount!',
+        alert_fill_activity: 'Please select activity type or enter details!',
+        alert_fill_note: 'Please select a symptom or enter notes!',
+        confirm_delete_record: 'Are you sure you want to delete this record?',
+        confirm_delete_reminder: 'Do you want to delete this reminder?',
+        confirm_clear_all: 'ALL measurements and profile records will be deleted!',
+        alert_all_cleared: 'All data has been reset.',
+        alert_demo_loaded: 'Sample demo data loaded successfully!',
+        alert_settings_saved: 'Profile and target settings saved successfully!',
+        alert_reminder_added: 'Reminder added successfully!',
+        alert_invalid_reminder: 'Please enter a valid time and label!',
+        wa_title: 'GlucoBalance Blood Sugar Summary',
+        wa_general_status: 'General Overview',
+        wa_latest_records: 'Latest Readings',
+        wa_footer: 'Sent via GlucoBalance Mobile Tracker.',
+        csv_date: 'Date',
+        csv_time: 'Time',
+        csv_timing: 'Timing',
+        csv_category: 'Category',
+        csv_glucose: 'Glucose',
+        csv_bolus: 'Bolus Insulin',
+        csv_basal: 'Basal Insulin',
+        csv_med: 'Medication',
+        csv_carbs: 'Carbs (g)',
+        csv_meal_note: 'Meal Notes',
+        csv_activity: 'Sports / Activity',
+        csv_symptoms: 'Symptoms',
+        csv_notes: 'Notes'
+      },
+
+      de: {
+        app_title: 'GlukoBalance',
+        app_badge: 'Mobil',
+        header_summary: 'Übersicht',
+        header_report: 'Bericht',
+        header_alarm: 'Alarm',
+        header_settings: 'Einstell.',
+        header_add: 'Eintrag',
+        nav_lang: 'Sprache',
+        nav_lang_title: 'Sprachauswahl / Language',
+        nav_charts: 'Grafik',
+        nav_logbook: 'Tagebuch',
+        nav_reminders: 'Erinnerung',
+        nav_report: 'Bericht',
+        nav_settings: 'Einstellungen',
+        modal_lang_title: 'Sprache wählen',
+        modal_lang_sub: 'Wählen Sie Ihre bevorzugte Sprache',
+        toast_badge: 'Mess- & Medikamentenzeit',
+        toast_later: 'Später',
+        toast_enter: '+ Wert eintragen',
+        hypo_alert: 'NOTFALL-WARNUNG',
+        hypo_title: 'Hypoglykämie',
+        hypo_rule: '15-15 Regel: 15g schnellen Zucker zu sich nehmen (3-4 Stück Würfelzucker oder Fruchtsaft). 15 Min. ruhen und erneut messen.',
+        btn_close: 'Schließen',
+        latest_measurement: 'Letzte Messung',
+        stat_avg: 'Durchschnitt',
+        stat_a1c: 'Geschätzter A1c',
+        stat_a1c_sub: 'ADAG-Formel',
+        stat_tir: 'TIR (Im Ziel)',
+        stat_tir_sub: 'Bereich 70-180',
+        hub_title: 'Dateneingabe',
+        hub_subtitle: 'Tippen Sie zum schnellen Hinzufügen:',
+        hub_glucose: 'Zucker',
+        hub_insulin: 'Medikament',
+        hub_food: 'Mahlzeit',
+        hub_activity: 'Sport',
+        hub_note: 'Notiz',
+        today_records_title: 'Heutige Einträge',
+        today_empty: 'Heute noch keine Einträge. Tippen Sie oben, um einen hinzuzufügen.',
+        search_placeholder: 'Messungen, Mahlzeiten, Medikamente suchen...',
+        filter_all: 'Alle',
+        filter_glucose: '🩸 Zucker',
+        filter_insulin: '💉 Med.',
+        filter_food: '🥗 Mahlzeit',
+        filter_activity: '🏃 Sport',
+        filter_note: '📝 Notiz',
+        filter_fasting: 'Nüchtern',
+        filter_post: 'Nach Essen',
+        filter_out: 'Außerhalb Ziel',
+        log_empty: 'Keine passenden Einträge gefunden.',
+        days_7: '7 Tage',
+        days_14: '14 Tage',
+        days_30: '30 Tage',
+        days_90: '90 Tage',
+        chart_trend_title: 'Blutzucker-Trendkurve',
+        chart_tir_title: 'Zielbereich-Verteilung (TIR)',
+        chart_meal_title: 'Durchschnittszucker nach Mahlzeit',
+        chart_tir_in_range: 'Im Ziel (70-180)',
+        chart_tir_high: 'Hoch (>180)',
+        chart_tir_low: 'Niedrig (<70)',
+        chart_glucose_label: 'Zucker',
+        chart_meal_avg: 'Durchschnitt',
+        meal_fasting: 'Morgens Nüchtern',
+        meal_breakfast_post: 'Nach Frühstück',
+        meal_lunch_post: 'Nach Mittag',
+        meal_dinner_post: 'Nach Abend',
+        meal_bedtime: 'Schlafenszeit',
+        rem_banner_title: 'Mess- & Medikamentenalarme',
+        rem_banner_sub: 'Rechtzeitige Kontrolle ist der Schlüssel zum Diabetesmanagement.',
+        rem_btn_sound_test: 'Tontest',
+        rem_btn_open_notif: 'Alarm aktivieren',
+        rem_add_title: 'Neue Erinnerung hinzufügen',
+        rem_label_time: 'Uhrzeit',
+        rem_label_type: 'Typ / Mahlzeit',
+        rem_opt_glucose: 'Blutzucker',
+        rem_opt_insulin: 'Insulin / Med.',
+        rem_opt_meal: 'Mahlzeit',
+        rem_label_title: 'Titel / Bezeichnung',
+        rem_placeholder_title: 'z.B. Snack & Insulin',
+        rem_btn_save: '+ Erinnerung speichern',
+        rem_active: 'Aktiv',
+        rem_inactive: 'Aus',
+        rep_wa_title: 'Bericht an Arzt per WhatsApp senden',
+        rep_wa_sub: 'Senden Sie Ihre Messübersicht mit einem Klick an Ihren Arzt.',
+        rep_wa_btn: 'Auf WhatsApp teilen',
+        rep_doc_summary: 'Klinische Zusammenfassung',
+        rep_ada_std: 'Standards der American Diabetes Association (ADA)',
+        rep_badge: 'Klinischer Bericht',
+        rep_total_records: 'Einträge gesamt:',
+        rep_avg_glucose: 'Durchschnittszucker:',
+        rep_est_a1c: 'Geschätzter HbA1c:',
+        rep_hypo_events: 'Hypoglykämie-Fälle:',
+        rep_14days_title: 'Messergebnisse der letzten 14 Tage',
+        rep_14days_sub: 'Detaillierte Blutzucker-, Insulin- und Medikamentenübersicht für den Arzt:',
+        rep_14days_empty: 'Keine Einträge in den letzten 14 Tagen vorhanden.',
+        rep_unit_count: 'Einträge',
+        rep_measurement: 'Messungen',
+        rep_btn_print: '📄 Arztbericht drucken / PDF',
+        rep_btn_csv: '📥 Excel (CSV) Bericht herunterladen',
+        rep_btn_json: '💾 Alle Daten sichern (JSON)',
+        set_prof_title: 'Persönliches Profil & Kontakt',
+        set_prof_sub: 'Einstellungen',
+        set_patient_name: 'Name des Patienten',
+        set_diabetes_type: 'Diabetes-Typ',
+        set_dt_type2: 'Typ 2 Diabetes',
+        set_dt_type1: 'Typ 1 Diabetes',
+        set_dt_gestational: 'Schwangerschaftsdiabetes',
+        set_dt_prediabetes: 'Prädiabetes',
+        set_doc_name: 'Name des Arztes',
+        set_doc_phone: 'Telefon des Arztes',
+        set_btn_save: 'Einstellungen speichern',
+        set_targets_title: 'Glukose-Zielbereiche',
+        set_target_hypo: 'Hypo-Untergrenze',
+        set_target_fasting: 'Nüchtern-Obergrenze',
+        set_target_post: 'Nach-Mahlzeit-Obergrenze',
+        set_btn_demo: '🔄 Beispieldaten laden',
+        set_btn_clear: '🗑️ Alle Daten löschen',
+        modal_add_title: 'Neuen Eintrag hinzufügen',
+        modal_edit_title: 'Eintrag bearbeiten',
+        modal_add_sub: 'Sie können Medikation, Mahlzeit oder Sport auch ohne Messung eintragen',
+        modal_edit_sub: 'Aktualisieren Sie den bestehenden Eintrag',
+        modal_sub_glucose: 'Nüchtern- oder Postprandial-Blutzucker eintragen',
+        modal_sub_insulin: 'Bolus-, Basalinsulin oder Tabletten erfassen',
+        modal_sub_food: 'Mahlzeit, Kohlenhydrate und Notiz eintragen',
+        modal_sub_activity: 'Gehen, Training oder sportliche Aktivität eintragen',
+        modal_sub_note: 'Tagesnotiz, Blutdruck oder Symptome festhalten',
+        label_datetime: 'Datum & Uhrzeit:',
+        label_glucose: 'Blutzuckerwert',
+        label_timing: 'Messzeitpunkt',
+        opt_select_timing: 'Messzeitpunkt wählen...',
+        badge_eval_pending: 'Bewertung erfolgt nach Eingabe des Wertes.',
+        label_bolus: 'Bolus (Mahlzeit) Insulin (Einheiten)',
+        label_basal: 'Basal (Langzeit) Insulin (Einheiten)',
+        label_med: 'Oral eingenommenes Medikament (z.B. Metformin)',
+        label_med_time: 'Einnahmezeit',
+        label_meal_time: 'Essenszeit',
+        label_carbs: 'Geschätzte Kohlenhydrate (g)',
+        label_meal_note: 'Verzehrte Speisen / Menü',
+        label_activity_intensity: 'Intensität der Aktivität',
+        opt_select_activity: 'Aktivitätsart wählen...',
+        act_light: 'Leicht (15-30 Min. Gehen)',
+        act_medium: 'Mäßig (30-60 Min. Rad/Fitness)',
+        act_heavy: 'Intensiv (Schweres Training/Lauf)',
+        act_rest: 'Ruhetag / Inaktiv',
+        label_activity_details: 'Details / Dauer',
+        label_symptoms: 'Symptome / Wohlbefinden',
+        opt_select_symptom: 'Symptom oder Zustand wählen...',
+        sym_normal: 'Normal / Fühle mich gut',
+        sym_fatigue: 'Müdigkeit / Erschöpfung',
+        sym_dry_mouth: 'Mundtrockenheit / Starker Durst',
+        sym_dizziness: 'Schwindel / Zittern (Hypo-Gefühl)',
+        sym_blurred_vision: 'Verschwommenes Sehen',
+        sym_stress: 'Gestresst / Unruhig',
+        label_extra_notes: 'Zusätzliche Notizen (Optional)',
+        btn_cancel: 'Abbrechen',
+        btn_save_record: 'Eintrag speichern',
+        btn_save_changes: '✓ Änderungen speichern',
+        btn_edit: 'Bearbeiten',
+        btn_delete: 'Löschen',
+        sec_glucose: 'BLUTZUCKERMESSUNG',
+        sec_insulin: 'MEDIKAMENTE & INSULIN',
+        sec_food: 'MAHLZEIT & ESSEN',
+        sec_activity: 'SPORT & AKTIVITÄT',
+        sec_note: 'NOTIZ & SYMPTOM',
+        time_label: 'Uhrzeit:',
+        timing_prefix: 'Zeitpunkt:',
+        detail_label: 'Detail',
+        carbs_unit: 'Kohlenhydrate',
+        carbs_short: 'KH',
+        bolus_unit: 'Einheiten',
+        basal_unit: 'Einheiten',
+        summary_bolus: 'Bolus',
+        summary_basal: 'Basal',
+        summary_insulin_record: 'Insulin/Medikament',
+        activity_title: 'Aktivität',
+        record_general: 'Eintrag',
+        status_hypo: 'Niedrig (Hypoglykämie)',
+        status_target: 'Im Zielbereich (Normal)',
+        status_fasting_high: 'Nüchtern Hoch',
+        status_post_high: 'Nach dem Essen Hoch',
+        status_critical_high: 'Kritisch Hoch',
+        status_no_measure: 'Dateneingabe',
+        advice_hypo: '15-15 Regel: 15g schnellen Zucker nehmen und 15 Min. ruhen.',
+        advice_critical_high: 'Wert sehr hoch! Viel Wasser trinken und Arzt konsultieren.',
+        advice_fasting_high: 'Über dem Nüchternziel. Kohlenhydrate und Medikation prüfen.',
+        advice_post_high: 'Über dem Zielwert nach dem Essen. Portionen überprüfen.',
+        advice_target: 'Glückwunsch! Blutzucker liegt im gesunden Zielbereich.',
+        advice_no_measure: 'Keine Messung durchgeführt.',
+        timing_fasting: 'Morgens Nüchtern',
+        timing_fasting_short: 'Nüchtern',
+        timing_breakfast_post: 'Nach dem Frühstück (+2h)',
+        timing_breakfast_post_short: 'Frühst. Nach',
+        timing_lunch_pre: 'Vor dem Mittag',
+        timing_lunch_pre_short: 'Mittag Vor',
+        timing_lunch_post: 'Nach dem Mittag (+2h)',
+        timing_lunch_post_short: 'Mittag Nach',
+        timing_dinner_pre: 'Vor dem Abend',
+        timing_dinner_pre_short: 'Abend Vor',
+        timing_dinner_post: 'Nach dem Abend (+2h)',
+        timing_dinner_post_short: 'Abend Nach',
+        timing_bedtime: 'Vor dem Schlafen',
+        timing_bedtime_short: 'Schlafen',
+        timing_night: 'Nacht 03:00 Kontrolle',
+        timing_night_short: 'Nacht 03:00',
+        timing_random: 'Zufällig / Zwischenkontrolle',
+        timing_random_short: 'Zufällig',
+        alert_fill_glucose: 'Bitte Blutzuckerwert eingeben!',
+        alert_invalid_glucose: 'Bitte einen gültigen Blutzuckerwert eingeben!',
+        alert_select_timing: 'Bitte Messzeitpunkt auswählen!',
+        alert_fill_insulin: 'Bitte mindestens ein Medikament oder eine Insulindosis eingeben!',
+        alert_fill_food: 'Bitte Mahlzeit oder Kohlenhydratmenge eingeben!',
+        alert_fill_activity: 'Bitte Aktivitätsart oder Detail eingeben!',
+        alert_fill_note: 'Bitte Symptom wählen oder Notiz eingeben!',
+        confirm_delete_record: 'Möchten Sie diesen Eintrag wirklich löschen?',
+        confirm_delete_reminder: 'Möchten Sie diese Erinnerung löschen?',
+        confirm_clear_all: 'ALLE Mess- und Profildaten werden gelöscht!',
+        alert_all_cleared: 'Alle Daten wurden zurückgesetzt.',
+        alert_demo_loaded: 'Beispieldaten erfolgreich geladen!',
+        alert_settings_saved: 'Profil- und Zieleinstellungen gespeichert!',
+        alert_reminder_added: 'Erinnerung erfolgreich hinzugefügt!',
+        alert_invalid_reminder: 'Bitte gültige Uhrzeit und Beschreibung angeben!',
+        wa_title: 'GlukoBalance Blutzucker-Übersicht',
+        wa_general_status: 'Allgemeiner Status',
+        wa_latest_records: 'Letzte Messungen',
+        wa_footer: 'Übermittelt mit GlukoBalance Mobil.',
+        csv_date: 'Datum',
+        csv_time: 'Uhrzeit',
+        csv_timing: 'Messzeitpunkt',
+        csv_category: 'Kategorie',
+        csv_glucose: 'Zucker',
+        csv_bolus: 'Bolus-Insulin',
+        csv_basal: 'Basal-Insulin',
+        csv_med: 'Medikament',
+        csv_carbs: 'Kohlenhydrate (g)',
+        csv_meal_note: 'Mahlzeit-Notiz',
+        csv_activity: 'Sport / Aktivität',
+        csv_symptoms: 'Symptome',
+        csv_notes: 'Notizen'
+      },
+
+      fr: {
+        app_title: 'GlucoÉquilibre',
+        app_badge: 'Mobile',
+        header_summary: 'Résumé',
+        header_report: 'Rapport',
+        header_alarm: 'Alarme',
+        header_settings: 'Param.',
+        header_add: 'Entrée',
+        nav_lang: 'Langue',
+        nav_lang_title: 'Choix de la langue',
+        nav_charts: 'Graphiques',
+        nav_logbook: 'Journal',
+        nav_reminders: 'Rappels',
+        nav_report: 'Rapport',
+        nav_settings: 'Paramètres',
+        modal_lang_title: 'Choisir la langue',
+        modal_lang_sub: 'Sélectionnez votre langue d\'application',
+        toast_badge: 'Heure de mesure et méd.',
+        toast_later: 'Plus tard',
+        toast_enter: '+ Entrer valeur',
+        hypo_alert: 'ALERTE D\'URGENCE',
+        hypo_title: 'Hypoglycémie',
+        hypo_rule: 'Règle des 15-15 : Prenez 15 g de sucre rapide (3-4 morceaux de sucre ou un verre de jus). Reposez-vous 15 min et remesurez.',
+        btn_close: 'Fermer',
+        latest_measurement: 'Dernière Mesure',
+        stat_avg: 'Moyenne',
+        stat_a1c: 'HbA1c estimée',
+        stat_a1c_sub: 'Formule ADAG',
+        stat_tir: 'TIR (Dans la cible)',
+        stat_tir_sub: 'Plage 70-180',
+        hub_title: 'Saisie Rapide',
+        hub_subtitle: 'Appuyez pour ajouter rapidement :',
+        hub_glucose: 'Glycémie',
+        hub_insulin: 'Insuline/Méd.',
+        hub_food: 'Repas',
+        hub_activity: 'Activité',
+        hub_note: 'Note',
+        today_records_title: 'Enregistrements du Jour',
+        today_empty: 'Aucun enregistrement aujourd\'hui. Appuyez ci-dessus pour ajouter.',
+        search_placeholder: 'Rechercher mesures, repas, médicaments...',
+        filter_all: 'Tout',
+        filter_glucose: '🩸 Glycémie',
+        filter_insulin: '💉 Méd.',
+        filter_food: '🥗 Repas',
+        filter_activity: '🏃 Sport',
+        filter_note: '📝 Note',
+        filter_fasting: 'À jeun',
+        filter_post: 'Postprandial',
+        filter_out: 'Hors cible',
+        log_empty: 'Aucun enregistrement correspondant trouvé.',
+        days_7: '7 Jours',
+        days_14: '14 Jours',
+        days_30: '30 Jours',
+        days_90: '90 Jours',
+        chart_trend_title: 'Courbe de Tendance Glycémique',
+        chart_tir_title: 'Temps dans la Cible (TIR)',
+        chart_meal_title: 'Glycémie Moyenne par Repas',
+        chart_tir_in_range: 'Dans la cible (70-180)',
+        chart_tir_high: 'Élevé (>180)',
+        chart_tir_low: 'Bas (<70)',
+        chart_glucose_label: 'Glycémie',
+        chart_meal_avg: 'Moyenne',
+        meal_fasting: 'Matin à jeun',
+        meal_breakfast_post: 'Post-Petit-déj',
+        meal_lunch_post: 'Post-Déjeuner',
+        meal_dinner_post: 'Post-Dîner',
+        meal_bedtime: 'Coucher',
+        rem_banner_title: 'Alarmes de Mesure & Médicaments',
+        rem_banner_sub: 'La régularité est la clé de la maîtrise du diabète.',
+        rem_btn_sound_test: 'Test sonore',
+        rem_btn_open_notif: 'Activer alertes',
+        rem_add_title: 'Ajouter un rappel',
+        rem_label_time: 'Heure',
+        rem_label_type: 'Repas / Type',
+        rem_opt_glucose: 'Glycémie',
+        rem_opt_insulin: 'Insuline / Méd.',
+        rem_opt_meal: 'Repas',
+        rem_label_title: 'Titre / Libellé',
+        rem_placeholder_title: 'ex: Collation & Insuline',
+        rem_btn_save: '+ Enregistrer le rappel',
+        rem_active: 'Actif',
+        rem_inactive: 'Inactif',
+        rep_wa_title: 'Envoyer le rapport au médecin via WhatsApp',
+        rep_wa_sub: 'Partagez votre résumé glycémique d\'un simple clic.',
+        rep_wa_btn: 'Partager sur WhatsApp',
+        rep_doc_summary: 'Résumé de Consultation Médicale',
+        rep_ada_std: 'Normes de l\'American Diabetes Association (ADA)',
+        rep_badge: 'Rapport Clinique',
+        rep_total_records: 'Total des entrées :',
+        rep_avg_glucose: 'Glycémie moyenne :',
+        rep_est_a1c: 'HbA1c estimée :',
+        rep_hypo_events: 'Événements d\'hypo :',
+        rep_14days_title: 'Résultats des 14 Derniers Jours',
+        rep_14days_sub: 'Historique détaillé de glycémie, insuline et médicaments pour le médecin :',
+        rep_14days_empty: 'Aucune donnée sur les 14 derniers jours.',
+        rep_unit_count: 'entrées',
+        rep_measurement: 'Mesures',
+        rep_btn_print: '📄 Imprimer rapport / Télécharger PDF',
+        rep_btn_csv: '📥 Télécharger rapport Excel (CSV)',
+        rep_btn_json: '💾 Sauvegarder toutes les données (JSON)',
+        set_prof_title: 'Profil Personnel & Contact',
+        set_prof_sub: 'Paramètres',
+        set_patient_name: 'Nom & Prénom du Patient',
+        set_diabetes_type: 'Type de Diabète',
+        set_dt_type2: 'Diabète de type 2',
+        set_dt_type1: 'Diabète de type 1',
+        set_dt_gestational: 'Diabète gestationnel',
+        set_dt_prediabetes: 'Prédiabète',
+        set_doc_name: 'Nom du Médecin',
+        set_doc_phone: 'Téléphone du Médecin',
+        set_btn_save: 'Enregistrer les paramètres',
+        set_targets_title: 'Plages Cibles de Glycémie',
+        set_target_hypo: 'Seuil Bas (Hypo)',
+        set_target_fasting: 'Seuil Haut à Jeun',
+        set_target_post: 'Seuil Haut Post-Repas',
+        set_btn_demo: '🔄 Charger données démo',
+        set_btn_clear: '🗑️ Réinitialiser tout',
+        modal_add_title: 'Ajouter une Entrée',
+        modal_edit_title: 'Modifier l\'Entrée',
+        modal_add_sub: 'Vous pouvez consigner médicaments, repas ou sport même sans test glycémique',
+        modal_edit_sub: 'Mettez à jour l\'enregistrement existant',
+        modal_sub_glucose: 'Enregistrer une glycémie à jeun ou postprandiale',
+        modal_sub_insulin: 'Enregistrer insuline bolus, basale ou comprimé',
+        modal_sub_food: 'Enregistrer repas, glucides et notes alimentaires',
+        modal_sub_activity: 'Enregistrer marche, entraînement ou activité',
+        modal_sub_note: 'Note du jour, tension ou symptômes ressentis',
+        label_datetime: 'Date & Heure :',
+        label_glucose: 'Valeur de Glycémie',
+        label_timing: 'Moment de Mesure',
+        opt_select_timing: 'Sélectionner le moment...',
+        badge_eval_pending: 'L\'évaluation sera affichée après la saisie.',
+        label_bolus: 'Insuline Bolus (Repas) (Unités)',
+        label_basal: 'Insuline Basale (Lente) (Unités)',
+        label_med: 'Médicament oral (ex: Metformine)',
+        label_med_time: 'Heure de prise',
+        label_meal_time: 'Heure du repas',
+        label_carbs: 'Glucides estimés (g)',
+        label_meal_note: 'Repas consommé / Menu',
+        label_activity_intensity: 'Intensité de l\'Activité',
+        opt_select_activity: 'Sélectionner l\'activité...',
+        act_light: 'Légère (15-30 min marche rapide)',
+        act_medium: 'Modérée (30-60 min vélo/gym)',
+        act_heavy: 'Intense (Entraînement lourd/course)',
+        act_rest: 'Repos / Jour inactif',
+        label_activity_details: 'Détails / Durée',
+        label_symptoms: 'Symptômes / État de Santé',
+        opt_select_symptom: 'Sélectionner un symptôme...',
+        sym_normal: 'Normal / Je me sens bien',
+        sym_fatigue: 'Fatigue / Épuisement',
+        sym_dry_mouth: 'Bouche sèche / Soif intense',
+        sym_dizziness: 'Vertiges / Tremblements (Hypo)',
+        sym_blurred_vision: 'Vision floue',
+        sym_stress: 'Stressé / Agité',
+        label_extra_notes: 'Remarques & Notes (Facultatif)',
+        btn_cancel: 'Annuler',
+        btn_save_record: 'Enregistrer',
+        btn_save_changes: '✓ Enregistrer modifications',
+        btn_edit: 'Modifier',
+        btn_delete: 'Supprimer',
+        sec_glucose: 'MESURE DE GLYCÉMIE',
+        sec_insulin: 'MÉDICAMENT & INSULINE',
+        sec_food: 'REPAS & ALIMENTATION',
+        sec_activity: 'SPORT & ACTIVITÉ',
+        sec_note: 'NOTE & SYMPTÔME',
+        time_label: 'Heure :',
+        timing_prefix: 'Moment :',
+        detail_label: 'Détail',
+        carbs_unit: 'Glucides',
+        carbs_short: 'Gluc.',
+        bolus_unit: 'Unités',
+        basal_unit: 'Unités',
+        summary_bolus: 'Bolus',
+        summary_basal: 'Basale',
+        summary_insulin_record: 'Enregistrement Insuline',
+        activity_title: 'Activité',
+        record_general: 'Entrée',
+        status_hypo: 'Bas (Hypoglycémie)',
+        status_target: 'Dans la Cible (Normal)',
+        status_fasting_high: 'À jeun Élevé',
+        status_post_high: 'Post-prandial Élevé',
+        status_critical_high: 'Critique Élevé',
+        status_no_measure: 'Saisie',
+        advice_hypo: 'Règle 15-15 : Prenez 15g de sucre rapide et reposez-vous 15 min.',
+        advice_critical_high: 'Valeur très élevée ! Buvez beaucoup d\'eau et consultez votre médecin.',
+        advice_fasting_high: 'Au-dessus de la cible à jeun. Vérifiez les glucides et l\'insuline.',
+        advice_post_high: 'Au-dessus de la cible post-prandiale. Contrôlez vos portions.',
+        advice_target: 'Félicitations ! La glycémie est dans la plage cible.',
+        advice_no_measure: 'Aucune mesure enregistrée.',
+        timing_fasting: 'Matin à jeun',
+        timing_fasting_short: 'À jeun',
+        timing_breakfast_post: 'Post-Petit-déjeuner (+2h)',
+        timing_breakfast_post_short: 'Post-P-Déj',
+        timing_lunch_pre: 'Avant Déjeuner',
+        timing_lunch_pre_short: 'Av. Déj',
+        timing_lunch_post: 'Post-Déjeuner (+2h)',
+        timing_lunch_post_short: 'Post-Déj',
+        timing_dinner_pre: 'Avant Dîner',
+        timing_dinner_pre_short: 'Av. Dîner',
+        timing_dinner_post: 'Post-Dîner (+2h)',
+        timing_dinner_post_short: 'Post-Dîner',
+        timing_bedtime: 'Avant Coucher',
+        timing_bedtime_short: 'Coucher',
+        timing_night: 'Nuit 03:00 Contrôle',
+        timing_night_short: 'Nuit 03:00',
+        timing_random: 'Aléatoire / Contrôle',
+        timing_random_short: 'Aléatoire',
+        alert_fill_glucose: 'Veuillez saisir une valeur de glycémie !',
+        alert_invalid_glucose: 'Veuillez saisir une valeur glycémique valide !',
+        alert_select_timing: 'Veuillez choisir le moment de la mesure !',
+        alert_fill_insulin: 'Veuillez renseigner au moins un médicament ou une dose d\'insuline !',
+        alert_fill_food: 'Veuillez renseigner le repas ou la quantité de glucides !',
+        alert_fill_activity: 'Veuillez choisir un type d\'activité ou saisir un détail !',
+        alert_fill_note: 'Veuillez sélectionner un symptôme ou saisir une note !',
+        confirm_delete_record: 'Voulez-vous vraiment supprimer cet enregistrement ?',
+        confirm_delete_reminder: 'Voulez-vous supprimer ce rappel ?',
+        confirm_clear_all: 'TOUTES les mesures et données seront supprimées !',
+        alert_all_cleared: 'Toutes les données ont été réinitialisées.',
+        alert_demo_loaded: 'Données de démonstration chargées avec succès !',
+        alert_settings_saved: 'Paramètres du profil enregistrés avec succès !',
+        alert_reminder_added: 'Rappel ajouté avec succès !',
+        alert_invalid_reminder: 'Veuillez saisir une heure et un libellé valides !',
+        wa_title: 'Résumé Glycémique GlucoÉquilibre',
+        wa_general_status: 'État Général',
+        wa_latest_records: 'Dernières Mesures',
+        wa_footer: 'Transmis via GlucoÉquilibre Mobile.',
+        csv_date: 'Date',
+        csv_time: 'Heure',
+        csv_timing: 'Moment',
+        csv_category: 'Catégorie',
+        csv_glucose: 'Glycémie',
+        csv_bolus: 'Insuline Bolus',
+        csv_basal: 'Insuline Basale',
+        csv_med: 'Médicament',
+        csv_carbs: 'Glucides (g)',
+        csv_meal_note: 'Note Repas',
+        csv_activity: 'Sport / Activité',
+        csv_symptoms: 'Symptômes',
+        csv_notes: 'Notes'
+      },
+
+      es: {
+        app_title: 'GlucoEquilibrio',
+        app_badge: 'Móvil',
+        header_summary: 'Resumen',
+        header_report: 'Informe',
+        header_alarm: 'Alarma',
+        header_settings: 'Ajustes',
+        header_add: 'Registro',
+        nav_lang: 'Idioma',
+        nav_lang_title: 'Selección de Idioma',
+        nav_charts: 'Gráficos',
+        nav_logbook: 'Registros',
+        nav_reminders: 'Alarmas',
+        nav_report: 'Informe',
+        nav_settings: 'Ajustes',
+        modal_lang_title: 'Seleccionar Idioma',
+        modal_lang_sub: 'Elija el idioma de la aplicación',
+        toast_badge: 'Hora de Medición y Medicación',
+        toast_later: 'Más tarde',
+        toast_enter: '+ Registrar valor',
+        hypo_alert: 'ALERTA DE EMERGENCIA',
+        hypo_title: 'Hipoglucemia',
+        hypo_rule: 'Regla 15-15: Tome 15g de azúcar rápido (3-4 terrones o medio vaso de zumo). Descanse 15 min y vuelva a medir.',
+        btn_close: 'Cerrar',
+        latest_measurement: 'Última Lectura',
+        stat_avg: 'Promedio',
+        stat_a1c: 'A1c Estimado',
+        stat_a1c_sub: 'Fórmula ADAG',
+        stat_tir: 'TIR (En Rango)',
+        stat_tir_sub: 'Rango 70-180',
+        hub_title: 'Entrada de Datos',
+        hub_subtitle: 'Toque para agregar un registro rápido:',
+        hub_glucose: 'Glucosa',
+        hub_insulin: 'Insulina/Med.',
+        hub_food: 'Comida',
+        hub_activity: 'Deporte',
+        hub_note: 'Nota',
+        today_records_title: 'Registros de Hoy',
+        today_empty: 'Aún no hay registros hoy. Toque los botones de arriba para agregar.',
+        search_placeholder: 'Buscar lecturas, comidas, medicación o notas...',
+        filter_all: 'Todos',
+        filter_glucose: '🩸 Glucosa',
+        filter_insulin: '💉 Med.',
+        filter_food: '🥗 Comida',
+        filter_activity: '🏃 Deporte',
+        filter_note: '📝 Nota',
+        filter_fasting: 'Ayunas',
+        filter_post: 'Postprandial',
+        filter_out: 'Fuera de Rango',
+        log_empty: 'No se encontraron registros coincidentes.',
+        days_7: '7 Días',
+        days_14: '14 Días',
+        days_30: '30 Días',
+        days_90: '90 Días',
+        chart_trend_title: 'Curva de Tendencia de Glucosa',
+        chart_tir_title: 'Distribución en Rango (TIR)',
+        chart_meal_title: 'Glucosa Promedio por Comida',
+        chart_tir_in_range: 'En Rango (70-180)',
+        chart_tir_high: 'Alto (>180)',
+        chart_tir_low: 'Bajo (<70)',
+        chart_glucose_label: 'Glucosa',
+        chart_meal_avg: 'Promedio',
+        meal_fasting: 'Ayunas Mañana',
+        meal_breakfast_post: 'Post-Desayuno',
+        meal_lunch_post: 'Post-Almuerzo',
+        meal_dinner_post: 'Post-Cena',
+        meal_bedtime: 'Dormir',
+        rem_banner_title: 'Alarmas de Medición y Medicación',
+        rem_banner_sub: 'La constancia en la medición es clave en el control de la diabetes.',
+        rem_btn_sound_test: 'Probar Sonido',
+        rem_btn_open_notif: 'Activar Alertas',
+        rem_add_title: 'Agregar Nuevo Recordatorio',
+        rem_label_time: 'Hora',
+        rem_label_type: 'Tipo / Comida',
+        rem_opt_glucose: 'Glucosa en Sangre',
+        rem_opt_insulin: 'Insulina / Med.',
+        rem_opt_meal: 'Comida',
+        rem_label_title: 'Título / Etiqueta',
+        rem_placeholder_title: 'ej: Merienda e Insulina',
+        rem_btn_save: '+ Guardar Recordatorio',
+        rem_active: 'Activo',
+        rem_inactive: 'Inactivo',
+        rep_wa_title: 'Enviar Informe al Médico por WhatsApp',
+        rep_wa_sub: 'Comparta su resumen de glucosa con un solo clic.',
+        rep_wa_btn: 'Compartir en WhatsApp',
+        rep_doc_summary: 'Resumen de Consulta Médica',
+        rep_ada_std: 'Estándares de la American Diabetes Association (ADA)',
+        rep_badge: 'Informe Clínico',
+        rep_total_records: 'Total de Registros:',
+        rep_avg_glucose: 'Glucosa Promedio:',
+        rep_est_a1c: 'HbA1c Estimada:',
+        rep_hypo_events: 'Eventos de Hipoglucemia:',
+        rep_14days_title: 'Resultados de los Últimos 14 Días',
+        rep_14days_sub: 'Desglose detallado de glucosa, insulina y medicación para revisión médica:',
+        rep_14days_empty: 'No hay registros en los últimos 14 días.',
+        rep_unit_count: 'registros',
+        rep_measurement: 'Mediciones',
+        rep_btn_print: '📄 Imprimir informe / Descargar PDF',
+        rep_btn_csv: '📥 Descargar informe Excel (CSV)',
+        rep_btn_json: '💾 Respaldar todos los datos (JSON)',
+        set_prof_title: 'Perfil Personal y Contacto',
+        set_prof_sub: 'Ajustes',
+        set_patient_name: 'Nombre y Apellidos del Paciente',
+        set_diabetes_type: 'Tipo de Diabetes',
+        set_dt_type2: 'Diabetes Tipo 2',
+        set_dt_type1: 'Diabetes Tipo 1',
+        set_dt_gestational: 'Diabetes Gestacional',
+        set_dt_prediabetes: 'Prediabetes',
+        set_doc_name: 'Nombre del Médico',
+        set_doc_phone: 'Teléfono del Médico',
+        set_btn_save: 'Guardar Ajustes',
+        set_targets_title: 'Rangos Objetivo de Glucosa',
+        set_target_hypo: 'Límite Inferior (Hipo)',
+        set_target_fasting: 'Límite Superior en Ayunas',
+        set_target_post: 'Límite Superior Post-Comida',
+        set_btn_demo: '🔄 Cargar Datos de Demostración',
+        set_btn_clear: '🗑️ Restablecer Todos los Datos',
+        modal_add_title: 'Agregar Registro',
+        modal_edit_title: 'Editar Registro',
+        modal_add_sub: 'Puede ingresar medicamentos, comida o actividad física aun sin medir la glucosa',
+        modal_edit_sub: 'Actualice el registro existente y guarde los cambios',
+        modal_sub_glucose: 'Registrar glucosa en ayunas o después de comer',
+        modal_sub_insulin: 'Registrar insulina bolus, basal o pastillas',
+        modal_sub_food: 'Registrar comida ingerida, carbohidratos y notas',
+        modal_sub_activity: 'Registrar caminata, ejercicio o actividad deportiva',
+        modal_sub_note: 'Nota diaria, presión arterial o síntomas percibidos',
+        label_datetime: 'Fecha y Hora:',
+        label_glucose: 'Valor de Glucosa en Sangre',
+        label_timing: 'Momento de Medición',
+        opt_select_timing: 'Seleccione momento de medición...',
+        badge_eval_pending: 'El estado se evaluará al ingresar el valor.',
+        label_bolus: 'Insulina Bolus (Comida) (Unidades)',
+        label_basal: 'Insulina Basal (Lenta) (Unidades)',
+        label_med: 'Medicación oral (ej: Metformina)',
+        label_med_time: 'Hora de Medicación',
+        label_meal_time: 'Hora de la Comida',
+        label_carbs: 'Carbohidratos Estimados (g)',
+        label_meal_note: 'Alimentos Consumidos / Menú',
+        label_activity_intensity: 'Intensidad de Actividad Física',
+        opt_select_activity: 'Seleccione tipo de actividad...',
+        act_light: 'Ligera (15-30 min caminata rápida)',
+        act_medium: 'Moderada (30-60 min bici/gimnasio)',
+        act_heavy: 'Intensa (Entrenamiento pesado/carrera)',
+        act_rest: 'Descanso / Día inactivo',
+        label_activity_details: 'Detalle / Duración',
+        label_symptoms: 'Síntomas / Estado de Salud',
+        opt_select_symptom: 'Seleccione síntoma o estado...',
+        sym_normal: 'Normal / Me siento bien',
+        sym_fatigue: 'Fatiga / Cansancio extremo',
+        sym_dry_mouth: 'Boca seca / Sed excesiva',
+        sym_dizziness: 'Mareo / Temblores (Hipo)',
+        sym_blurred_vision: 'Visión borrosa',
+        sym_stress: 'Estresado / Inquieto',
+        label_extra_notes: 'Notas y Explicaciones (Opcional)',
+        btn_cancel: 'Cancelar',
+        btn_save_record: 'Guardar Registro',
+        btn_save_changes: '✓ Guardar Cambios',
+        btn_edit: 'Editar',
+        btn_delete: 'Eliminar',
+        sec_glucose: 'MEDICIÓN DE GLUCOSA',
+        sec_insulin: 'MEDICACIÓN E INSULINA',
+        sec_food: 'COMIDA Y ALIMENTACIÓN',
+        sec_activity: 'DEPORTE Y ACTIVIDAD',
+        sec_note: 'NOTA Y SÍNTOMA',
+        time_label: 'Hora:',
+        timing_prefix: 'Momento:',
+        detail_label: 'Detalle',
+        carbs_unit: 'Carbohidratos',
+        carbs_short: 'Carb.',
+        bolus_unit: 'Unidades',
+        basal_unit: 'Unidades',
+        summary_bolus: 'Bolus',
+        summary_basal: 'Basal',
+        summary_insulin_record: 'Registro de Insulina/Med.',
+        activity_title: 'Actividad',
+        record_general: 'Registro',
+        status_hypo: 'Bajo (Hipoglucemia)',
+        status_target: 'En Rango (Normal)',
+        status_fasting_high: 'En Ayunas Alto',
+        status_post_high: 'Postprandial Alto',
+        status_critical_high: 'Críticamente Alto',
+        status_no_measure: 'Registro',
+        advice_hypo: 'Regla 15-15: Tome 15g de azúcar rápido y descanse 15 min.',
+        advice_critical_high: '¡Valor muy alto! Beba abundante agua y consulte a su médico.',
+        advice_fasting_high: 'Por encima del objetivo en ayunas. Revise carbohidratos y medicación.',
+        advice_post_high: 'Por encima del objetivo postprandial. Controle las porciones.',
+        advice_target: '¡Felicidades! La glucosa está en el rango saludable.',
+        advice_no_measure: 'Sin medición registrada.',
+        timing_fasting: 'Ayunas Mañana',
+        timing_fasting_short: 'Ayunas',
+        timing_breakfast_post: 'Post Desayuno (+2h)',
+        timing_breakfast_post_short: 'Post-Des.',
+        timing_lunch_pre: 'Antes Almuerzo',
+        timing_lunch_pre_short: 'Pre-Alm.',
+        timing_lunch_post: 'Post Almuerzo (+2h)',
+        timing_lunch_post_short: 'Post-Alm.',
+        timing_dinner_pre: 'Antes Cena',
+        timing_dinner_pre_short: 'Pre-Cena',
+        timing_dinner_post: 'Post Cena (+2h)',
+        timing_dinner_post_short: 'Post-Cena',
+        timing_bedtime: 'Antes de Dormir',
+        timing_bedtime_short: 'Dormir',
+        timing_night: 'Noche 03:00 Control',
+        timing_night_short: 'Noche 03:00',
+        timing_random: 'Aleatorio / Control puntual',
+        timing_random_short: 'Aleatorio',
+        alert_fill_glucose: '¡Por favor ingrese un valor de glucosa!',
+        alert_invalid_glucose: '¡Por favor ingrese un valor de glucosa válido!',
+        alert_select_timing: '¡Por favor seleccione el momento de medición!',
+        alert_fill_insulin: '¡Por favor ingrese al menos un medicamento o dosis de insulina!',
+        alert_fill_food: '¡Por favor ingrese la comida o cantidad de carbohidratos!',
+        alert_fill_activity: '¡Por favor seleccione tipo de actividad o ingrese detalles!',
+        alert_fill_note: '¡Por favor seleccione un síntoma o ingrese una nota!',
+        confirm_delete_record: '¿Está seguro de que desea eliminar este registro?',
+        confirm_delete_reminder: '¿Desea eliminar este recordatorio?',
+        confirm_clear_all: '¡TODOS los registros y mediciones se borrarán!',
+        alert_all_cleared: 'Se han restablecido todos los datos.',
+        alert_demo_loaded: '¡Datos de demostración cargados exitosamente!',
+        alert_settings_saved: '¡Ajustes de perfil y objetivos guardados exitosamente!',
+        alert_reminder_added: '¡Recordatorio agregado exitosamente!',
+        alert_invalid_reminder: '¡Por favor ingrese una hora y descripción válidas!',
+        wa_title: 'Resumen de Glucosa GlucoEquilibrio',
+        wa_general_status: 'Estado General',
+        wa_latest_records: 'Últimas Lecturas',
+        wa_footer: 'Enviado desde GlucoEquilibrio Móvil.',
+        csv_date: 'Fecha',
+        csv_time: 'Hora',
+        csv_timing: 'Momento',
+        csv_category: 'Categoría',
+        csv_glucose: 'Glucosa',
+        csv_bolus: 'Insulina Bolus',
+        csv_basal: 'Insulina Basal',
+        csv_med: 'Medicación',
+        csv_carbs: 'Carbohidratos (g)',
+        csv_meal_note: 'Notas de Comida',
+        csv_activity: 'Deporte / Actividad',
+        csv_symptoms: 'Síntomas',
+        csv_notes: 'Notas'
+      },
+
+      ar: {
+        app_title: 'غلوكو توازن',
+        app_badge: 'جوال',
+        header_summary: 'ملخص',
+        header_report: 'تقرير',
+        header_alarm: 'تنبيه',
+        header_settings: 'إعدادات',
+        header_add: 'تسجيل',
+        nav_lang: 'اللغة',
+        nav_lang_title: 'اختيار اللغة / Language',
+        nav_charts: 'مخططات',
+        nav_logbook: 'السجلات',
+        nav_reminders: 'تنبيهات',
+        nav_report: 'تقرير',
+        nav_settings: 'الإعدادات',
+        modal_lang_title: 'اختيار لغة التطبيق',
+        modal_lang_sub: 'اختر لغتك المفضلة',
+        toast_badge: 'موعد القياس والدواء',
+        toast_later: 'لاحقاً',
+        toast_enter: '+ إدخال القراءة',
+        hypo_alert: 'تنبيه طوارئ',
+        hypo_title: 'هبوط السكر (هيبوجلايسيميا)',
+        hypo_rule: 'قاعدة 15-15: تناول 15 غراماً من السكر السريع (3-4 قطع سكر أو نصف كوب عصير). استرح 15 دقيقة وأعد القياس.',
+        btn_close: 'إغلاق',
+        latest_measurement: 'آخر قراءة',
+        stat_avg: 'المتوسط',
+        stat_a1c: 'السكر التراكمي المقدر',
+        stat_a1c_sub: 'معادلة ADAG',
+        stat_tir: 'في النطاق (TIR)',
+        stat_tir_sub: 'نطاق 70-180',
+        hub_title: 'إدخال البيانات',
+        hub_subtitle: 'المس لإضافة تسجيل سريع:',
+        hub_glucose: 'السكر',
+        hub_insulin: 'الدواء',
+        hub_food: 'الوجبة',
+        hub_activity: 'الرياضة',
+        hub_note: 'ملاحظة',
+        today_records_title: 'سجلات اليوم',
+        today_empty: 'لم يتم إدخال سجلات اليوم بعد. المس أزرار الإدخال أعلاه للإضافة.',
+        search_placeholder: 'ابحث في القياسات أو الأدوية أو الوجبات...',
+        filter_all: 'الكل',
+        filter_glucose: '🩸 سكر',
+        filter_insulin: '💉 دواء',
+        filter_food: '🥗 وجبة',
+        filter_activity: '🏃 رياضة',
+        filter_note: '📝 ملاحظة',
+        filter_fasting: 'صائم',
+        filter_post: 'بعد الأكل',
+        filter_out: 'خارج النطاق',
+        log_empty: 'لم يتم العثور على سجلات مطابقة.',
+        days_7: '7 أيام',
+        days_14: '14 يوماً',
+        days_30: '30 يوماً',
+        days_90: '90 يوماً',
+        chart_trend_title: 'منحنى اتجاه سكر الدم',
+        chart_tir_title: 'توزيع الوقت في النطاق (TIR)',
+        chart_meal_title: 'متوسط السكر حسب الوجبة',
+        chart_tir_in_range: 'في النطاق (70-180)',
+        chart_tir_high: 'مرتفع (>180)',
+        chart_tir_low: 'منخفض (<70)',
+        chart_glucose_label: 'السكر',
+        chart_meal_avg: 'المتوسط',
+        meal_fasting: 'صائم صباحاً',
+        meal_breakfast_post: 'بعد الفطور',
+        meal_lunch_post: 'بعد الغداء',
+        meal_dinner_post: 'بعد العشاء',
+        meal_bedtime: 'قبل النوم',
+        rem_banner_title: 'تنبيهات الفحص والأدوية',
+        rem_banner_sub: 'الانتظام في الفحص هو مفتاح السيطرة على السكري.',
+        rem_btn_sound_test: 'تجربة الصوت',
+        rem_btn_open_notif: 'تفعيل الإشعارات',
+        rem_add_title: 'إضافة تذكير جديد',
+        rem_label_time: 'الوقت',
+        rem_label_type: 'النوع / الوجبة',
+        rem_opt_glucose: 'سكر الدم',
+        rem_opt_insulin: 'أنسولين / دواء',
+        rem_opt_meal: 'وجبة',
+        rem_label_title: 'العنوان / الوصف',
+        rem_placeholder_title: 'مثال: وجبة خفيفة وأنسولين',
+        rem_btn_save: '+ حفظ التذكير',
+        rem_active: 'مفعل',
+        rem_inactive: 'معطل',
+        rep_wa_title: 'إرسال التقرير للطبيب عبر واتساب',
+        rep_wa_sub: 'شارك ملخص قراءاتك مع طبيبك بنقرة واحدة.',
+        rep_wa_btn: 'مشاركة على واتساب',
+        rep_doc_summary: 'ملخص استشارة الطبيب',
+        rep_ada_std: 'معايير الجمعية الأمريكية للسكري (ADA)',
+        rep_badge: 'تقرير سريري',
+        rep_total_records: 'إجمالي السجلات:',
+        rep_avg_glucose: 'متوسط السكر:',
+        rep_est_a1c: 'التراكمي المقدر:',
+        rep_hypo_events: 'حالات الهبوط:',
+        rep_14days_title: 'نتائج آخر 14 يوماً',
+        rep_14days_sub: 'جدول مفصل لقراءات السكر والأنسولين لتقييم الطبيب:',
+        rep_14days_empty: 'لا توجد سجلات خلال آخر 14 يوماً.',
+        rep_unit_count: 'سجل',
+        rep_measurement: 'قراءات',
+        rep_btn_print: '📄 طباعة تقرير الطبيب / تحميل PDF',
+        rep_btn_csv: '📥 تحميل تقرير إكسل (CSV)',
+        rep_btn_json: '💾 نسخة احتياطية لكافة البيانات (JSON)',
+        set_prof_title: 'الملف الشخصي والاتصال',
+        set_prof_sub: 'الإعدادات',
+        set_patient_name: 'اسم المريض بالكامل',
+        set_diabetes_type: 'نوع السكري',
+        set_dt_type2: 'السكري من النوع 2',
+        set_dt_type1: 'السكري من النوع 1',
+        set_dt_gestational: 'سكري الحمل',
+        set_dt_prediabetes: 'مرحلة ما قبل السكري',
+        set_doc_name: 'اسم الطبيب المعالج',
+        set_doc_phone: 'رقم هاتف الطبيب',
+        set_btn_save: 'حفظ الإعدادات',
+        set_targets_title: 'النطاقات المستهدفة للسكر',
+        set_target_hypo: 'الحد الأدنى للهبوط',
+        set_target_fasting: 'الحد الأعلى للصائم',
+        set_target_post: 'الحد الأعلى بعد الأكل',
+        set_btn_demo: '🔄 تحميل بيانات تجريبية',
+        set_btn_clear: '🗑️ مسح كافة البيانات',
+        modal_add_title: 'إضافة تسجيل جديد',
+        modal_edit_title: 'تعديل السجل',
+        modal_add_sub: 'يمكنك تدوين الأدوية أو الوجبات أو الرياضة حتى بدون فحص السكر',
+        modal_edit_sub: 'تعديل السجل الحالي وحفظ التغييرات',
+        modal_sub_glucose: 'تسجيل قراءة السكر صائماً أو بعد الأكل',
+        modal_sub_insulin: 'تسجيل جرعة الأنسولين أو الأدوية الفموية',
+        modal_sub_food: 'تسجيل الوجبة ومقدار الكربوهيدرات',
+        modal_sub_activity: 'تسجيل المشي أو التمارين الرياضية',
+        modal_sub_note: 'ملاحظة يومية، قياس ضغط أو أعراض تشعر بها',
+        label_datetime: 'التاريخ والوقت:',
+        label_glucose: 'قيمة سكر الدم',
+        label_timing: 'وقت / حالة القياس',
+        opt_select_timing: 'اختر وقت القياس...',
+        badge_eval_pending: 'سيتم تقييم الحالة فور إدخال القراءة.',
+        label_bolus: 'أنسولين الوجبات (سريع) (وحدات)',
+        label_basal: 'أنسولين قاعدي (طويل) (وحدات)',
+        label_med: 'أدوية فموية (مثال: منظم ميتفورمين)',
+        label_med_time: 'وقت تناول الدواء',
+        label_meal_time: 'وقت الوجبة',
+        label_carbs: 'الكربوهيدرات التقديرية (غرام)',
+        label_meal_note: 'الوجبات المتناولة / القائمة',
+        label_activity_intensity: 'شدة النشاط البدني',
+        opt_select_activity: 'اختر نوع النشاط...',
+        act_light: 'خفيف (15-30 دقيقة مشي سريع)',
+        act_medium: 'متوسط (30-60 دقيقة دراجة/رياضة)',
+        act_heavy: 'شديد (تمارين شاقة/جري)',
+        act_rest: 'راحة / يوم خامل',
+        label_activity_details: 'تفاصيل النشاط / المدة',
+        label_symptoms: 'الأعراض / الحالة الصحية',
+        opt_select_symptom: 'اختر العرض أو الحالة...',
+        sym_normal: 'طبيعي / أشعر أنني بخير',
+        sym_fatigue: 'إرهاق / تعب شديد',
+        sym_dry_mouth: 'جفاف الفم / عطش شديد',
+        sym_dizziness: 'دوخة / رجفة (شعور بالهبوط)',
+        sym_blurred_vision: 'تشوش في الرؤية',
+        sym_stress: 'توتر / قلق',
+        label_extra_notes: 'ملاحظات وتوضيحات إضافية (اختياري)',
+        btn_cancel: 'إلغاء',
+        btn_save_record: 'حفظ البيانات',
+        btn_save_changes: '✓ حفظ التغييرات',
+        btn_edit: 'تعديل',
+        btn_delete: 'حذف',
+        sec_glucose: 'قياس السكر',
+        sec_insulin: 'الدواء والأنسولين',
+        sec_food: 'الوجبات والغذاء',
+        sec_activity: 'الرياضة والنشاط',
+        sec_note: 'الملاحظات والأعراض',
+        time_label: 'الوقت:',
+        timing_prefix: 'الموعد:',
+        detail_label: 'التفاصيل',
+        carbs_unit: 'كربوهيدرات',
+        carbs_short: 'كارب',
+        bolus_unit: 'وحدة',
+        basal_unit: 'وحدة',
+        summary_bolus: 'سريع',
+        summary_basal: 'قاعدي',
+        summary_insulin_record: 'تسجيل دواء/أنسولين',
+        activity_title: 'نشاط',
+        record_general: 'تسجيل',
+        status_hypo: 'منخفض (هبوط السكر)',
+        status_target: 'في النطاق (طبيعي)',
+        status_fasting_high: 'صائم مرتفع',
+        status_post_high: 'بعد الأكل مرتفع',
+        status_critical_high: 'مرتفع جداً (حرج)',
+        status_no_measure: 'إدخال بيانات',
+        advice_hypo: 'قاعدة 15-15: تناول 15 غراماً سكر سريع واسترح 15 دقيقة.',
+        advice_critical_high: 'القيمة مرتفعة جداً! اشرب ماء واستشر طبيبك.',
+        advice_fasting_high: 'أعلى من هدف الصيام. راجع توقيت الدواء والكربوهيدرات.',
+        advice_post_high: 'أعلى من هدف ما بعد الوجبة. راجع كمية الوجبة.',
+        advice_target: 'تهانينا! مستوى السكر في النطاق الصحي المستهدف.',
+        advice_no_measure: 'لم يتم إجراء قياس.',
+        timing_fasting: 'صائم صباحاً',
+        timing_fasting_short: 'صائم',
+        timing_breakfast_post: 'بعد الإفطار (+ساعتان)',
+        timing_breakfast_post_short: 'بعد الفطور',
+        timing_lunch_pre: 'قبل الغداء',
+        timing_lunch_pre_short: 'قبل الغداء',
+        timing_lunch_post: 'بعد الغداء (+ساعتان)',
+        timing_lunch_post_short: 'بعد الغداء',
+        timing_dinner_pre: 'قبل العشاء',
+        timing_dinner_pre_short: 'قبل العشاء',
+        timing_dinner_post: 'بعد العشاء (+ساعتان)',
+        timing_dinner_post_short: 'بعد العشاء',
+        timing_bedtime: 'قبل النوم',
+        timing_bedtime_short: 'قبل النوم',
+        timing_night: 'فحص 03:00 ليلاً',
+        timing_night_short: '03:00 ليلاً',
+        timing_random: 'عشوائي / فحص دوري',
+        timing_random_short: 'عشوائي',
+        alert_fill_glucose: 'يرجى إدخال قيمة سكر الدم!',
+        alert_invalid_glucose: 'يرجى إدخال قيمة صحيحة للسكر!',
+        alert_select_timing: 'يرجى اختيار وقت القياس!',
+        alert_fill_insulin: 'يرجى إدخال اسم دواء أو جرعة أنسولين على الأقل!',
+        alert_fill_food: 'يرجى إدخال تفاصيل الوجبة أو الكربوهيدرات!',
+        alert_fill_activity: 'يرجى اختيار نوع الرياضة أو كتابة التفاصيل!',
+        alert_fill_note: 'يرجى اختيار عرض أو تدوين ملاحظة!',
+        confirm_delete_record: 'هل أنت متأكد من رغبتك في حذف هذا السجل؟',
+        confirm_delete_reminder: 'هل تريد حذف هذا التنبيه؟',
+        confirm_clear_all: 'سيتم مسح كافة القياسات والبيانات الشخصية تماماً!',
+        alert_all_cleared: 'تم مسح كافة البيانات.',
+        alert_demo_loaded: 'تم تحميل البيانات التجريبية بنجاح!',
+        alert_settings_saved: 'تم حفظ إعدادات الملف الشخصي والأهداف بنجاح!',
+        alert_reminder_added: 'تمت إضافة التنبيه بنجاح!',
+        alert_invalid_reminder: 'يرجى إدخال وقت صحيح ووصف للتنبيه!',
+        wa_title: 'ملخص سكر الدم - تطبيق غلوكو توازن',
+        wa_general_status: 'الحالة العامة',
+        wa_latest_records: 'آخر القياسات',
+        wa_footer: 'أُرسل عبر تطبيق غلوكو توازن للجوال.',
+        csv_date: 'التاريخ',
+        csv_time: 'الوقت',
+        csv_timing: 'وقت القياس',
+        csv_category: 'الفئة',
+        csv_glucose: 'السكر',
+        csv_bolus: 'أنسولين الوجبات',
+        csv_basal: 'أنسولين قاعدي',
+        csv_med: 'الدواء',
+        csv_carbs: 'الكربوهيدرات (غ)',
+        csv_meal_note: 'ملاحظة الوجبة',
+        csv_activity: 'الرياضة / النشاط',
+        csv_symptoms: 'الأعراض',
+        csv_notes: 'ملاحظات'
+      },
+
+      ru: {
+        app_title: 'ГлюкоБаланс',
+        app_badge: 'Мобильный',
+        header_summary: 'Обзор',
+        header_report: 'Отчет',
+        header_alarm: 'Будильник',
+        header_settings: 'Настр.',
+        header_add: 'Запись',
+        nav_lang: 'Язык',
+        nav_lang_title: 'Выбор языка / Language',
+        nav_charts: 'Графики',
+        nav_logbook: 'Журнал',
+        nav_reminders: 'Напоминания',
+        nav_report: 'Отчет',
+        nav_settings: 'Настройки',
+        modal_lang_title: 'Выбор языка',
+        modal_lang_sub: 'Выберите язык приложения',
+        toast_badge: 'Время измерения и лекарств',
+        toast_later: 'Позже',
+        toast_enter: '+ Ввести значение',
+        hypo_alert: 'ЭКСТРЕННОЕ ПРЕДУПРЕЖДЕНИЕ',
+        hypo_title: 'Гипогликемия',
+        hypo_rule: 'Правило 15-15: Примите 15г быстрых углеводов (3-4 кусочка сахара или стакан сока). Отдохните 15 мин и измерьте снова.',
+        btn_close: 'Закрыть',
+        latest_measurement: 'Последнее измерение',
+        stat_avg: 'Среднее',
+        stat_a1c: 'Расчетный A1c',
+        stat_a1c_sub: 'Формула ADAG',
+        stat_tir: 'TIR (В целевом)',
+        stat_tir_sub: 'Диапазон 70-180',
+        hub_title: 'Ввод данных',
+        hub_subtitle: 'Нажмите для быстрой записи:',
+        hub_glucose: 'Сахар',
+        hub_insulin: 'Лекарства',
+        hub_food: 'Еда',
+        hub_activity: 'Спорт',
+        hub_note: 'Заметка',
+        today_records_title: 'Записи за сегодня',
+        today_empty: 'Сегодня записей нет. Нажмите на кнопки ввода выше, чтобы добавить.',
+        search_placeholder: 'Поиск измерений, еды, лекарств, заметок...',
+        filter_all: 'Все',
+        filter_glucose: '🩸 Сахар',
+        filter_insulin: '💉 Лекарства',
+        filter_food: '🥗 Еда',
+        filter_activity: '🏃 Спорт',
+        filter_note: '📝 Заметка',
+        filter_fasting: 'Натощак',
+        filter_post: 'После еды',
+        filter_out: 'Вне нормы',
+        log_empty: 'Записи по критериям не найдены.',
+        days_7: '7 дней',
+        days_14: '14 дней',
+        days_30: '30 дней',
+        days_90: '90 дней',
+        chart_trend_title: 'График динамики уровня сахара',
+        chart_tir_title: 'Время в целевом диапазоне (TIR)',
+        chart_meal_title: 'Средний сахар по приемам пищи',
+        chart_tir_in_range: 'В целевом (70-180)',
+        chart_tir_high: 'Высокий (>180)',
+        chart_tir_low: 'Низкий (<70)',
+        chart_glucose_label: 'Сахар',
+        chart_meal_avg: 'Среднее',
+        meal_fasting: 'Утро натощак',
+        meal_breakfast_post: 'После завтрака',
+        meal_lunch_post: 'После обеда',
+        meal_dinner_post: 'После ужина',
+        meal_bedtime: 'Перед сном',
+        rem_banner_title: 'Будильники измерений и лекарств',
+        rem_banner_sub: 'Своевременный контроль — залог успешного управления диабетом.',
+        rem_btn_sound_test: 'Тест звука',
+        rem_btn_open_notif: 'Включить сигнал',
+        rem_add_title: 'Добавить напоминание',
+        rem_label_time: 'Время',
+        rem_label_type: 'Прием / Тип',
+        rem_opt_glucose: 'Сахар крови',
+        rem_opt_insulin: 'Инсулин / Лекарство',
+        rem_opt_meal: 'Прием пищи',
+        rem_label_title: 'Название / Описание',
+        rem_placeholder_title: 'напр.: Перекус и инсулин',
+        rem_btn_save: '+ Сохранить напоминание',
+        rem_active: 'Вкл',
+        rem_inactive: 'Выкл',
+        rep_wa_title: 'Отправить отчет врачу через WhatsApp',
+        rep_wa_sub: 'Отправьте сводку измерений доктору в один клик.',
+        rep_wa_btn: 'Поделиться в WhatsApp',
+        rep_doc_summary: 'Клиническая сводка для врача',
+        rep_ada_std: 'Стандарты Американской диабетической ассоциации (ADA)',
+        rep_badge: 'Медицинский отчет',
+        rep_total_records: 'Всего записей:',
+        rep_avg_glucose: 'Средний сахар:',
+        rep_est_a1c: 'Расчетный HbA1c:',
+        rep_hypo_events: 'Случаев гипогликемии:',
+        rep_14days_title: 'Результаты за последние 14 дней',
+        rep_14days_sub: 'Подробная выписка сахара, инсулина и лекарств для консультации врача:',
+        rep_14days_empty: 'За последние 14 дней записей нет.',
+        rep_unit_count: 'зап.',
+        rep_measurement: 'Измерений',
+        rep_btn_print: '📄 Распечатать отчет / Скачать PDF',
+        rep_btn_csv: '📥 Скачать отчет Excel (CSV)',
+        rep_btn_json: '💾 Резервная копия всех данных (JSON)',
+        set_prof_title: 'Профиль пациента и контакты',
+        set_prof_sub: 'Настройки',
+        set_patient_name: 'ФИО пациента',
+        set_diabetes_type: 'Тип диабета',
+        set_dt_type2: 'Диабет 2 типа',
+        set_dt_type1: 'Диабет 1 типа',
+        set_dt_gestational: 'Гестационный диабет',
+        set_dt_prediabetes: 'Предиабет',
+        set_doc_name: 'ФИО лечащего врача',
+        set_doc_phone: 'Телефон врача',
+        set_btn_save: 'Сохранить настройки',
+        set_targets_title: 'Целевые диапазоны сахара',
+        set_target_hypo: 'Нижняя граница (Гипо)',
+        set_target_fasting: 'Верхняя граница натощак',
+        set_target_post: 'Верхняя граница после еды',
+        set_btn_demo: '🔄 Загрузить демо-данные',
+        set_btn_clear: '🗑️ Очистить все данные',
+        modal_add_title: 'Добавить запись',
+        modal_edit_title: 'Редактировать запись',
+        modal_add_sub: 'Можно вносить лекарства, еду или активность даже без замера сахара',
+        modal_edit_sub: 'Обновите существующую запись и сохраните изменения',
+        modal_sub_glucose: 'Запись сахара натощак или после еды',
+        modal_sub_insulin: 'Запись болюсного, базального инсулина или таблеток',
+        modal_sub_food: 'Запись блюд, углеводов и заметок о еде',
+        modal_sub_activity: 'Запись ходьбы, тренировки или спорта',
+        modal_sub_note: 'Заметка дня, давление или симптомы',
+        label_datetime: 'Дата и время записи:',
+        label_glucose: 'Уровень сахара в крови',
+        label_timing: 'Время замера / Статус',
+        opt_select_timing: 'Выберите время замера...',
+        badge_eval_pending: 'Оценка появится после ввода значения.',
+        label_bolus: 'Болюсный инсулин (короткий) (Ед)',
+        label_basal: 'Базальный инсулин (длинный) (Ед)',
+        label_med: 'Таблетки (напр.: Метформин)',
+        label_med_time: 'Время приема лекарства',
+        label_meal_time: 'Время приема пищи',
+        label_carbs: 'Углеводы (ХЕ / граммы)',
+        label_meal_note: 'Что съедено / Меню',
+        label_activity_intensity: 'Интенсивность нагрузки',
+        opt_select_activity: 'Выберите тип активности...',
+        act_light: 'Легкая (15-30 мин быстрой ходьбы)',
+        act_medium: 'Средняя (30-60 мин велик/зал)',
+        act_heavy: 'Высокая (Бег/силовая тренировка)',
+        act_rest: 'Отдых / День без нагрузки',
+        label_activity_details: 'Детали / Длительность',
+        label_symptoms: 'Симптомы / Самочувствие',
+        opt_select_symptom: 'Выберите симптом...',
+        sym_normal: 'Нормально / Чувствую себя хорошо',
+        sym_fatigue: 'Слабость / Сильная усталость',
+        sym_dry_mouth: 'Сухость во рту / Жажда',
+        sym_dizziness: 'Головокружение / Дрожь (Гипо)',
+        sym_blurred_vision: 'Нечеткое зрение',
+        sym_stress: 'Стресс / Беспокойство',
+        label_extra_notes: 'Дополнительные примечания (Необязательно)',
+        btn_cancel: 'Отмена',
+        btn_save_record: 'Сохранить запись',
+        btn_save_changes: '✓ Сохранить изменения',
+        btn_edit: 'Изменить',
+        btn_delete: 'Удалить',
+        sec_glucose: 'ЗАМЕР САХАРА',
+        sec_insulin: 'ИНСУЛИН И ЛЕКАРСТВА',
+        sec_food: 'ПИТАНИЕ И ЕДА',
+        sec_activity: 'СПОРТ И АКТИВНОСТЬ',
+        sec_note: 'ЗАМЕТКА И СИМПТОМ',
+        time_label: 'Время:',
+        timing_prefix: 'Время:',
+        detail_label: 'Детали',
+        carbs_unit: 'Углеводы',
+        carbs_short: 'Угл.',
+        bolus_unit: 'Ед',
+        basal_unit: 'Ед',
+        summary_bolus: 'Болюс',
+        summary_basal: 'Базал',
+        summary_insulin_record: 'Запись инсулина/таблеток',
+        activity_title: 'Активность',
+        record_general: 'Запись',
+        status_hypo: 'Низкий (Гипогликемия)',
+        status_target: 'В норме (Целевой)',
+        status_fasting_high: 'Высокий натощак',
+        status_post_high: 'Высокий после еды',
+        status_critical_high: 'Критически высокий',
+        status_no_measure: 'Запись',
+        advice_hypo: 'Правило 15-15: Примите 15г быстрых углеводов и отдохните 15 мин.',
+        advice_critical_high: 'Очень высокий уровень! Пейте воду и обратитесь к врачу.',
+        advice_fasting_high: 'Выше целевого натощак. Проверьте углеводы и время приема лекарств.',
+        advice_post_high: 'Выше целевого после еды. Контролируйте размер порций.',
+        advice_target: 'Поздравляем! Сахар крови в целевом диапазоне.',
+        advice_no_measure: 'Измерение не производилось.',
+        timing_fasting: 'Утро натощак',
+        timing_fasting_short: 'Натощак',
+        timing_breakfast_post: 'После завтрака (+2ч)',
+        timing_breakfast_post_short: 'Пост-завт.',
+        timing_lunch_pre: 'До обеда',
+        timing_lunch_pre_short: 'До обеда',
+        timing_lunch_post: 'После обеда (+2ч)',
+        timing_lunch_post_short: 'Пост-обед',
+        timing_dinner_pre: 'До ужина',
+        timing_dinner_pre_short: 'До ужина',
+        timing_dinner_post: 'После ужина (+2ч)',
+        timing_dinner_post_short: 'Пост-ужин',
+        timing_bedtime: 'Перед сном',
+        timing_bedtime_short: 'Сон',
+        timing_night: 'Ночь 03:00 Контроль',
+        timing_night_short: 'Ночь 03:00',
+        timing_random: 'Случайный замер',
+        timing_random_short: 'Случайно',
+        alert_fill_glucose: 'Пожалуйста, введите уровень сахара!',
+        alert_invalid_glucose: 'Пожалуйста, введите корректное значение сахара!',
+        alert_select_timing: 'Пожалуйста, выберите время замера!',
+        alert_fill_insulin: 'Пожалуйста, укажите хотя бы одно лекарство или дозу инсулина!',
+        alert_fill_food: 'Пожалуйста, укажите еду или количество углеводов!',
+        alert_fill_activity: 'Пожалуйста, выберите тип активности или укажите детали!',
+        alert_fill_note: 'Пожалуйста, выберите симптом или введите заметку!',
+        confirm_delete_record: 'Вы действительно хотите удалить эту запись?',
+        confirm_delete_reminder: 'Удалить это напоминание?',
+        confirm_clear_all: 'ВСЕ записи и данные профиля будут удалены!',
+        alert_all_cleared: 'Все данные сброшены.',
+        alert_demo_loaded: 'Демо-данные успешно загружены!',
+        alert_settings_saved: 'Настройки профиля успешно сохранены!',
+        alert_reminder_added: 'Напоминание успешно добавлено!',
+        alert_invalid_reminder: 'Пожалуйста, укажите корректное время и описание!',
+        wa_title: 'Сводка сахара крови ГлюкоБаланс',
+        wa_general_status: 'Общий статус',
+        wa_latest_records: 'Последние замеры',
+        wa_footer: 'Передано через мобильное приложение ГлюкоБаланс.',
+        csv_date: 'Дата',
+        csv_time: 'Время',
+        csv_timing: 'Время замера',
+        csv_category: 'Категория',
+        csv_glucose: 'Сахар',
+        csv_bolus: 'Болюсный инсулин',
+        csv_basal: 'Базальный инсулин',
+        csv_med: 'Лекарство',
+        csv_carbs: 'Углеводы (г)',
+        csv_meal_note: 'Заметка о еде',
+        csv_activity: 'Спорт / Активность',
+        csv_symptoms: 'Симптомы',
+        csv_notes: 'Заметки'
+      }
+    };
+
+    let currentLang = 'tr';
+
+    function t(key) {
+      if (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key] !== undefined) {
+        return TRANSLATIONS[currentLang][key];
+      }
+      if (TRANSLATIONS.tr && TRANSLATIONS.tr[key] !== undefined) {
+        return TRANSLATIONS.tr[key];
+      }
+      return key;
+    }
+
+    function getLocaleCode() {
+      const map = { tr: 'tr-TR', en: 'en-US', de: 'de-DE', fr: 'fr-FR', es: 'es-ES', ar: 'ar-SA', ru: 'ru-RU' };
+      return map[currentLang] || 'tr-TR';
+    }
+
+    function detectInitialLanguage() {
+      const saved = localStorage.getItem('glukodenge_lang');
+      if (saved && SUPPORTED_LANGS[saved]) return saved;
+
+      const navLangs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'tr'];
+      for (const raw of navLangs) {
+        if (!raw) continue;
+        const code = raw.toLowerCase().split('-')[0].split('_')[0];
+        if (SUPPORTED_LANGS[code]) {
+          return code;
+        }
+      }
+      return 'tr';
+    }
+
+    function applyLanguage(lang) {
+      if (!SUPPORTED_LANGS[lang]) lang = 'tr';
+      currentLang = lang;
+      localStorage.setItem('glukodenge_lang', lang);
+
+      document.documentElement.lang = lang;
+      document.documentElement.dir = SUPPORTED_LANGS[lang].rtl ? 'rtl' : 'ltr';
+
+      // 1. Text nodes with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = t(key);
+        if (val !== undefined && val !== null) {
+          el.textContent = val;
+        }
+      });
+
+      // 2. Placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const val = t(key);
+        if (val) el.placeholder = val;
+      });
+
+      // 3. Titles
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        const val = t(key);
+        if (val) el.title = val;
+      });
+
+      // 4. Update bottom nav button
+      const navFlag = document.getElementById('navLangFlag');
+      if (navFlag) navFlag.textContent = SUPPORTED_LANGS[lang].flag;
+      const navLabel = document.getElementById('navLangLabel');
+      if (navLabel) navLabel.textContent = t('nav_lang');
+
+      // 5. Update dynamic selects
+      updateSelectOptions();
+
+      // 6. Re-render UI
+      renderToday();
+      renderLogbook();
+      renderReminders();
+      renderReport();
+      if (currentTab === 'charts') renderCharts();
+      updateModalFeedback();
+    }
+
+    function updateSelectOptions() {
+      // Timing options
+      const selTiming = document.getElementById('selectTiming');
+      if (selTiming) {
+        const curVal = selTiming.value;
+        selTiming.innerHTML = `
+          <option value="" disabled ${!curVal ? 'selected' : ''}>${t('opt_select_timing')}</option>
+          <option value="fasting">${t('timing_fasting')}</option>
+          <option value="breakfast_post">${t('timing_breakfast_post')}</option>
+          <option value="lunch_pre">${t('timing_lunch_pre')}</option>
+          <option value="lunch_post">${t('timing_lunch_post')}</option>
+          <option value="dinner_pre">${t('timing_dinner_pre')}</option>
+          <option value="dinner_post">${t('timing_dinner_post')}</option>
+          <option value="bedtime">${t('timing_bedtime')}</option>
+          <option value="night">${t('timing_night')}</option>
+          <option value="random">${t('timing_random')}</option>
+        `;
+        if (curVal) selTiming.value = curVal;
+      }
+
+      // Activity options
+      const selAct = document.getElementById('selectActivity');
+      if (selAct) {
+        const curVal = selAct.value;
+        selAct.innerHTML = `
+          <option value="" disabled ${!curVal ? 'selected' : ''}>${t('opt_select_activity')}</option>
+          <option value="Hafif (15-30 dk yürüyüş)">${t('act_light')}</option>
+          <option value="Orta (30-60 dk egzersiz)">${t('act_medium')}</option>
+          <option value="Yoğun (Ağır spor/koşu)">${t('act_heavy')}</option>
+          <option value="Dinlenme / Hareketsiz">${t('act_rest')}</option>
+        `;
+        if (curVal) selAct.value = curVal;
+      }
+
+      // Symptom options
+      const selSym = document.getElementById('selectSymptom');
+      if (selSym) {
+        const curVal = selSym.value;
+        selSym.innerHTML = `
+          <option value="" disabled ${!curVal ? 'selected' : ''}>${t('opt_select_symptom')}</option>
+          <option value="Normal / İyi">${t('sym_normal')}</option>
+          <option value="Halsizlik / Yorgunluk">${t('sym_fatigue')}</option>
+          <option value="Ağız Kuruluğu / Çok Su İçme">${t('sym_dry_mouth')}</option>
+          <option value="Baş Dönmesi / Titreme (Hipo)">${t('sym_dizziness')}</option>
+          <option value="Bulanık Görme">${t('sym_blurred_vision')}</option>
+          <option value="Stresli / Huzursuz">${t('sym_stress')}</option>
+        `;
+        if (curVal) selSym.value = curVal;
+      }
+
+      // Diabetes Type options
+      const selDt = document.getElementById('profDiabetesType');
+      if (selDt) {
+        const curVal = selDt.value;
+        selDt.innerHTML = `
+          <option value="type2">${t('set_dt_type2')}</option>
+          <option value="type1">${t('set_dt_type1')}</option>
+          <option value="gestational">${t('set_dt_gestational')}</option>
+          <option value="prediabetes">${t('set_dt_prediabetes')}</option>
+        `;
+        if (curVal) selDt.value = curVal;
+      }
+
+      // Reminder Type options
+      const selRt = document.getElementById('newRemType');
+      if (selRt) {
+        const curVal = selRt.value;
+        selRt.innerHTML = `
+          <option value="glucose">${t('rem_opt_glucose')}</option>
+          <option value="insulin">${t('rem_opt_insulin')}</option>
+          <option value="meal">${t('rem_opt_meal')}</option>
+        `;
+        if (curVal) selRt.value = curVal;
+      }
+    }
+
+    function renderLanguageList() {
+      const container = document.getElementById('langListContainer');
+      if (!container) return;
+      const langKeys = ['tr', 'en', 'de', 'fr', 'es', 'ar', 'ru'];
+      container.innerHTML = langKeys.map(k => {
+        const info = SUPPORTED_LANGS[k];
+        const isSelected = currentLang === k;
+        return `
+          <button type="button" onclick="changeLanguage('${k}')" class="touch-active w-full p-3 rounded-2xl border flex items-center justify-between transition cursor-pointer ${isSelected ? 'bg-teal-50/90 border-teal-600 shadow-xs' : 'bg-white hover:bg-slate-50 border-slate-200'}">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">${info.flag}</span>
+              <div class="text-left ${info.rtl ? 'text-right' : ''}">
+                <div class="text-sm font-bold text-slate-800">${info.native}</div>
+                <div class="text-[11px] text-slate-500 font-medium">${info.name}</div>
+              </div>
+            </div>
+            ${isSelected ? '<span class="text-teal-700 font-black text-lg">✓</span>' : '<span class="text-slate-300 text-sm">○</span>'}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function openLanguageModal() {
+      renderLanguageList();
+      const m = document.getElementById('modalLanguage');
+      if (m) {
+        m.classList.remove('hidden');
+        m.classList.add('active');
+      }
+    }
+
+    function closeLanguageModal() {
+      const m = document.getElementById('modalLanguage');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('active');
+      }
+    }
+
+    function changeLanguage(lang) {
+      applyLanguage(lang);
+      closeLanguageModal();
+    }
+
     function playNotificationChime() {
       try {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -766,16 +2680,22 @@
     }
 
     const TIMINGS = [
-      { id: 'fasting', label: 'Sabah Açlık', short: 'Sabah Açlık' },
-      { id: 'breakfast_post', label: 'Kahvaltı Tokluk', short: 'Kahvaltı Tokluk' },
-      { id: 'lunch_pre', label: 'Öğle Açlık', short: 'Öğle Açlık' },
-      { id: 'lunch_post', label: 'Öğle Tokluk', short: 'Öğle Tokluk' },
-      { id: 'dinner_pre', label: 'Akşam Açlık', short: 'Akşam Açlık' },
-      { id: 'dinner_post', label: 'Akşam Tokluk', short: 'Akşam Tokluk' },
-      { id: 'bedtime', label: 'Gece Yatış', short: 'Gece Yatış' },
-      { id: 'night', label: 'Gece 03:00', short: 'Gece 03:00' },
-      { id: 'random', label: 'Rastgele', short: 'Rastgele' },
+      { id: 'fasting', key: 'timing_fasting', shortKey: 'timing_fasting_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'breakfast_post', key: 'timing_breakfast_post', shortKey: 'timing_breakfast_post_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'lunch_pre', key: 'timing_lunch_pre', shortKey: 'timing_lunch_pre_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'lunch_post', key: 'timing_lunch_post', shortKey: 'timing_lunch_post_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'dinner_pre', key: 'timing_dinner_pre', shortKey: 'timing_dinner_pre_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'dinner_post', key: 'timing_dinner_post', shortKey: 'timing_dinner_post_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'bedtime', key: 'timing_bedtime', shortKey: 'timing_bedtime_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'night', key: 'timing_night', shortKey: 'timing_night_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
+      { id: 'random', key: 'timing_random', shortKey: 'timing_random_short', get label() { return t(this.key); }, get short() { return t(this.shortKey); } },
     ];
+
+    function getTimingLabel(id, isShort = false) {
+      const item = TIMINGS.find(t => t.id === id);
+      if (!item) return id || '';
+      return isShort ? item.short : item.label;
+    }
 
     const DEFAULT_REMINDERS = [
       { id: 'rem-1', time: '07:30', label: 'Sabah Açlık Şekeri & İlaç', type: 'glucose', active: true },
@@ -858,10 +2778,10 @@
         gInput.value = '';
       }
 
+      const initialLang = detectInitialLanguage();
+      applyLanguage(initialLang);
+
       switchTab('today');
-      renderToday();
-      renderLogbook();
-      renderReminders();
       updateReminderBadge();
 
       setInterval(checkReminders, 5000);
@@ -892,19 +2812,18 @@
     }
 
     function classify(g, timingId) {
-      if (g === null || g === undefined || g === '') return { label: 'Bilgi Girişi', color: '#64748b', class: 'bg-slate-100 text-slate-700', advice: 'Ölçüm yapılmadı.' };
+      if (g === null || g === undefined || g === '') return { label: t('status_no_measure'), color: '#64748b', class: 'bg-slate-100 text-slate-700', badgeBg: 'bg-slate-100', badgeText: 'text-slate-700', advice: t('advice_no_measure') };
       const val = Number(g);
       const isF = timingId === 'fasting' || timingId === 'lunch_pre' || timingId === 'dinner_pre';
-      if (val < (profile.targets?.hypo || 70)) return { label: 'Düşük (Hipoglisemi)', color: '#f43f5e', class: 'bg-rose-500 text-white', advice: '15-15 Kuralı: 15g hızlı şeker alın ve 15 dk dinlenin.' };
-      if (val > 250) return { label: 'Kritik Yüksek', color: '#7e22ce', class: 'bg-purple-700 text-white', advice: 'Değer çok yüksek! Bol su için ve doktorunuza danışın.' };
-      if (isF && val > (profile.targets?.fastingMax || 130)) return { label: 'Açlık Yüksek', color: '#f59e0b', class: 'bg-amber-500 text-white', advice: 'Açlık hedefinin üzerinde. Karbonhidrat ve ilaç saatinizi gözden geçirin.' };
-      if (!isF && val > (profile.targets?.postMealMax || 180)) return { label: 'Tokluk Yüksek', color: '#f59e0b', class: 'bg-amber-500 text-white', advice: 'Tokluk hedefinin üzerinde. Porsiyon miktarınızı kontrol edin.' };
-      return { label: 'Hedefte (Normal)', color: '#10b981', class: 'bg-emerald-500 text-white', advice: 'Tebrikler! Kan şekeriniz sağlıklı hedef aralıkta.' };
+      if (val < (profile.targets?.hypo || 70)) return { label: t('status_hypo'), color: '#f43f5e', class: 'bg-rose-500 text-white', badgeBg: 'bg-rose-500', badgeText: 'text-white', advice: t('advice_hypo') };
+      if (val > 250) return { label: t('status_critical_high'), color: '#7e22ce', class: 'bg-purple-700 text-white', badgeBg: 'bg-purple-700', badgeText: 'text-white', advice: t('advice_critical_high') };
+      if (isF && val > (profile.targets?.fastingMax || 130)) return { label: t('status_fasting_high'), color: '#f59e0b', class: 'bg-amber-500 text-white', badgeBg: 'bg-amber-500', badgeText: 'text-white', advice: t('advice_fasting_high') };
+      if (!isF && val > (profile.targets?.postMealMax || 180)) return { label: t('status_post_high'), color: '#f59e0b', class: 'bg-amber-500 text-white', badgeBg: 'bg-amber-500', badgeText: 'text-white', advice: t('advice_post_high') };
+      return { label: t('status_target'), color: '#10b981', class: 'bg-emerald-500 text-white', badgeBg: 'bg-emerald-500', badgeText: 'text-white', advice: t('advice_target') };
     }
 
     function getRecordSummary(r) {
-      const tObj = TIMINGS.find(t => t.id === r.timing);
-      const timingLabel = tObj ? tObj.label : (r.timing || '');
+      const timingLabel = getTimingLabel(r.timing);
       const hasG = r.glucose !== null && r.glucose !== undefined && Number(r.glucose) > 0;
       
       if (hasG) {
@@ -913,26 +2832,25 @@
       }
       if (r.entryType === 'insulin' || (r.medication || r.insulinBolus || r.insulinBasal)) {
         let parts = [];
-        if (r.insulinBolus) parts.push(`${r.insulinBolus}U Bolus`);
-        if (r.insulinBasal) parts.push(`${r.insulinBasal}U Bazal`);
+        if (r.insulinBolus) parts.push(`${r.insulinBolus}U ${t('summary_bolus')}`);
+        if (r.insulinBasal) parts.push(`${r.insulinBasal}U ${t('summary_basal')}`);
         if (r.medication) parts.push(r.medication);
-        return `💉 İlaç: ${parts.join(' + ') || 'İlaç/İnsülin Kaydı'}`;
+        return `💉 ${t('hub_insulin')}: ${parts.join(' + ') || t('summary_insulin_record')}`;
       }
       if (r.entryType === 'food' || (r.mealNote || r.carbs)) {
-        return `🥗 Besin: ${r.carbs ? r.carbs + 'g Karb ' : ''}${r.mealNote ? `• "${r.mealNote}"` : ''}`.trim();
+        return `🥗 ${t('hub_food')}: ${r.carbs ? r.carbs + 'g ' + t('carbs_short') + ' ' : ''}${r.mealNote ? `• "${r.mealNote}"` : ''}`.trim();
       }
       if (r.entryType === 'activity' || (r.activity || r.activityDetails)) {
-        return `🏃 Spor: ${r.activity || 'Aktivite'} ${r.activityDetails ? `(${r.activityDetails})` : ''}`.trim();
+        return `🏃 ${t('hub_activity')}: ${r.activity || t('activity_title')} ${r.activityDetails ? `(${r.activityDetails})` : ''}`.trim();
       }
       if (r.entryType === 'note' || (r.symptoms || r.notes)) {
-        return `📝 Not: ${r.symptoms || ''} ${r.notes ? `• ${r.notes}` : ''}`.trim();
+        return `📝 ${t('hub_note')}: ${r.symptoms || ''} ${r.notes ? `• ${r.notes}` : ''}`.trim();
       }
-      return '📋 Kayıt';
+      return `📋 ${t('record_general')}`;
     }
 
     function renderRecordSectionsHtml(r) {
-      const tObj = TIMINGS.find(t => t.id === r.timing);
-      const timingLabel = tObj ? tObj.label : (r.timing || '');
+      const timingLabel = getTimingLabel(r.timing);
       const hasG = r.glucose !== null && r.glucose !== undefined && Number(r.glucose) > 0;
       const c = hasG ? classify(r.glucose, r.timing) : null;
       const hasInsulin = !!(r.medication || r.insulinBolus || r.insulinBasal || r.medicationTime);
@@ -947,12 +2865,12 @@
         html += `
           <div class="bg-rose-50/70 border border-rose-100 rounded-xl p-2.5 text-xs">
             <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-rose-900 flex items-center gap-1 text-[11px]">🩸 ŞEKER ÖLÇÜMÜ</span>
+              <span class="font-bold text-rose-900 flex items-center gap-1 text-[11px]">🩸 ${t('sec_glucose')}</span>
               <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${c.class}">${c.label}</span>
             </div>
             <div class="flex items-baseline gap-2">
               <span class="text-base font-black font-mono text-slate-800">${formatGlucose(r.glucose, profile.unit)} <span class="text-xs font-semibold text-slate-500">${profile.unit}</span></span>
-              ${timingLabel ? `<span class="text-[11px] text-slate-600 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-rose-100">Vakit: ${timingLabel}</span>` : ''}
+              ${timingLabel ? `<span class="text-[11px] text-slate-600 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-rose-100">${t('timing_prefix')} ${timingLabel}</span>` : ''}
             </div>
           </div>
         `;
@@ -963,12 +2881,12 @@
         html += `
           <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-2.5 text-xs">
             <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-teal-900 flex items-center gap-1 text-[11px]">💉 İLAÇ & İNSÜLİN</span>
-              ${r.medicationTime ? `<span class="text-[10px] text-teal-700 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-teal-200">Saat: ${r.medicationTime}</span>` : ''}
+              <span class="font-bold text-teal-900 flex items-center gap-1 text-[11px]">💉 ${t('sec_insulin')}</span>
+              ${r.medicationTime ? `<span class="text-[10px] text-teal-700 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-teal-200">${t('time_label')} ${r.medicationTime}</span>` : ''}
             </div>
             <div class="flex flex-wrap gap-1.5 text-[11px] mt-1">
-              ${r.insulinBolus ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bolus: ${r.insulinBolus} Ünite</span>` : ''}
-              ${r.insulinBasal ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bazal: ${r.insulinBasal} Ünite</span>` : ''}
+              ${r.insulinBolus ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bolus: ${r.insulinBolus} ${t('bolus_unit')}</span>` : ''}
+              ${r.insulinBasal ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">Bazal: ${r.insulinBasal} ${t('basal_unit')}</span>` : ''}
               ${r.medication ? `<span class="bg-white border border-teal-200 text-teal-900 px-2 py-0.5 rounded-lg font-bold">💊 ${r.medication}</span>` : ''}
             </div>
           </div>
@@ -980,11 +2898,11 @@
         html += `
           <div class="bg-amber-50/70 border border-amber-100 rounded-xl p-2.5 text-xs">
             <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-amber-900 flex items-center gap-1 text-[11px]">🥗 BESİN & ÖĞÜN</span>
-              ${r.mealTime ? `<span class="text-[10px] text-amber-800 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-amber-200">Saat: ${r.mealTime}</span>` : ''}
+              <span class="font-bold text-amber-900 flex items-center gap-1 text-[11px]">🥗 ${t('sec_food')}</span>
+              ${r.mealTime ? `<span class="text-[10px] text-amber-800 font-semibold bg-white/80 px-1.5 py-0.5 rounded border border-amber-200">${t('time_label')} ${r.mealTime}</span>` : ''}
             </div>
             <div class="text-[11px] text-slate-700 space-y-1 mt-1">
-              ${r.carbs ? `<span class="inline-block bg-white border border-amber-200 text-amber-900 px-2 py-0.5 rounded-lg font-bold">🍞 ${r.carbs}g Karbonhidrat</span>` : ''}
+              ${r.carbs ? `<span class="inline-block bg-white border border-amber-200 text-amber-900 px-2 py-0.5 rounded-lg font-bold">🍞 ${r.carbs}g ${t('carbs_unit')}</span>` : ''}
               ${r.mealNote ? `<p class="text-slate-700 italic font-medium bg-white/80 p-2 rounded-lg border border-amber-200/60 mt-1">"${r.mealNote}"</p>` : ''}
             </div>
           </div>
@@ -995,10 +2913,10 @@
       if (hasActivity) {
         html += `
           <div class="bg-sky-50/70 border border-sky-100 rounded-xl p-2.5 text-xs">
-            <span class="font-bold text-sky-900 flex items-center gap-1 text-[11px] mb-1">🏃 SPOR & AKTİVİTE</span>
+            <span class="font-bold text-sky-900 flex items-center gap-1 text-[11px] mb-1">🏃 ${t('sec_activity')}</span>
             <div class="text-[11px] text-slate-700 space-y-1 mt-1">
               ${r.activity ? `<span class="inline-block bg-white border border-sky-200 text-sky-900 px-2 py-0.5 rounded-lg font-bold">⚡ ${r.activity}</span>` : ''}
-              ${r.activityDetails ? `<p class="text-slate-700 font-medium bg-white/80 p-2 rounded-lg border border-sky-200/60 mt-1">🏃 Detay: ${r.activityDetails}</p>` : ''}
+              ${r.activityDetails ? `<p class="text-slate-700 font-medium bg-white/80 p-2 rounded-lg border border-sky-200/60 mt-1">🏃 ${t('detail_label')}: ${r.activityDetails}</p>` : ''}
             </div>
           </div>
         `;
@@ -1008,7 +2926,7 @@
       if (hasNote) {
         html += `
           <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-2.5 text-xs">
-            <span class="font-bold text-purple-900 flex items-center gap-1 text-[11px] mb-1">📝 NOT & BELİRTİ</span>
+            <span class="font-bold text-purple-900 flex items-center gap-1 text-[11px] mb-1">📝 ${t('sec_note')}</span>
             <div class="text-[11px] text-slate-700 space-y-1 mt-1">
               ${r.symptoms ? `<span class="inline-block bg-white border border-purple-200 text-purple-900 px-2 py-0.5 rounded-lg font-bold">🩺 ${r.symptoms}</span>` : ''}
               ${r.notes ? `<p class="text-slate-700 font-medium bg-white/80 p-2 rounded-lg border border-purple-200/60 mt-1">💬 ${r.notes}</p>` : ''}
@@ -1039,7 +2957,7 @@
 
         if (Number(latest.glucose) < (profile.targets?.hypo || 70)) {
           document.getElementById('hypoAlertBox').classList.remove('hidden');
-          document.getElementById('hypoValueText').textContent = `Hipoglisemi: ${displayVal} ${profile.unit}`;
+          document.getElementById('hypoValueText').textContent = `${t('hypo_title')}: ${displayVal} ${profile.unit}`;
         } else {
           document.getElementById('hypoAlertBox').classList.add('hidden');
         }
@@ -1057,11 +2975,11 @@
       document.getElementById('statTir').textContent = `%${tir}`;
       document.getElementById('statUnitLabel').textContent = profile.unit;
 
-      document.getElementById('repTotalCount').textContent = `${records.length} adet`;
+      document.getElementById('repTotalCount').textContent = `${records.length} ${t('rep_unit_count')}`;
       document.getElementById('repAvgVal').textContent = `${avgDisplay} ${profile.unit}`;
       document.getElementById('repA1cVal').textContent = `%${a1c}`;
       const hypoCount = values.filter(v => v < 70).length;
-      document.getElementById('repHypoCount').textContent = `${hypoCount} adet`;
+      document.getElementById('repHypoCount').textContent = `${hypoCount} ${t('rep_unit_count')}`;
       renderReport();
 
       const now = new Date();
@@ -1097,12 +3015,12 @@
 
       const listCont = document.getElementById('todayListContainer');
       if (todayLogs.length === 0) {
-        listCont.innerHTML = `<div class="bg-white rounded-2xl p-4 text-center text-xs text-slate-400 border border-slate-200">Bugün henüz kayıt girilmedi. Yukarıdaki bilgi girişi butonlarına dokunarak ekleyin.</div>`;
+        listCont.innerHTML = `<div class="bg-white rounded-2xl p-4 text-center text-xs text-slate-400 border border-slate-200">${t('today_empty')}</div>`;
       } else {
         listCont.innerHTML = todayLogs.map(r => {
           const c = classify(r.glucose, r.timing);
           const tObj = TIMINGS.find(t => t.id === r.timing);
-          const timeStr = new Date(r.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+          const timeStr = new Date(r.timestamp).toLocaleTimeString(getLocaleCode(), { hour: '2-digit', minute: '2-digit' });
           const summary = getRecordSummary(r);
           const sectionsHtml = renderRecordSectionsHtml(r);
 
@@ -1134,17 +3052,17 @@
                   </div>
                   <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-1.5 flex-wrap">
-                      <span class="text-xs font-black text-slate-800">${tObj ? tObj.label : (r.timing || 'Kayıt')}</span>
+                      <span class="text-xs font-black text-slate-800">${tObj ? tObj.label : (r.timing ? getTimingLabel(r.timing) : t('record_general'))}</span>
                       <span class="text-[10px] text-slate-400 font-mono">${timeStr}</span>
                     </div>
                     <p class="text-[11px] font-bold text-teal-800 truncate mt-0.5">${summary}</p>
                   </div>
                 </div>
                 <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Kaydı Düzenle">
-                    <span>✏️</span> <span>Düzenle</span>
+                  <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="${t('btn_edit')}">
+                    <span>✏️</span> <span>${t('btn_edit')}</span>
                   </button>
-                  <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="Kaydı Sil">
+                  <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="${t('btn_delete')}">
                     🗑️
                   </button>
                 </div>
@@ -1186,15 +3104,15 @@
       });
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-200">Kriterlere uygun kayıt bulunamadı.</div>`;
+        list.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-200">${t('log_empty')}</div>`;
         return;
       }
 
       list.innerHTML = filtered.map(r => {
         const c = classify(r.glucose, r.timing);
         const tObj = TIMINGS.find(t => t.id === r.timing);
-        const dateStr = new Date(r.timestamp).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' });
-        const timeStr = new Date(r.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        const dateStr = new Date(r.timestamp).toLocaleDateString(getLocaleCode(), { day: '2-digit', month: 'short' });
+        const timeStr = new Date(r.timestamp).toLocaleTimeString(getLocaleCode(), { hour: '2-digit', minute: '2-digit' });
         const summary = getRecordSummary(r);
         const sectionsHtml = renderRecordSectionsHtml(r);
 
@@ -1226,7 +3144,7 @@
                 </div>
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center space-x-1.5 flex-wrap">
-                    <span class="text-xs font-bold text-slate-800">${tObj ? tObj.label : (r.timing || 'Kayıt')}</span>
+                    <span class="text-xs font-bold text-slate-800">${tObj ? tObj.label : (r.timing ? getTimingLabel(r.timing) : t('record_general'))}</span>
                     ${r.glucose ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${c.class}">${c.label}</span>` : ''}
                   </div>
                   <span class="text-[10px] text-slate-400 block">${dateStr} • ${timeStr}</span>
@@ -1234,10 +3152,10 @@
                 </div>
               </div>
               <div class="flex items-center gap-1 shrink-0">
-                <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="Kaydı Düzenle">
-                  <span>✏️</span> <span>Düzenle</span>
+                <button onclick="editRecord('${r.id}')" class="touch-active px-2.5 py-1 text-xs font-bold text-teal-800 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 flex items-center gap-1 transition shadow-2xs cursor-pointer" title="${t('btn_edit')}">
+                  <span>✏️</span> <span>${t('btn_edit')}</span>
                 </button>
-                <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="Kaydı Sil">
+                <button onclick="deleteRecord('${r.id}')" class="touch-active p-1.5 text-slate-300 hover:text-rose-600 text-sm transition cursor-pointer" title="${t('btn_delete')}">
                   🗑️
                 </button>
               </div>
@@ -1278,7 +3196,7 @@
           </div>
           <div class="flex items-center space-x-2">
             <button onclick="toggleReminder('${r.id}')" class="touch-active px-3 py-1.5 rounded-xl text-xs font-bold transition ${r.active ? 'bg-teal-700 text-white shadow-xs' : 'bg-slate-100 text-slate-400'}">
-              ${r.active ? 'Açık' : 'Kapalı'}
+              ${r.active ? t('rem_active') : t('rem_inactive')}
             </button>
             <button onclick="deleteReminder('${r.id}')" class="text-slate-300 hover:text-rose-600 p-1">🗑️</button>
           </div>
@@ -1294,7 +3212,7 @@
     }
 
     function deleteReminder(id) {
-      if (!confirm('Bu hatırlatıcıyı silmek istiyor musunuz?')) return;
+      if (!confirm(t('confirm_delete_reminder'))) return;
       reminders = reminders.filter(r => r.id !== id);
       saveReminders();
       renderReminders();
@@ -1306,7 +3224,7 @@
       const type = document.getElementById('newRemType').value;
       const label = document.getElementById('newRemLabel').value.trim();
 
-      if (!time || !label) return alert('Lütfen geçerli bir saat ve açıklama yazınız!');
+      if (!time || !label) return alert(t('alert_invalid_reminder'));
 
       const newR = {
         id: `rem-${Date.now()}`,
@@ -1322,7 +3240,7 @@
       renderReminders();
       updateReminderBadge();
       document.getElementById('newRemLabel').value = '';
-      alert('Hatırlatıcı başarıyla eklendi!');
+      alert(t('alert_reminder_added'));
     }
 
     function updateReminderBadge() {
@@ -1430,18 +3348,18 @@
       const types = ['glucose', 'insulin', 'food', 'activity', 'note'];
       const icons = { glucose: '🩸', insulin: '💉', food: '🥗', activity: '🏃', note: '📝' };
       const titles = {
-        glucose: 'Yeni Şeker Kaydı',
-        insulin: 'Yeni İlaç / İnsülin Kaydı',
-        food: 'Yeni Besin / Öğün Kaydı',
-        activity: 'Yeni Spor / Aktivite Kaydı',
-        note: 'Yeni Not & Belirti Kaydı'
+        glucose: t('modal_add_title') + ' (' + t('hub_glucose') + ')',
+        insulin: t('modal_add_title') + ' (' + t('hub_insulin') + ')',
+        food: t('modal_add_title') + ' (' + t('hub_food') + ')',
+        activity: t('modal_add_title') + ' (' + t('hub_activity') + ')',
+        note: t('modal_add_title') + ' (' + t('hub_note') + ')'
       };
       const subtitles = {
-        glucose: 'Açlık veya tokluk kan şekeri ölçümünüzü kaydedin',
-        insulin: 'Bolus, bazal insülin veya hap kullanımını kaydedin',
-        food: 'Yediğiniz öğün, karbonhidrat ve yemek notunu kaydedin',
-        activity: 'Yürüyüş, egzersiz veya spor aktivitenizi kaydedin',
-        note: 'Günün notu, tansiyon veya hissettiğiniz belirtileri kaydedin'
+        glucose: t('modal_sub_glucose'),
+        insulin: t('modal_sub_insulin'),
+        food: t('modal_sub_food'),
+        activity: t('modal_sub_activity'),
+        note: t('modal_sub_note')
       };
 
       types.forEach(t => {
@@ -1528,11 +3446,11 @@
       if (notesInput) notesInput.value = rec.notes || '';
 
       const titleEl = document.getElementById('modalTitle');
-      if (titleEl) titleEl.textContent = 'Kaydı Düzenle';
+      if (titleEl) titleEl.textContent = t('modal_edit_title');
       const subEl = document.getElementById('modalSubtitle');
-      if (subEl) subEl.textContent = 'Mevcut kaydı güncelleyin ve değişiklikleri kaydedin';
+      if (subEl) subEl.textContent = t('modal_edit_sub');
       const submitBtn = document.getElementById('modalSubmitBtn');
-      if (submitBtn) submitBtn.textContent = '✓ Değişiklikleri Kaydet';
+      if (submitBtn) submitBtn.textContent = t('btn_save_changes');
 
       const modal = document.getElementById('modalSheet');
       modal.classList.remove('hidden');
@@ -1543,7 +3461,7 @@
     function openAddModal(type = 'glucose') {
       editingRecordId = null;
       const submitBtn = document.getElementById('modalSubmitBtn');
-      if (submitBtn) submitBtn.textContent = 'Bilgiyi Kaydet';
+      if (submitBtn) submitBtn.textContent = t('btn_save_record');
 
       setModalEntryType(type);
       const now = new Date();
@@ -1668,17 +3586,17 @@
 
       if (currentModalType === 'glucose') {
         if (!rawG) {
-          return alert('Lütfen kan şekeri değerini giriniz!');
+          return alert(t('alert_fill_glucose'));
         }
         const num = parseFloat(rawG);
         if (profile.unit === 'mmol/L') {
           if (isNaN(num) || num < 1.1 || num > 36.0) {
-            return alert('Lütfen geçerli bir kan şekeri değeri giriniz (1.1 - 36.0 mmol/L)!');
+            return alert(t('alert_invalid_glucose'));
           }
           gVal = toMgDl(num, 'mmol/L');
         } else {
           if (isNaN(num) || num < 20 || num > 650) {
-            return alert('Lütfen geçerli bir kan şekeri değeri giriniz (20 - 650 mg/dL)!');
+            return alert(t('alert_invalid_glucose'));
           }
           gVal = Math.round(num);
         }
@@ -1704,19 +3622,19 @@
       const tsVal = document.getElementById('inputTimestamp')?.value;
 
       if (currentModalType === 'glucose' && !selTiming) {
-        return alert('Lütfen ölçüm vaktini (Sabah Açlık, vb.) seçiniz!');
+        return alert(t('alert_select_timing'));
       }
       if (currentModalType === 'insulin' && !med && !bolus && !basal) {
-        return alert('Lütfen en az bir ilaç adı veya insülin dozu giriniz!');
+        return alert(t('alert_fill_insulin'));
       }
       if (currentModalType === 'food' && !mealNote && !carbs) {
-        return alert('Lütfen yenilen yemeği veya karbonhidrat miktarını giriniz!');
+        return alert(t('alert_fill_food'));
       }
       if (currentModalType === 'activity' && !act && !actDet) {
-        return alert('Lütfen spor/aktivite türünü seçiniz veya detayını yazınız!');
+        return alert(t('alert_fill_activity'));
       }
       if (currentModalType === 'note' && !symptom && !notes) {
-        return alert('Lütfen bir belirti seçiniz veya açıklama/not yazınız!');
+        return alert(t('alert_fill_note'));
       }
 
       const timestampIso = tsVal ? new Date(tsVal).toISOString() : new Date().toISOString();
@@ -1776,7 +3694,7 @@
     }
 
     function deleteRecord(id) {
-      if (!confirm('Bu kaydı silmek istediğinize emin misiniz?')) return;
+      if (!confirm(t('confirm_delete_record'))) return;
       records = records.filter(r => r.id !== id);
       saveRecords();
       renderToday();
@@ -1796,26 +3714,25 @@
       const inRange = values.filter(v => v >= 70 && v <= 180).length;
       const tir = values.length ? Math.round((inRange / values.length) * 100) : 0;
 
-      let text = `🩺 *GlukoDenge Kan Şekeri Özeti* (${profile.name})\n`;
-      text += `📅 Genel Durum:\n`;
-      text += `• Ortalama Şeker: *${values.length ? formatGlucose(avg, profile.unit) : '--'} ${profile.unit}*\n`;
-      text += `• Tahmini HbA1c: *%${a1c}*\n`;
-      text += `• Hedefte Kalma (TIR): *%${tir}*\n`;
-      text += `• Toplam Kayıt: ${records.length} adet\n\n`;
+      let text = `🩺 *${t('wa_title')}* (${profile.name})\n`;
+      text += `📅 ${t('wa_general_status')}:\n`;
+      text += `• ${t('rep_avg_glucose')} *${values.length ? formatGlucose(avg, profile.unit) : '--'} ${profile.unit}*\n`;
+      text += `• ${t('stat_a1c')}: *%${a1c}*\n`;
+      text += `• ${t('stat_tir')}: *%${tir}*\n`;
+      text += `• ${t('rep_total_records')} ${records.length} ${t('rep_unit_count')}\n\n`;
 
-      text += `📋 *Son Ölçümler:*\n`;
+      text += `📋 *${t('wa_latest_records')}:*\n`;
       records.slice(0, 5).forEach(r => {
-        const dateStr = new Date(r.timestamp).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit' });
-        const timeStr = new Date(r.timestamp).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-        const tObj = TIMINGS.find(t => t.id === r.timing);
-        const slot = tObj ? tObj.short : r.timing;
-        text += `▫️ ${dateStr} ${timeStr} [${slot}]: *${r.glucose ? formatGlucose(r.glucose, profile.unit) + ' ' + profile.unit : 'Kayıt'}*`;
-        if (r.medication || r.insulinBolus) text += ` (İlaç: ${r.medication || ''} ${r.insulinBolus ? r.insulinBolus + 'U' : ''})`;
-        if (r.carbs) text += ` (${r.carbs}g karb)`;
+        const dateStr = new Date(r.timestamp).toLocaleDateString(getLocaleCode(), { day: '2-digit', month: '2-digit' });
+        const timeStr = new Date(r.timestamp).toLocaleTimeString(getLocaleCode(), { hour: '2-digit', minute: '2-digit' });
+        const slot = getTimingLabel(r.timing, true);
+        text += `▫️ ${dateStr} ${timeStr} [${slot}]: *${r.glucose ? formatGlucose(r.glucose, profile.unit) + ' ' + profile.unit : t('record_general')}*`;
+        if (r.medication || r.insulinBolus) text += ` (${t('hub_insulin')}: ${r.medication || ''} ${r.insulinBolus ? r.insulinBolus + 'U' : ''})`;
+        if (r.carbs) text += ` (${r.carbs}g ${t('carbs_short')})`;
         text += `\n`;
       });
 
-      text += `\n_GlukoDenge Mobil Takip Uygulaması ile iletildi._`;
+      text += `\n_${t('wa_footer')}_`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 
@@ -1871,7 +3788,7 @@
         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
       const countBadge = document.getElementById('rep14CountBadge');
-      if (countBadge) countBadge.textContent = `${logs14.length} Ölçüm`;
+      if (countBadge) countBadge.textContent = `${logs14.length} ${t('rep_measurement')}`;
 
       const container = document.getElementById('rep14TableContainer');
       if (!container) return;
@@ -1879,7 +3796,7 @@
       if (logs14.length === 0) {
         container.innerHTML = `
           <div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-            Son 14 güne ait kayıt bulunmuyor. Yeni ölçüm ekledikçe burada otomatik listelenecektir.
+            ${t('rep_14days_empty')}
           </div>
         `;
         return;
@@ -1887,10 +3804,9 @@
 
       container.innerHTML = logs14.map(r => {
         const d = new Date(r.timestamp);
-        const dateStr = d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
-        const timeStr = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-        const tObj = TIMINGS.find(t => t.id === r.timing);
-        const timingLabel = tObj ? (tObj.short || tObj.label) : (r.timing || 'Ölçüm');
+        const dateStr = d.toLocaleDateString(getLocaleCode(), { day: 'numeric', month: 'short' });
+        const timeStr = d.toLocaleTimeString(getLocaleCode(), { hour: '2-digit', minute: '2-digit' });
+        const timingLabel = getTimingLabel(r.timing, true) || t('rep_measurement');
         const hasG = r.glucose !== null && r.glucose !== undefined && Number(r.glucose) > 0;
         const c = hasG ? classify(r.glucose, r.timing) : null;
         const gVal = hasG ? formatGlucose(r.glucose, profile.unit) : null;
@@ -1899,7 +3815,7 @@
         if (r.insulinBolus) extraDetails.push(`💉 Bolus: ${r.insulinBolus} ü`);
         if (r.insulinBasal) extraDetails.push(`💉 Bazal: ${r.insulinBasal} ü`);
         if (r.medication) extraDetails.push(`💊 ${r.medication}`);
-        if (r.carbs) extraDetails.push(`🍞 ${r.carbs}g Karb`);
+        if (r.carbs) extraDetails.push(`🍞 ${r.carbs}g ${t('carbs_short')}`);
         if (r.mealNote) extraDetails.push(`🥗 ${r.mealNote}`);
         if (r.activity) extraDetails.push(`🏃 ${r.activity}${r.activityDetails ? ` (${r.activityDetails})` : ''}`);
         if (r.symptoms) extraDetails.push(`🩺 ${r.symptoms}`);
@@ -1925,7 +3841,7 @@
                 </div>
                 <span class="block text-[9px] font-semibold text-slate-400 mt-0.5">${c.label}</span>
               ` : `
-                <span class="text-[11px] text-slate-400 font-medium">Kayıt</span>
+                <span class="text-[11px] text-slate-400 font-medium">${t('record_general')}</span>
               `}
             </div>
           </div>
@@ -1980,11 +3896,11 @@
     }
 
     function downloadCSV() {
-      let csv = `\uFEFFTarih;Saat;Ölçüm Vakti;Kategori;Şeker (${profile.unit});Bolus İnsülin;Bazal İnsülin;İlaç;Karbonhidrat (g);Yemek Notu;Spor / Aktivite;Belirtiler;Notlar\r\n`;
+      let csv = `\uFEFF${t('csv_date')};${t('csv_time')};${t('csv_timing')};${t('csv_category')};${t('csv_glucose')} (${profile.unit});${t('csv_bolus')};${t('csv_basal')};${t('csv_med')};${t('csv_carbs')};${t('csv_meal_note')};${t('csv_activity')};${t('csv_symptoms')};${t('csv_notes')}\r\n`;
       records.forEach(r => {
         const d = new Date(r.timestamp);
-        const date = d.toLocaleDateString('tr-TR');
-        const time = d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        const date = d.toLocaleDateString(getLocaleCode());
+        const time = d.toLocaleTimeString(getLocaleCode(), { hour: '2-digit', minute: '2-digit' });
         const clean = t => `"${String(t || '').replace(/"/g, '""')}"`;
         const timingObj = TIMINGS.find(t => t.id === r.timing);
         const timingLabel = timingObj ? (timingObj.short || timingObj.label) : (r.timing || '');
@@ -2016,23 +3932,23 @@
       };
       localStorage.setItem('gluko_tel_profile', JSON.stringify(profile));
       document.getElementById('headerPatientName').textContent = profile.name;
-      alert('Profil ve hedef ayarları başarıyla kaydedildi!');
+      alert(t('alert_settings_saved'));
     }
 
     function clearAllData() {
-      if (!confirm('TÜM ölçüm ve profil verileriniz silinecektir!')) return;
+      if (!confirm(t('confirm_clear_all'))) return;
       records = [];
       saveRecords();
       renderToday();
       renderLogbook();
       if (currentTab === 'charts') renderCharts();
-      alert('Tüm veriler sıfırlandı.');
+      alert(t('alert_all_cleared'));
     }
 
     function reloadDemoData() {
       localStorage.removeItem('gluko_tel_records');
       init();
-      alert('Örnek veriler başarıyla yüklendi!');
+      alert(t('alert_demo_loaded'));
     }
 
     function setChartDays(days) {
@@ -2079,7 +3995,7 @@
         data: {
           labels,
           datasets: [{
-            label: `Şeker (${profile.unit})`,
+            label: `${t('chart_glucose_label')} (${profile.unit})`,
             data,
             borderColor: '#0f766e',
             backgroundColor: 'rgba(15,118,110,0.08)',
@@ -2116,7 +4032,7 @@
       tirChart = new Chart(ctxTir, {
         type: 'doughnut',
         data: {
-          labels: ['Hedefte (70-180)', 'Yüksek (>180)', 'Düşük (<70)'],
+          labels: [t('chart_tir_in_range'), t('chart_tir_high'), t('chart_tir_low')],
           datasets: [{
             data: [inRange, high, low],
             backgroundColor: ['#10b981', '#f59e0b', '#f43f5e']
@@ -2132,7 +4048,7 @@
       });
 
       // Meal Averages Bar Chart
-      const mealLabels = ['Sabah Aç', 'Kahvaltı Tok', 'Öğle Tok', 'Akşam Tok', 'Yatış'];
+      const mealLabels = [t('meal_fasting'), t('meal_breakfast_post'), t('meal_lunch_post'), t('meal_dinner_post'), t('meal_bedtime')];
       const mealKeys = ['fasting', 'breakfast_post', 'lunch_post', 'dinner_post', 'bedtime'];
       const mealAvgs = mealKeys.map(k => {
         const matches = glucoseOnly.filter(r => r.timing === k);
@@ -2147,7 +4063,7 @@
         data: {
           labels: mealLabels,
           datasets: [{
-            label: `Ortalama (${profile.unit})`,
+            label: `${t('chart_meal_avg')} (${profile.unit})`,
             data: mealAvgs,
             backgroundColor: '#0d9488',
             borderRadius: 8
